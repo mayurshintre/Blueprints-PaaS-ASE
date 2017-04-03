@@ -36,6 +36,7 @@
     <None Include="images\vsdx\asesequencevsdx.vsdx" />
     <None Include="images\vsdx\solution.vsdx" />
     <None Include="README.md" />
+    <None Include="templates\keyvault.json" />
     <None Include="templates\azuresql.json" />
     <None Include="templates\ilbaseapiapp.json" />
     <None Include="templates\ilbasewebapp.json" />

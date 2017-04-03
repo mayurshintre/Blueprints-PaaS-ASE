@@ -2,5 +2,39 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
+    "vnetName": {
+      "value": "JeradNet"
+    },
+    "vnetAddressPrefix": {
+      "value": "10.1.1.0"
+    },
+    "vnetAddressPrefixCIDR": {
+      "value": "16"
+    },
+    "subnet1Prefix": {
+      "value": "10.1.1.0"
+    },
+    "subnet1PrefixCIDR": {
+      "value": "24"
+    },
+    "subnet1Name": {
+      "value": "subMegatron"
+    },
+    "subnet2Prefix": {
+      "value": "10.1.2.0"
+    },
+    "subnet2PrefixCIDR": {
+      "value": "24"
+    },
+    "subnet2Name": {
+      "value": "subStarScream"
+    },
+    "customDNSIP": {
+      "value": "10.0.0.4"
+    },
+    "dnsOption": 
+    {
+      "value": "customdns"
+    }
   }
 }

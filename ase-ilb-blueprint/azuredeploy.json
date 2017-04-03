@@ -81,6 +81,10 @@
     }
   },
   "variables": {
+    "Region": "[resourceGroup().location]",
+    "TemplateURIs":"https: //github.com/mayurshintre/Blueprints/blob/master/ase-ilb-blueprint/templates/",
+    "VaultName": "[concat('ILBaseVault',uniqueString(resourceGroup().id))]",
+    "VaultSKU": "Premium",
     "vnetAddressSpace": "[concat(parameters('vnetAddressPrefix'), '/', parameters('vnetAddressPrefixCIDR'))]",
     "subnet1AddressSpace": "[concat(parameters('subnet1Prefix'), '/', parameters('subnet1PrefixCIDR'))]",
     "subnet2AddressSpace": "[concat(parameters('subnet2Prefix'), '/', parameters('subnet2PrefixCIDR'))]"
@@ -88,12 +92,29 @@
   "resources": [
     {
       "type": "Microsoft.Resources/deployments",
-      "name": "NewVnetDeploy",
+      "name": "KeyVault",
       "apiVersion": "2015-01-01",
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[concat('https://scriptstoresa.blob.core.windows.net/pubscript/newvnet', parameters('dnsOption'),'.json')]",
+          "uri": "[concat(variables('TemplateURIs'),'keyvault.json')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "VaultName": { "value": "[variables('VaultName')]" },
+          "Region": { "value": "[variables('Region')]" },
+          "VaultSku": { "value": "[variables('VaultSKU')]" }
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "name": "Vnet",
+      "apiVersion": "2015-01-01",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(variables('TemplateURIs'),parameters('dnsOption'),'.json')]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
@@ -109,7 +130,7 @@
           "subnet2Prefix": { "value": "[parameters('subnet2Prefix')]" },
           "subnet2PrefixCIDR": { "value": "[parameters('subnet2PrefixCIDR')]" },
           "subnet1PrefixCIDR": { "value": "[parameters('subnet1PrefixCIDR')]" },
-          "customDNSIP": { "value": "[parameters('customDNSIP')]"}
+          "customDNSIP": { "value": "[parameters('customDNSIP')]" }
         }
       }
     }
