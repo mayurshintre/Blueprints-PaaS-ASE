@@ -1,6 +1,6 @@
 ﻿# NIST 800-66 Blueprint for ILB ASE
 
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https://github.com/mayurshintre/Blueprints/ase-ilb-blueprint/azuredeploy.json" target="_blank">
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https://github.com/mayurshintre/Blueprints/blob/master/ase-ilb-blueprint/azuredeploy.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/></a>
 
 This template deploys a NIST 800-66 compliant secure baseline for Azure App service Environment, Web App, API Apps, Redis Cache and Web Application Gateway 
