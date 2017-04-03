@@ -31,6 +31,16 @@
       <Visible>False</Visible>
     </None>
     <Content Include="Deploy-AzureResourceGroup.ps1" />
+    <None Include="images\sequence.jpg" />
+    <None Include="images\solution.jpg" />
+    <None Include="images\vsdx\asesequencevsdx.vsdx" />
+    <None Include="images\vsdx\solution.vsdx" />
+    <None Include="templates\newvnetazuredns.json" />
+    <None Include="templates\newvnetcustomdns.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\Debug\" />
+    <Folder Include="obj\Debug\" />
   </ItemGroup>
   <Target Name="GetReferenceAssemblyPaths" />
 </Project>
