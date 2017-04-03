@@ -82,7 +82,7 @@
   },
   "variables": {
     "Region": "[resourceGroup().location]",
-    "TemplateURIs":"https: //github.com/mayurshintre/Blueprints/blob/master/ase-ilb-blueprint/templates/",
+    "TemplateURIs":"https://raw.githubusercontent.com/mayurshintre/Blueprints/master/ase-ilb-blueprint/templates/",
     "VaultName": "[concat('ILBaseVault',uniqueString(resourceGroup().id))]",
     "VaultSKU": "Premium",
     "vnetAddressSpace": "[concat(parameters('vnetAddressPrefix'), '/', parameters('vnetAddressPrefixCIDR'))]",
@@ -114,7 +114,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[concat(variables('TemplateURIs'),parameters('dnsOption'),'.json')]",
+          "uri": "[concat(variables('TemplateURIs'),'newvnet',parameters('dnsOption'),'.json')]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
