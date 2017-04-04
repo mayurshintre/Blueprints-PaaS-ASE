@@ -234,28 +234,28 @@
     },
     "redisCachemaxclients": {
       "type": "int",
-      "defaultValue": "7500",
+      "defaultValue": 7500,
       "metadata": {
         "description": "Set to true to allow access to redis on port 6379, without SSL tunneling (less secure)."
       }
     },
     "redisCachemaxmemoryreserved": {
       "type": "int",
-      "defaultValue": "200",
+      "defaultValue": 200,
       "metadata": {
         "description": "Set to true to allow access to redis on port 6379, without SSL tunneling (less secure)."
       }
     },
     "redisCachemaxfragmentationmemory-reserved": {
       "type": "int",
-      "defaultValue": "300",
+      "defaultValue": 300,
       "metadata": {
         "description": "Set to true to allow access to redis on port 6379, without SSL tunneling (less secure)."
       }
     },
     "redisCachemaxmemory-delta": {
       "type": "int",
-      "defaultValue": "200",
+      "defaultValue": 200,
       "metadata": {
         "description": "Set to true to allow access to redis on port 6379, without SSL tunneling (less secure)."
       }
@@ -355,10 +355,9 @@
           "redisCacheName": { "value": "[parameters('redisCacheName')]" },
           "redisShardCount": { "value": "[parameters('redisShardCount')]" },
           "redisCacheCapacity": { "value": "[parameters('redisCacheCapacity')]" },
-          "redisCachevirtualNetwork": { "value": "[parameters('vnetName')]" },
-          "redisCachesubnet": { "value": "[variables('RedisCacheSubnetAddressSpace')]" },
+          "virtualNetwork": { "value": "[parameters('vnetName')]" },
+          "subnet": { "value": "[variables('RedisCacheSubnetAddressSpace')]" },
           "redisCacheStaticIP": { "value": "[variables('redisCacheStaticIP')]" },
-          "existingDiagnosticsStorageAccountName": { "value": "[parameters('existingDiagnosticsStorageAccountName')]" },
           "enableNonSslPort": { "value": "[parameters('enableNonSslPort')]" },
           "redisCachemaxclients": { "value": "[parameters('redisCachemaxclients')]" },
           "redisCachemaxmemoryreserved": { "value": "[parameters('redisCachemaxmemoryreserved')]" },
