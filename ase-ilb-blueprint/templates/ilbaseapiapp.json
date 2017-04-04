@@ -2,11 +2,145 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
+    "virtualNetworks_asev2_1_vnet_name": {
+      "defaultValue": "asev2-1-vnet",
+      "type": "String"
+    },
+    "serverfarms_aspv2_name": {
+      "defaultValue": "aspv2",
+      "type": "String"
+    },
+    "sites_asev2apiapp_name": {
+      "defaultValue": "asev2apiapp",
+      "type": "String"
+    },
+    "sites_ilbasewebapp_name": {
+      "defaultValue": "ilbasewebapp",
+      "type": "String"
+    }
   },
-  "variables": {
-  },
+  "variables": {},
   "resources": [
-  ],
-  "outputs": {
-  }
+    {
+      "comments": "Generalized from resource: '/subscriptions/960e1588-d82e-47d5-8c2c-342cd071e172/resourceGroups/asev2/providers/Microsoft.Network/virtualNetworks/asev2-1-vnet'.",
+      "type": "Microsoft.Network/virtualNetworks",
+      "name": "[parameters('virtualNetworks_asev2_1_vnet_name')]",
+      "apiVersion": "2016-03-30",
+      "location": "westus",
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "192.168.250.0/23"
+          ]
+        },
+        "subnets": [
+          {
+            "name": "default",
+            "properties": {
+              "addressPrefix": "192.168.250.0/24"
+            }
+          }
+        ]
+      },
+      "dependsOn": []
+    },
+    {
+      "comments": "Generalized from resource: '/subscriptions/960e1588-d82e-47d5-8c2c-342cd071e172/resourceGroups/asev2/providers/Microsoft.Web/serverfarms/aspv2'.",
+      "type": "Microsoft.Web/serverfarms",
+      "sku": {
+        "name": "P1",
+        "tier": "Premium",
+        "size": "P1",
+        "family": "P",
+        "capacity": 1
+      },
+      "kind": "app",
+      "name": "[parameters('serverfarms_aspv2_name')]",
+      "apiVersion": "2015-08-01",
+      "location": "West US",
+      "properties": {
+        "name": "[parameters('serverfarms_aspv2_name')]",
+        "numberOfWorkers": 1
+      },
+      "dependsOn": []
+    },
+    {
+      "comments": "Generalized from resource: '/subscriptions/960e1588-d82e-47d5-8c2c-342cd071e172/resourceGroups/asev2/providers/Microsoft.Web/sites/asev2apiapp'.",
+      "type": "Microsoft.Web/sites",
+      "kind": "api",
+      "name": "[parameters('sites_asev2apiapp_name')]",
+      "apiVersion": "2015-08-01",
+      "location": "West US",
+      "tags": {
+        "hidden-related:/subscriptions/960e1588-d82e-47d5-8c2c-342cd071e172/resourcegroups/asev2/providers/Microsoft.Web/serverfarms/aspv2": "empty"
+      },
+      "properties": {
+        "name": "[parameters('sites_asev2apiapp_name')]",
+        "hostNames": [
+          "asev2apiapp.internal.ase"
+        ],
+        "enabledHostNames": [
+          "asev2apiapp.internal.ase",
+          "asev2apiapp.scm.internal.ase"
+        ],
+        "hostNameSslStates": [
+          {
+            "name": "[concat(parameters('sites_asev2apiapp_name'),'.internal.ase')]",
+            "sslState": 0,
+            "thumbprint": null,
+            "ipBasedSslState": 0
+          },
+          {
+            "name": "[concat(parameters('sites_asev2apiapp_name'),'.scm.internal.ase')]",
+            "sslState": 0,
+            "thumbprint": null,
+            "ipBasedSslState": 0
+          }
+        ],
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_aspv2_name'))]"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_aspv2_name'))]"
+      ]
+    },
+    {
+      "comments": "Generalized from resource: '/subscriptions/960e1588-d82e-47d5-8c2c-342cd071e172/resourceGroups/asev2/providers/Microsoft.Web/sites/ilbasewebapp'.",
+      "type": "Microsoft.Web/sites",
+      "kind": "app",
+      "name": "[parameters('sites_ilbasewebapp_name')]",
+      "apiVersion": "2015-08-01",
+      "location": "West US",
+      "tags": {
+        "hidden-related:/subscriptions/960e1588-d82e-47d5-8c2c-342cd071e172/resourcegroups/asev2/providers/Microsoft.Web/serverfarms/aspv2": "empty"
+      },
+      "properties": {
+        "name": "[parameters('sites_ilbasewebapp_name')]",
+        "hostNames": [
+          "ilbasewebapp.internal.ase"
+        ],
+        "enabledHostNames": [
+          "ilbasewebapp.internal.ase",
+          "ilbasewebapp.scm.internal.ase"
+        ],
+        "hostNameSslStates": [
+          {
+            "name": "[concat(parameters('sites_ilbasewebapp_name'),'.internal.ase')]",
+            "sslState": 0,
+            "thumbprint": null,
+            "ipBasedSslState": 0
+          },
+          {
+            "name": "[concat(parameters('sites_ilbasewebapp_name'),'.scm.internal.ase')]",
+            "sslState": 0,
+            "thumbprint": null,
+            "ipBasedSslState": 0
+          }
+        ],
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_aspv2_name'))]"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_aspv2_name'))]"
+      ]
+    }
+  ]
 }
