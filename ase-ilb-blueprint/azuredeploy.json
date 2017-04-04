@@ -251,7 +251,8 @@
     "WebAppSubnetAddressSpace": "[concat(parameters('WebAppSubnetPrefix'), '/', parameters('WebAppSubnetPrefixCIDR'))]",
     "APIAppSubnetAddressSpace": "[concat(parameters('APIAppSubnetPrefix'), '/', parameters('APIAppSubnetPrefixCIDR'))]",
     "RedisCacheSubnetAddressSpace": "[concat(parameters('RedisCacheSubnetPrefix'), '/', parameters('RedisCacheSubnetPrefixCIDR'))]",
-    "GatewayAddressSpace": "[concat(parameters('GatewaySubnetPrefix'), '/', parameters('GatewaySubnetPrefixCIDR'))]"
+    "GatewayAddressSpace": "[concat(parameters('GatewaySubnetPrefix'), '/', parameters('GatewaySubnetPrefixCIDR'))]",
+    "redisCacheStaticIP": "[concat(parameters('RedisCacheSubnetPrefix'), ]"
   },
   "resources": [
     {
@@ -330,7 +331,10 @@
           "redisShardCount": { "value": "[parameters('redisShardCount')]" },
           "redisCacheCapacity": { "value": "[parameters('redisCacheCapacity')]" },
           "redisCachevirtualNetwork": { "value": "[parameters('vnetName')]" },
-          "redisCachesubnet": {}
+          "redisCachesubnet": { "value": "[variables('RedisCacheSubnetAddressSpace')]" },
+          "redisCacheStaticIP": {},
+          "existingDiagnosticsStorageAccountName": {},
+          "enableNonSslPort": {}
         }
       }
     }
