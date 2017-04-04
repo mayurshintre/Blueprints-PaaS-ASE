@@ -53,7 +53,6 @@
     },
     "subnet2Prefix": {
       "type": "string",
-      "defaultValue": "10.0.1.0",
       "metadata": {
         "description": "Subnet 2 Prefix"
       }
