@@ -18,7 +18,7 @@
     },
     "vnetAddressPrefixCIDR": {
       "type": "int",
-      "defaultValue": "16",
+      "defaultValue": 16,
       "maxValue": 32,
       "metadata": {
         "description": "Address CIDR prefix"
@@ -33,7 +33,7 @@
     },
     "subnet1PrefixCIDR": {
       "type": "int",
-      "defaultValue": "24",
+      "defaultValue": 24,
       "maxValue": 32,
       "metadata": {
         "description": "Subnet 1 CIDR Prefix"
@@ -55,7 +55,7 @@
     },
     "subnet2PrefixCIDR": {
       "type": "int",
-      "defaultValue": "24",
+      "defaultValue": 24,
       "maxValue": 32,
       "metadata": {
         "description": "Subnet 2 CIDR Prefix"
@@ -70,14 +70,14 @@
     },
     "subnet3Prefix": {
       "type": "string",
-      "defaultValue": "10.0.1.0",
+      "defaultValue": "10.0.2.0",
       "metadata": {
         "description": "Subnet 3 Prefix"
       }
     },
     "subnet3PrefixCIDR": {
       "type": "int",
-      "defaultValue": "24",
+      "defaultValue": 24,
       "maxValue": 32,
       "metadata": {
         "description": "Subnet 3 CIDR Prefix"
@@ -92,14 +92,14 @@
     },
     "subnet4Prefix": {
       "type": "string",
-      "defaultValue": "10.0.1.0",
+      "defaultValue": "10.0.3.0",
       "metadata": {
         "description": "Subnet 4 Prefix"
       }
     },
     "subnet4PrefixCIDR": {
       "type": "int",
-      "defaultValue": "24",
+      "defaultValue": 24,
       "maxValue": 32,
       "metadata": {
         "description": "Subnet 4 CIDR Prefix"
@@ -112,26 +112,62 @@
         "description": "Subnet 4 Name"
       }
     },
-    "subnet5Prefix": {
+    "GatewaySubnetPrefix": {
       "type": "string",
-      "defaultValue": "10.0.1.0",
+      "defaultValue": "10.0.4.0",
       "metadata": {
         "description": "Subnet 5 Prefix"
       }
     },
-    "subnet5PrefixCIDR": {
+    "GatewaySubnetPrefixCIDR": {
       "type": "int",
-      "defaultValue": "24",
+      "defaultValue": 24,
       "maxValue": 32,
       "metadata": {
         "description": "Subnet 5 CIDR Prefix"
       }
     },
-    "subnet5Name": {
+    "GatewaySubnetName": {
       "type": "string",
       "defaultValue": "GatewaySubnet",
       "metadata": {
         "description": "Subnet 5 Name"
+      }
+    },
+    "gatewayName": {
+      "type": "string",
+      "defaultValue": "gateway1",
+      "metadata": {
+        "description": "Name for the new gateway"
+      }
+    },
+    "gatewayPublicIPName": {
+      "type": "string",
+      "defaultValue": "GWPublicIP",
+      "metadata": {
+        "description": "Name for public IP object used for the new gateway"
+      }
+    },
+    "localGatewayName": {
+      "type": "string",
+      "defaultValue": "localGateway",
+      "metadata": {
+        "description": "Name for gateway connected to other VNet/on-prem network"
+      }
+    },
+    "localGatewayIPAddress": {
+      "type": "string",
+      "defaultValue": "192.0.0.0",
+      "metadata": {
+        "description": "Public IP address for the gateway to connect to (from other VNet/on-prem)"
+      }
+    },
+    "localGatewayAddressCIDRPrefix": {
+      "type": "int",
+      "defaultValue": 24,
+      "maxValue": 32,
+      "metadata": {
+        "description": "CIDR block for remote network"
       }
     },
     "customDNSIP": {
@@ -216,7 +252,7 @@
     "subnet2AddressSpace": "[concat(parameters('subnet2Prefix'), '/', parameters('subnet2PrefixCIDR'))]",
     "subnet3AddressSpace": "[concat(parameters('subnet3Prefix'), '/', parameters('subnet3PrefixCIDR'))]",
     "subnet4AddressSpace": "[concat(parameters('subnet4Prefix'), '/', parameters('subnet4PrefixCIDR'))]",
-    "subnet5AddressSpace": "[concat(parameters('subnet5Prefix'), '/', parameters('subnet5PrefixCIDR'))]"
+    "GatewayAddressSpace": "[concat(parameters('GatewaySubnetPrefix'), '/', parameters('GatewaySubnetPrefixCIDR'))]"
   },
   "resources": [
     {
@@ -267,10 +303,15 @@
           "subnet4Name": { "value": "[parameters('subnet4Name')]" },
           "subnet4Prefix": { "value": "[parameters('subnet4Prefix')]" },
           "subnet4PrefixCIDR": { "value": "[parameters('subnet4PrefixCIDR')]" },
-          "subnet5AddressSpace": { "value": "[variables('subnet5AddressSpace')]" },
-          "subnet5Name": { "value": "[parameters('subnet5Name')]" },
-          "subnet5Prefix": { "value": "[parameters('subnet5Prefix')]" },
-          "subnet5PrefixCIDR": { "value": "[parameters('subnet5PrefixCIDR')]" },
+          "GatewayAddressSpace": { "value": "[variables('GatewayAddressSpace')]" },
+          "GatewaySubnetName": { "value": "[parameters('GatewaySubnetName')]" },
+          "GatewaySubnetPrefix": { "value": "[parameters('GatewaySubnetPrefix')]" },
+          "GatewaySubnetPrefixCIDR": { "value": "[parameters('GatewaySubnetPrefixCIDR')]" },
+          "gatewayName": { "value": "[parameters('gatewayName')]" },
+          "gatewayPublicIPName": { "value": "[parameters('gatewayPublicIPName')]" },
+          "localGatewayName": { "value": "[parameters('localGatewayName')]" },
+          "localGatewayIPAddress": { "value": "[parameters('localGatewayIPAddress')]" },
+          "localGatewayAddressCIDRPrefix": { "value": "[parameters('localGatewayAddressCIDRPrefix')]" },
           "customDNSIP": { "value": "[parameters('customDNSIP')]" }
         }
       }
