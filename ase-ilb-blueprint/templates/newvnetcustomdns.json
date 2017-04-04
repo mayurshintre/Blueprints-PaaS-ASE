@@ -122,28 +122,58 @@
         "description": "Subnet 4 Address Space"
       }
     },
-    "subnet5Prefix": {
+    "GatewaySubnetPrefix": {
       "type": "string",
       "metadata": {
         "description": "Subnet 5 Prefix"
       }
     },
-    "subnet5PrefixCIDR": {
+    "GatewaySubnetPrefixCIDR": {
       "type": "int",
       "metadata": {
         "description": "Subnet 5 CIDR Prefix"
       }
     },
-    "subnet5Name": {
+    "GatewaySubnetName": {
       "type": "string",
       "metadata": {
         "description": "Subnet 5 Name"
       }
     },
-    "subnet5AddressSpace": {
+    "GatewayAddressSpace": {
       "type": "string",
       "metadata": {
         "description": "Subnet 5 Address Space"
+      }
+    },
+    "gatewayName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name for the new gateway"
+      }
+    },
+    "gatewayPublicIPName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name for public IP object used for the new gateway"
+      }
+    },
+    "localGatewayName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name for gateway connected to other VNet/on-prem network"
+      }
+    },
+    "localGatewayIPAddress": {
+      "type": "string",
+      "metadata": {
+        "description": "Public IP address for the gateway to connect to (from other VNet/on-prem)"
+      }
+    },
+    "localGatewayAddressCIDRPrefix": {
+      "type": "int",
+      "metadata": {
+        "description": "CIDR block for remote network"
       }
     },
     "customDNSIP": {
@@ -154,9 +184,34 @@
     }
   },
   "variables": {
-    "apiVersion": "2015-06-15"
+    "apiVersion": "2015-06-15",
+    "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',parameters('vnetName'))]",
+    "gatewaySubnetRef": "[concat(variables('vnetID'),'/subnets/',parameters('GatewaySubnetName'))]"
   },
   "resources": [
+    {
+      "apiVersion": "2015-05-01-preview",
+      "type": "Microsoft.Network/publicIPAddresses",
+      "name": "[parameters('gatewayPublicIPName')]",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "publicIPAllocationMethod": "Dynamic"
+      }
+    },
+    {
+      "apiVersion": "2016-02-03",
+      "type": "Microsoft.Network/localNetworkGateways",
+      "name": "[parameters('localGatewayName')]",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "localNetworkAddressSpace": {
+          "addressPrefixes": [
+            "[parameters('localGatewayAddressCIDRPrefix')]"
+          ]
+        },
+        "gatewayIpAddress": "[parameters('localGatewayIPAddress')]"
+      }
+    },
     {
       "apiVersion": "[variables('apiVersion')]",
       "type": "Microsoft.Network/virtualNetworks",
@@ -199,9 +254,41 @@
             }
           },
           {
-            "name": "[parameters('subnet5Name')]",
+            "name": "[parameters('GatewaySubnetName')]",
             "properties": {
-              "addressPrefix": "[parameters('subnet5AddressSpace')]"
+              "addressPrefix": "[parameters('GatewayAddressSpace')]"
+            }
+          }
+        ]
+      }
+    },
+          {
+            "apiVersion": "2015-05-01-preview",
+            "type": "Microsoft.Network/virtualNetworkGateways",
+            "name": "[parameters('gatewayName')]",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+              "[concat('Microsoft.Network/publicIPAddresses/', parameters('gatewayPublicIPName'))]",
+              "[concat('Microsoft.Network/virtualNetworks/', parameters('vnetName'))]"
+            ],
+            "properties": {
+              "ipConfigurations": [
+                {
+                  "properties": {
+                    "privateIPAllocationMethod": "Dynamic",
+                    "subnet": {
+                      "id": "[variables('gatewaySubnetRef')]"
+                    },
+                    "publicIPAddress": {
+                      "id": "[resourceId('Microsoft.Network/publicIPAddresses',parameters('gatewayPublicIPName'))]"
+                    }
+                  },
+                  "name": "vnetGatewayConfig"
+                }
+              ],
+              "gatewayType": "Vpn",
+              "vpnType": "RouteBased",
+              "enableBgp": false
             }
           }
         ]
