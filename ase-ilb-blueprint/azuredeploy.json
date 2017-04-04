@@ -24,14 +24,14 @@
         "description": "Address CIDR prefix"
       }
     },
-    "subnet1Prefix": {
+    "WAFSubnetPrefix": {
       "type": "string",
       "defaultValue": "10.0.0.0",
       "metadata": {
         "description": "Subnet 1 Prefix"
       }
     },
-    "subnet1PrefixCIDR": {
+    "WAFSubnetPrefixCIDR": {
       "type": "int",
       "defaultValue": 24,
       "maxValue": 32,
@@ -39,21 +39,21 @@
         "description": "Subnet 1 CIDR Prefix"
       }
     },
-    "subnet1Name": {
+    "WAFSubnetName": {
       "type": "string",
       "defaultValue": "WAFSubnet",
       "metadata": {
         "description": "Subnet 1 Name"
       }
     },
-    "subnet2Prefix": {
+    "WebAppSubnetPrefix": {
       "type": "string",
       "defaultValue": "10.0.1.0",
       "metadata": {
         "description": "Subnet 2 Prefix"
       }
     },
-    "subnet2PrefixCIDR": {
+    "WebAppSubnetPrefixCIDR": {
       "type": "int",
       "defaultValue": 24,
       "maxValue": 32,
@@ -61,21 +61,21 @@
         "description": "Subnet 2 CIDR Prefix"
       }
     },
-    "subnet2Name": {
+    "WebAppSubnetName": {
       "type": "string",
       "defaultValue": "WebAppSubnet",
       "metadata": {
         "description": "Subnet 2 Name"
       }
     },
-    "subnet3Prefix": {
+    "APIAppSubnetPrefix": {
       "type": "string",
       "defaultValue": "10.0.2.0",
       "metadata": {
         "description": "Subnet 3 Prefix"
       }
     },
-    "subnet3PrefixCIDR": {
+    "APIAppSubnetPrefixCIDR": {
       "type": "int",
       "defaultValue": 24,
       "maxValue": 32,
@@ -83,21 +83,21 @@
         "description": "Subnet 3 CIDR Prefix"
       }
     },
-    "subnet3Name": {
+    "APIAppSubnetName": {
       "type": "string",
       "defaultValue": "APIAppSubnet",
       "metadata": {
         "description": "Subnet 3 Name"
       }
     },
-    "subnet4Prefix": {
+    "RedisCacheSubnetPrefix": {
       "type": "string",
       "defaultValue": "10.0.3.0",
       "metadata": {
         "description": "Subnet 4 Prefix"
       }
     },
-    "subnet4PrefixCIDR": {
+    "RedisCacheSubnetPrefixCIDR": {
       "type": "int",
       "defaultValue": 24,
       "maxValue": 32,
@@ -105,7 +105,7 @@
         "description": "Subnet 4 CIDR Prefix"
       }
     },
-    "subnet4Name": {
+    "RedisCacheSubnetName": {
       "type": "string",
       "defaultValue": "RedisCacheSubnet",
       "metadata": {
@@ -134,7 +134,7 @@
         "description": "Subnet 5 Name"
       }
     },
-    "gatewayName": {
+    "GatewayName": {
       "type": "string",
       "defaultValue": "gateway1",
       "metadata": {
@@ -183,63 +183,6 @@
       "metadata": {
         "description": "Pick either azuredns or customdns. This is Case Sensitive. "
       }
-    },
-    "redisCacheName": {
-      "type": "string",
-      "defaultValue": "rediscachepremium",
-      "metadata": {
-        "description": "The name of the Azure Redis Cache to create."
-      }
-    },
-    "redisShardCount": {
-      "type": "int",
-      "metadata": {
-        "description": "Number of highly available shards to create in the cluster. Requires Premium SKU. Set to 0 to not set up clustering."
-      }
-    },
-    "redisCacheCapacity": {
-      "type": "int",
-      "allowedValues": [
-        1,
-        2,
-        3,
-        4
-      ],
-      "defaultValue": 1,
-      "metadata": {
-        "description": "The size of the new Azure Redis Cache instance. Valid family and capacity combinations are (C0..C6, P1..P4)."
-      }
-    },
-    "virtualNetwork": {
-      "type": "string",
-      "metadata": {
-        "description": "Name of an existing virtual network to join, in same subscription and region. Requires Premium SKU."
-      }
-    },
-    "subnet": {
-      "type": "string",
-      "metadata": {
-        "description": "Name of an existing subnet to join in the virtual network. Requires configuring a virtualNetwork."
-      }
-    },
-    "redisCacheStaticIP": {
-      "type": "string",
-      "metadata": {
-        "description": "The static IP address the redis cache should have, for a cache in a virtual network subnet. Requires configuring a virtualNetwork."
-      }
-    },
-    "existingDiagnosticsStorageAccountName": {
-      "type": "string",
-      "metadata": {
-        "description": "Name of an existing storage account for diagnostics. Must be in the same subscription."
-      }
-    },
-    "enableNonSslPort": {
-      "type": "bool",
-      "defaultValue": false,
-      "metadata": {
-        "description": "Set to true to allow access to redis on port 6379, without SSL tunneling (less secure)."
-      }
     }
   },
   "variables": {
@@ -248,10 +191,10 @@
     "VaultName": "[concat('ILBaseVault',uniqueString(resourceGroup().id))]",
     "VaultSKU": "Premium",
     "vnetAddressSpace": "[concat(parameters('vnetAddressPrefix'), '/', parameters('vnetAddressPrefixCIDR'))]",
-    "subnet1AddressSpace": "[concat(parameters('subnet1Prefix'), '/', parameters('subnet1PrefixCIDR'))]",
-    "subnet2AddressSpace": "[concat(parameters('subnet2Prefix'), '/', parameters('subnet2PrefixCIDR'))]",
-    "subnet3AddressSpace": "[concat(parameters('subnet3Prefix'), '/', parameters('subnet3PrefixCIDR'))]",
-    "subnet4AddressSpace": "[concat(parameters('subnet4Prefix'), '/', parameters('subnet4PrefixCIDR'))]",
+    "WAFSubnetAddressSpace": "[concat(parameters('WAFSubnetPrefix'), '/', parameters('WAFSubnetPrefixCIDR'))]",
+    "WebAppSubnetAddressSpace": "[concat(parameters('WebAppSubnetPrefix'), '/', parameters('WebAppSubnetPrefixCIDR'))]",
+    "APIAppSubnetAddressSpace": "[concat(parameters('APIAppSubnetPrefix'), '/', parameters('APIAppSubnetPrefixCIDR'))]",
+    "RedisCacheSubnetAddressSpace": "[concat(parameters('RedisCacheSubnetPrefix'), '/', parameters('RedisCacheSubnetPrefixCIDR'))]",
     "GatewayAddressSpace": "[concat(parameters('GatewaySubnetPrefix'), '/', parameters('GatewaySubnetPrefixCIDR'))]"
   },
   "resources": [
@@ -275,7 +218,7 @@
     {
       "type": "Microsoft.Resources/deployments",
       "name": "Vnet",
-      "apiVersion": "2016-09-01",
+      "apiVersion": "2015-01-01",
       "properties": {
         "mode": "Incremental",
         "templateLink": {
@@ -287,27 +230,27 @@
           "vnetAddressSpace": { "value": "[variables('vnetAddressSpace')]" },
           "vnetAddressPrefix": { "value": "[parameters('vnetAddressPrefix')]" },
           "vnetAddressPrefixCIDR": { "value": "[parameters('vnetAddressPrefixCIDR')]" },
-          "subnet1AddressSpace": { "value": "[variables('subnet1AddressSpace')]" },
-          "subnet1Name": { "value": "[parameters('subnet1name')]" },
-          "subnet1PrefixCIDR": { "value": "[parameters('subnet1PrefixCIDR')]" },
-          "subnet1Prefix": { "value": "[parameters('subnet1Prefix')]" },
-          "subnet2AddressSpace": { "value": "[variables('subnet2AddressSpace')]" },
-          "subnet2Name": { "value": "[parameters('subnet2Name')]" },
-          "subnet2Prefix": { "value": "[parameters('subnet2Prefix')]" },
-          "subnet2PrefixCIDR": { "value": "[parameters('subnet2PrefixCIDR')]" },
-          "subnet3AddressSpace": { "value": "[variables('subnet3AddressSpace')]" },
-          "subnet3Name": { "value": "[parameters('subnet3Name')]" },
-          "subnet3Prefix": { "value": "[parameters('subnet3Prefix')]" },
-          "subnet3PrefixCIDR": { "value": "[parameters('subnet3PrefixCIDR')]" },
-          "subnet4AddressSpace": { "value": "[variables('subnet4AddressSpace')]" },
-          "subnet4Name": { "value": "[parameters('subnet4Name')]" },
-          "subnet4Prefix": { "value": "[parameters('subnet4Prefix')]" },
-          "subnet4PrefixCIDR": { "value": "[parameters('subnet4PrefixCIDR')]" },
+          "WAFSubnetAddressSpace": { "value": "[variables('WAFSubnetAddressSpace')]" },
+          "WAFSubnetName": { "value": "[parameters('WAFSubnetName')]" },
+          "WAFSubnetPrefixCIDR": { "value": "[parameters('WAFSubnetPrefixCIDR')]" },
+          "WAFSubnetPrefix": { "value": "[parameters('WAFSubnetPrefix')]" },
+          "WebAppSubnetAddressSpace": { "value": "[variables('WebAppSubnetAddressSpace')]" },
+          "WebAppSubnetName": { "value": "[parameters('WebAppSubnetName')]" },
+          "WebAppSubnetPrefix": { "value": "[parameters('WebAppSubnetPrefix')]" },
+          "WebAppSubnetPrefixCIDR": { "value": "[parameters('WebAppSubnetPrefixCIDR')]" },
+          "APIAppSubnetAddressSpace": { "value": "[variables('APIAppSubnetAddressSpace')]" },
+          "APIAppSubnetName": { "value": "[parameters('APIAppSubnetName')]" },
+          "APIAppSubnetPrefix": { "value": "[parameters('APIAppSubnetPrefix')]" },
+          "APIAppSubnetPrefixCIDR": { "value": "[parameters('APIAppSubnetPrefixCIDR')]" },
+          "RedisCacheSubnetAddressSpace": { "value": "[variables('RedisCacheSubnetAddressSpace')]" },
+          "RedisCacheSubnetName": { "value": "[parameters('RedisCacheSubnetName')]" },
+          "RedisCacheSubnetPrefix": { "value": "[parameters('RedisCacheSubnetPrefix')]" },
+          "RedisCacheSubnetPrefixCIDR": { "value": "[parameters('RedisCacheSubnetPrefixCIDR')]" },
           "GatewayAddressSpace": { "value": "[variables('GatewayAddressSpace')]" },
           "GatewaySubnetName": { "value": "[parameters('GatewaySubnetName')]" },
           "GatewaySubnetPrefix": { "value": "[parameters('GatewaySubnetPrefix')]" },
           "GatewaySubnetPrefixCIDR": { "value": "[parameters('GatewaySubnetPrefixCIDR')]" },
-          "gatewayName": { "value": "[parameters('gatewayName')]" },
+          "GatewayName": { "value": "[parameters('GatewayName')]" },
           "gatewayPublicIPName": { "value": "[parameters('gatewayPublicIPName')]" },
           "localGatewayName": { "value": "[parameters('localGatewayName')]" },
           "localGatewayIPAddress": { "value": "[parameters('localGatewayIPAddress')]" },
@@ -315,24 +258,6 @@
           "customDNSIP": { "value": "[parameters('customDNSIP')]" }
         }
       }
-    },
-    {
-      "type": "Microsoft.Resources/deployments",
-      "name": "RedisCachePremium",
-      "apiVersion": "2016-09-01",
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[concat(variables('TemplateURIs'),'rediscache.json')]",
-          "contentVersion": "1.0.0.0"
-        },
-        "parameters": {
-          "redisCacheName": { "value": "[parameters('vnetName')]" },
-          "Region": { "value": "[variables('Region')]" },
-          "VaultSku": { "value": "[variables('VaultSKU')]" }
-        }
-      }
     }
-
   ]
  }

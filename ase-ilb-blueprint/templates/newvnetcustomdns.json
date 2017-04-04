@@ -26,97 +26,97 @@
         "description": "Address space for Vnet"
       }
     },
-    "subnet1Prefix": {
+    "WAFSubnetPrefix": {
       "type": "string",
       "metadata": {
         "description": "Subnet 1 Prefix"
       }
     },
-    "subnet1PrefixCIDR": {
+    "WAFSubnetPrefixCIDR": {
       "type": "int",
       "metadata": {
         "description": "Subnet 1 CIDR Prefix"
       }
     },
-    "subnet1AddressSpace": {
+    "WAFSubnetAddressSpace": {
       "type": "string",
       "metadata": {
         "description": "Subnet 1 Address Space"
       }
     },
-    "subnet1Name": {
+    "WAFSubnetName": {
       "type": "string",
       "metadata": {
         "description": "Subnet 1 Name"
       }
     },
-    "subnet2Prefix": {
+    "WebAppSubnetPrefix": {
       "type": "string",
       "metadata": {
         "description": "Subnet 2 Prefix"
       }
     },
-    "subnet2PrefixCIDR": {
+    "WebAppSubnetPrefixCIDR": {
       "type": "int",
       "metadata": {
         "description": "Subnet 2 CIDR Prefix"
       }
     },
-    "subnet2AddressSpace": {
+    "WebAppSubnetAddressSpace": {
       "type": "string",
       "metadata": {
         "description": "Subnet 2 Address Space"
       }
     },
-    "subnet2Name": {
+    "WebAppSubnetName": {
       "type": "string",
       "metadata": {
         "description": "Subnet 2 Name"
       }
     },
-    "subnet3Prefix": {
+    "APIAppSubnetPrefix": {
       "type": "string",
       "metadata": {
         "description": "Subnet 3 Prefix"
       }
     },
-    "subnet3PrefixCIDR": {
+    "APIAppSubnetPrefixCIDR": {
       "type": "int",
       "metadata": {
         "description": "Subnet 3 CIDR Prefix"
       }
     },
-    "subnet3Name": {
+    "APIAppSubnetName": {
       "type": "string",
       "metadata": {
         "description": "Subnet 3 Name"
       }
     },
-    "subnet3AddressSpace": {
+    "APIAppSubnetAddressSpace": {
       "type": "string",
       "metadata": {
         "description": "Subnet 3 Address Space"
       }
     },
-    "subnet4Prefix": {
+    "RedisCacheSubnetPrefix": {
       "type": "string",
       "metadata": {
         "description": "Subnet 4 Prefix"
       }
     },
-    "subnet4PrefixCIDR": {
+    "RedisCacheSubnetPrefixCIDR": {
       "type": "int",
       "metadata": {
         "description": "Subnet 4 CIDR Prefix"
       }
     },
-    "subnet4Name": {
+    "RedisCacheSubnetName": {
       "type": "string",
       "metadata": {
         "description": "Subnet 4 Name"
       }
     },
-    "subnet4AddressSpace": {
+    "RedisCacheSubnetAddressSpace": {
       "type": "string",
       "metadata": {
         "description": "Subnet 4 Address Space"
@@ -146,7 +146,7 @@
         "description": "Subnet 5 Address Space"
       }
     },
-    "gatewayName": {
+    "GatewayName": {
       "type": "string",
       "metadata": {
         "description": "Name for the new gateway"
@@ -230,27 +230,27 @@
         },
         "subnets": [
           {
-            "name": "[parameters('subnet1Name')]",
+            "name": "[parameters('WAFSubnetName')]",
             "properties": {
-              "addressPrefix": "[parameters('subnet1AddressSpace')]"
+              "addressPrefix": "[parameters('WAFSubnetAddressSpace')]"
             }
           },
           {
-            "name": "[parameters('subnet2Name')]",
+            "name": "[parameters('WebAppSubnetName')]",
             "properties": {
-              "addressPrefix": "[parameters('subnet2AddressSpace')]"
+              "addressPrefix": "[parameters('WebAppSubnetAddressSpace')]"
             }
           },
           {
-            "name": "[parameters('subnet3Name')]",
+            "name": "[parameters('APIAppSubnetName')]",
             "properties": {
-              "addressPrefix": "[parameters('subnet3AddressSpace')]"
+              "addressPrefix": "[parameters('APIAppSubnetAddressSpace')]"
             }
           },
           {
-            "name": "[parameters('subnet4Name')]",
+            "name": "[parameters('RedisCacheSubnetName')]",
             "properties": {
-              "addressPrefix": "[parameters('subnet4AddressSpace')]"
+              "addressPrefix": "[parameters('RedisCacheSubnetAddressSpace')]"
             }
           },
           {
@@ -265,7 +265,7 @@
           {
             "apiVersion": "2015-05-01-preview",
             "type": "Microsoft.Network/virtualNetworkGateways",
-            "name": "[parameters('gatewayName')]",
+            "name": "[parameters('GatewayName')]",
             "location": "[resourceGroup().location]",
             "dependsOn": [
               "[concat('Microsoft.Network/publicIPAddresses/', parameters('gatewayPublicIPName'))]",
