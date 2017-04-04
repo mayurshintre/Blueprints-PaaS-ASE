@@ -15,7 +15,7 @@
       }
     },
     "vnetAddressPrefixCIDR": {
-      "type": "string",
+      "type": "int",
       "metadata": {
         "description": "Address CIDR Prefix"
       }
@@ -33,7 +33,7 @@
       }
     },
     "subnet1PrefixCIDR": {
-      "type": "string",
+      "type": "int",
       "metadata": {
         "description": "Subnet 1 CIDR Prefix"
       }
@@ -57,7 +57,7 @@
       }
     },
     "subnet2PrefixCIDR": {
-      "type": "string",
+      "type": "int",
       "metadata": {
         "description": "Subnet 2 CIDR Prefix"
       }
@@ -81,7 +81,7 @@
       }
     },
     "subnet3PrefixCIDR": {
-      "type": "string",
+      "type": "int",
       "metadata": {
         "description": "Subnet 3 CIDR Prefix"
       }
@@ -105,7 +105,7 @@
       }
     },
     "subnet4PrefixCIDR": {
-      "type": "string",
+      "type": "int",
       "metadata": {
         "description": "Subnet 4 CIDR Prefix"
       }
@@ -129,7 +129,7 @@
       }
     },
     "subnet5PrefixCIDR": {
-      "type": "string",
+      "type": "int",
       "metadata": {
         "description": "Subnet 5 CIDR Prefix"
       }

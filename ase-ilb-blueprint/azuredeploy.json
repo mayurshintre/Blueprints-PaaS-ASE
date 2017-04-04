@@ -41,7 +41,7 @@
     },
     "subnet1Name": {
       "type": "string",
-      "defaultValue": "Subnet1",
+      "defaultValue": "WAFSubnet",
       "metadata": {
         "description": "Subnet 1 Name"
       }
@@ -54,7 +54,7 @@
       }
     },
     "subnet2PrefixCIDR": {
-      "type": "string",
+      "type": "int",
       "defaultValue": "24",
       "maxValue": 32,
       "metadata": {
@@ -63,7 +63,7 @@
     },
     "subnet2Name": {
       "type": "string",
-      "defaultValue": "Subnet2",
+      "defaultValue": "WebAppSubnet",
       "metadata": {
         "description": "Subnet 2 Name"
       }
@@ -85,7 +85,7 @@
     },
     "subnet3Name": {
       "type": "string",
-      "defaultValue": "Subnet3",
+      "defaultValue": "APIAppSubnet",
       "metadata": {
         "description": "Subnet 3 Name"
       }
@@ -98,7 +98,7 @@
       }
     },
     "subnet4PrefixCIDR": {
-      "type": "string",
+      "type": "int",
       "defaultValue": "24",
       "maxValue": 32,
       "metadata": {
@@ -107,7 +107,7 @@
     },
     "subnet4Name": {
       "type": "string",
-      "defaultValue": "Subnet4",
+      "defaultValue": "RedisCacheSubnet",
       "metadata": {
         "description": "Subnet 4 Name"
       }
@@ -120,7 +120,7 @@
       }
     },
     "subnet5PrefixCIDR": {
-      "type": "string",
+      "type": "int",
       "defaultValue": "24",
       "maxValue": 32,
       "metadata": {
@@ -129,7 +129,7 @@
     },
     "subnet5Name": {
       "type": "string",
-      "defaultValue": "Subnet5",
+      "defaultValue": "GatewaySubnet",
       "metadata": {
         "description": "Subnet 5 Name"
       }
