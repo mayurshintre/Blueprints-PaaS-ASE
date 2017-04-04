@@ -61,7 +61,7 @@
   },
   "resources": [
     {
-      "apiVersion": "2015-08-01",
+      "apiVersion": "2016-04-01",
       "name": "[parameters('redisCacheName')]",
       "type": "Microsoft.Cache/Redis",
       "location": "[resourceGroup().location]",
@@ -75,7 +75,13 @@
         },
         "staticIP": "[parameters('redisCacheStaticIP')]",
         "subnet": "[parameters('subnet')]",
-        "virtualNetwork": "[parameters('virtualNetwork')]"
+        "virtualNetwork": "[parameters('virtualNetwork')]",
+        "redisConfiguration": {
+          "maxclients": "7500",
+          "maxmemory-reserved": "200",
+          "maxfragmentationmemory-reserved": "300",
+          "maxmemory-delta": "200"
+        }
       },
       "resources": [
         {

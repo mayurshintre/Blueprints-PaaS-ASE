@@ -157,6 +157,7 @@
     },
     "redisShardCount": {
       "type": "int",
+      "defaultValue": "2",
       "metadata": {
         "description": "Number of highly available shards to create in the cluster. Requires Premium SKU. Set to 0 to not set up clustering."
       }
@@ -169,18 +170,18 @@
         3,
         4
       ],
-      "defaultValue": 1,
+      "defaultValue": 2,
       "metadata": {
         "description": "The size of the new Azure Redis Cache instance. Valid family and capacity combinations are (C0..C6, P1..P4)."
       }
     },
-    "virtualNetwork": {
+    "redisCachevirtualNetwork": {
       "type": "string",
       "metadata": {
         "description": "Name of an existing virtual network to join, in same subscription and region. Requires Premium SKU."
       }
     },
-    "subnet": {
+    "redisCachesubnet": {
       "type": "string",
       "metadata": {
         "description": "Name of an existing subnet to join in the virtual network. Requires configuring a virtualNetwork."
@@ -286,12 +287,13 @@
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
-          "redisCacheName": { "value": "[parameters('vnetName')]" },
-          "Region": { "value": "[variables('Region')]" },
-          "VaultSku": { "value": "[variables('VaultSKU')]" }
+          "redisCacheName": { "value": "[parameters('redisCacheName')]" },
+          "redisShardCount": { "value": "[parameters('redisShardCount')]" },
+          "redisCacheCapacity": { "value": "[parameters('redisCacheCapacity')]" },
+          "redisCachevirtualNetwork": { "value": "[parameters('vnetName')]" },
+          "redisCachesubnet": {}
         }
       }
     }
-
   ]
  }
