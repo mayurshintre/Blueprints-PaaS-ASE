@@ -137,7 +137,7 @@
     "GatewaySubnetName": {
       "type": "string",
       "metadata": {
-        "description": "Subnet 5 Name"
+        "description": "Gateway Subnet Name"
       }
     },
     "GatewayAddressSpace": {
@@ -158,28 +158,28 @@
         "description": "Name for public IP object used for the new gateway"
       }
     },
-    "localGatewayName": {
-      "type": "string",
-      "metadata": {
-        "description": "Name for gateway connected to other VNet/on-prem network"
-      }
-    },
-    "localGatewayIPAddress": {
-      "type": "string",
-      "metadata": {
-        "description": "Public IP address for the gateway to connect to (from other VNet/on-prem)"
-      }
-    },
-    "localGatewayAddressCIDRPrefix": {
-      "type": "int",
-      "metadata": {
-        "description": "CIDR block for remote network"
-      }
-    },
     "customDNSIP": {
       "type": "string",
       "metadata": {
         "description": "IP Address of Custom DNS Server"
+      }
+    },
+    "GatewayType": {
+      "type": "string",
+      "metadata": {
+        "description": "Set either VPN or ExpressRoute"
+      }
+    },
+    "VPNType": {
+      "type": "string",
+      "metadata": {
+        "description": "RouteBased or PolicyBased"
+      }
+    },
+    "enableBGP": {
+      "type": "string",
+      "metadata": {
+        "description": "RouteBased or PolicyBased"
       }
     }
   },
@@ -271,9 +271,9 @@
                   "name": "vnetGatewayConfig"
                 }
               ],
-              "gatewayType": "Vpn",
-              "vpnType": "RouteBased",
-              "enableBgp": false
+              "gatewayType": "[parameters('GatewayType')]",
+              "vpnType": "[parameters('vpnType')]",
+              "enableBgp": "[parameters('enableBGP')]"
             }
           }
         ]

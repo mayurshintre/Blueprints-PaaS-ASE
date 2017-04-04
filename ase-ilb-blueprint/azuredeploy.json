@@ -6,14 +6,14 @@
       "type": "string",
       "defaultValue": "VNet1",
       "metadata": {
-        "description": "VNet name"
+        "description": "Name of Virtual Network"
       }
     },
     "vnetAddressPrefix": {
       "type": "string",
       "defaultValue": "10.0.0.0",
       "metadata": {
-        "description": "Address prefix"
+        "description": "IP Address Of Virtual Network Without CIDR"
       }
     },
     "vnetAddressPrefixCIDR": {
@@ -21,14 +21,14 @@
       "defaultValue": 16,
       "maxValue": 32,
       "metadata": {
-        "description": "Address CIDR prefix"
+        "description": "Virtual Network CIDR Block"
       }
     },
     "WAFSubnetPrefix": {
       "type": "string",
       "defaultValue": "10.0.0.0",
       "metadata": {
-        "description": "Subnet 1 Prefix"
+        "description": "WAF Subnet IP Address Without CIDR Block"
       }
     },
     "WAFSubnetPrefixCIDR": {
@@ -36,21 +36,21 @@
       "defaultValue": 24,
       "maxValue": 32,
       "metadata": {
-        "description": "Subnet 1 CIDR Prefix"
+        "description": "WAF Subnet CIDR Block"
       }
     },
     "WAFSubnetName": {
       "type": "string",
       "defaultValue": "WAFSubnet",
       "metadata": {
-        "description": "Subnet 1 Name"
+        "description": "WAF Subnet Name"
       }
     },
     "WebAppSubnetPrefix": {
       "type": "string",
       "defaultValue": "10.0.1.0",
       "metadata": {
-        "description": "Subnet 2 Prefix"
+        "description": "Web App Subnet IP Address Without CIDR Block"
       }
     },
     "WebAppSubnetPrefixCIDR": {
@@ -58,21 +58,21 @@
       "defaultValue": 24,
       "maxValue": 32,
       "metadata": {
-        "description": "Subnet 2 CIDR Prefix"
+        "description": "Web App Subnet CIDR Block"
       }
     },
     "WebAppSubnetName": {
       "type": "string",
       "defaultValue": "WebAppSubnet",
       "metadata": {
-        "description": "Subnet 2 Name"
+        "description": "Web App Subnet Name"
       }
     },
     "APIAppSubnetPrefix": {
       "type": "string",
       "defaultValue": "10.0.2.0",
       "metadata": {
-        "description": "Subnet 3 Prefix"
+        "description": "API App Subnet IP Address Without CIDR Block"
       }
     },
     "APIAppSubnetPrefixCIDR": {
@@ -80,21 +80,21 @@
       "defaultValue": 24,
       "maxValue": 32,
       "metadata": {
-        "description": "Subnet 3 CIDR Prefix"
+        "description": "API App Subnet CIDR Block"
       }
     },
     "APIAppSubnetName": {
       "type": "string",
       "defaultValue": "APIAppSubnet",
       "metadata": {
-        "description": "Subnet 3 Name"
+        "description": "API App Subnet Name"
       }
     },
     "RedisCacheSubnetPrefix": {
       "type": "string",
       "defaultValue": "10.0.3.0",
       "metadata": {
-        "description": "Subnet 4 Prefix"
+        "description": "Redis Cache Subnet IP Address Without CIDR Block"
       }
     },
     "RedisCacheSubnetPrefixCIDR": {
@@ -102,21 +102,21 @@
       "defaultValue": 24,
       "maxValue": 32,
       "metadata": {
-        "description": "Subnet 4 CIDR Prefix"
+        "description": "Redis Cache Subnet CIDR Block"
       }
     },
     "RedisCacheSubnetName": {
       "type": "string",
       "defaultValue": "RedisCacheSubnet",
       "metadata": {
-        "description": "Subnet 4 Name"
+        "description": "Redis Cache Subnet Name"
       }
     },
     "GatewaySubnetPrefix": {
       "type": "string",
       "defaultValue": "10.0.4.0",
       "metadata": {
-        "description": "Subnet 5 Prefix"
+        "description": "Gateways Subnet IP Address Without CIDR Block"
       }
     },
     "GatewaySubnetPrefixCIDR": {
@@ -124,21 +124,24 @@
       "defaultValue": 24,
       "maxValue": 32,
       "metadata": {
-        "description": "Subnet 5 CIDR Prefix"
+        "description": "Gateway Subnet CIDR Block"
       }
     },
     "GatewaySubnetName": {
       "type": "string",
       "defaultValue": "GatewaySubnet",
+      "allowedValues": [
+        "GatewaySubnet"
+      ],
       "metadata": {
-        "description": "Subnet 5 Name"
+        "description": "Gateway Subnet Name"
       }
     },
     "GatewayName": {
       "type": "string",
       "defaultValue": "gateway1",
       "metadata": {
-        "description": "Name for the new gateway"
+        "description": "Name Of The Gateway"
       }
     },
     "gatewayPublicIPName": {
@@ -148,26 +151,37 @@
         "description": "Name for public IP object used for the new gateway"
       }
     },
-    "localGatewayName": {
+    "GatewayType": {
       "type": "string",
-      "defaultValue": "localGateway",
+      "defaultValue": "vpn",
+      "allowedValues": [
+        "vpn",
+        "ExpressRoute"
+      ],
       "metadata": {
-        "description": "Name for gateway connected to other VNet/on-prem network"
+        "description": "Set either VPN or Expressroute"
       }
     },
-    "localGatewayIPAddress": {
+    "VPNType": {
       "type": "string",
-      "defaultValue": "192.0.0.0",
+      "defaultValue": "RouteBased",
+      "allowedValues": [
+        "RouteBased",
+        "PolicyBased"
+      ],
       "metadata": {
-        "description": "Public IP address for the gateway to connect to (from other VNet/on-prem)"
+        "description": "RouteBased or PolicyBased"
       }
     },
-    "localGatewayAddressCIDRPrefix": {
-      "type": "int",
-      "defaultValue": 24,
-      "maxValue": 32,
+    "enableBGP": {
+      "type": "string",
+      "defaultValue": false,
+      "allowedValues": [
+        false,
+        true
+      ],
       "metadata": {
-        "description": "CIDR block for remote network"
+        "description": "RouteBased or PolicyBased"
       }
     },
     "customDNSIP": {
@@ -252,7 +266,7 @@
     "APIAppSubnetAddressSpace": "[concat(parameters('APIAppSubnetPrefix'), '/', parameters('APIAppSubnetPrefixCIDR'))]",
     "RedisCacheSubnetAddressSpace": "[concat(parameters('RedisCacheSubnetPrefix'), '/', parameters('RedisCacheSubnetPrefixCIDR'))]",
     "GatewayAddressSpace": "[concat(parameters('GatewaySubnetPrefix'), '/', parameters('GatewaySubnetPrefixCIDR'))]",
-    "redisCacheStaticIP": "[concat(parameters('RedisCacheSubnetPrefix'), ]"
+    "redisCacheStaticIP": "[concat(parameters('RedisCacheSubnetPrefix'))]"
   },
   "resources": [
     {
@@ -308,10 +322,10 @@
           "GatewaySubnetPrefix": { "value": "[parameters('GatewaySubnetPrefix')]" },
           "GatewaySubnetPrefixCIDR": { "value": "[parameters('GatewaySubnetPrefixCIDR')]" },
           "GatewayName": { "value": "[parameters('GatewayName')]" },
+          "GatewayType": { "value": "[parameters('GatewayType')]" },
+          "enableBGP": { "value": "[parameters('enableBGP')]" },
+          "VPNType": { "value": "[parameters('VPNType')]" },
           "gatewayPublicIPName": { "value": "[parameters('gatewayPublicIPName')]" },
-          "localGatewayName": { "value": "[parameters('localGatewayName')]" },
-          "localGatewayIPAddress": { "value": "[parameters('localGatewayIPAddress')]" },
-          "localGatewayAddressCIDRPrefix": { "value": "[parameters('localGatewayAddressCIDRPrefix')]" },
           "customDNSIP": { "value": "[parameters('customDNSIP')]" }
         }
       }
