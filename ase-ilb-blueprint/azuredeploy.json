@@ -17,10 +17,11 @@
       }
     },
     "vnetAddressPrefixCIDR": {
-      "type": "string",
+      "type": "int",
       "defaultValue": "16",
+      "maxValue": 32,
       "metadata": {
-        "description": "Address prefix"
+        "description": "Address CIDR prefix"
       }
     },
     "subnet1Prefix": {
@@ -31,15 +32,16 @@
       }
     },
     "subnet1PrefixCIDR": {
-      "type": "string",
+      "type": "int",
       "defaultValue": "24",
+      "maxValue": 32,
       "metadata": {
-        "description": "Subnet 1 Prefix"
+        "description": "Subnet 1 CIDR Prefix"
       }
     },
     "subnet1Name": {
       "type": "string",
-      "defaultValue": "Subnet1",
+      "defaultValue": "WAFSubnet",
       "metadata": {
         "description": "Subnet 1 Name"
       }
@@ -52,17 +54,84 @@
       }
     },
     "subnet2PrefixCIDR": {
-      "type": "string",
+      "type": "int",
       "defaultValue": "24",
+      "maxValue": 32,
       "metadata": {
-        "description": "Subnet 2 Prefix"
+        "description": "Subnet 2 CIDR Prefix"
       }
     },
     "subnet2Name": {
       "type": "string",
-      "defaultValue": "Subnet2",
+      "defaultValue": "WebAppSubnet",
       "metadata": {
         "description": "Subnet 2 Name"
+      }
+    },
+    "subnet3Prefix": {
+      "type": "string",
+      "defaultValue": "10.0.1.0",
+      "metadata": {
+        "description": "Subnet 3 Prefix"
+      }
+    },
+    "subnet3PrefixCIDR": {
+      "type": "int",
+      "defaultValue": "24",
+      "maxValue": 32,
+      "metadata": {
+        "description": "Subnet 3 CIDR Prefix"
+      }
+    },
+    "subnet3Name": {
+      "type": "string",
+      "defaultValue": "APIAppSubnet",
+      "metadata": {
+        "description": "Subnet 3 Name"
+      }
+    },
+    "subnet4Prefix": {
+      "type": "string",
+      "defaultValue": "10.0.1.0",
+      "metadata": {
+        "description": "Subnet 4 Prefix"
+      }
+    },
+    "subnet4PrefixCIDR": {
+      "type": "int",
+      "defaultValue": "24",
+      "maxValue": 32,
+      "metadata": {
+        "description": "Subnet 4 CIDR Prefix"
+      }
+    },
+    "subnet4Name": {
+      "type": "string",
+      "defaultValue": "RedisCacheSubnet",
+      "metadata": {
+        "description": "Subnet 4 Name"
+      }
+    },
+    "subnet5Prefix": {
+      "type": "string",
+      "defaultValue": "10.0.1.0",
+      "metadata": {
+        "description": "Subnet 5 Prefix"
+      }
+    },
+    "subnet5PrefixCIDR": {
+      "type": "int",
+      "defaultValue": "24",
+      "maxValue": 32,
+      "metadata": {
+        "description": "Subnet 5 CIDR Prefix"
+      }
+    },
+    "subnet5Name": {
+      "type": "string",
+      "defaultValue": "GatewaySubnet",
+      "metadata": {
+        "description": "Subnet 5 Name"
       }
     },
     "customDNSIP": {
@@ -82,12 +151,15 @@
   },
   "variables": {
     "Region": "[resourceGroup().location]",
-    "TemplateURIs":"https://raw.githubusercontent.com/mayurshintre/Blueprints/master/ase-ilb-blueprint/templates/",
+    "TemplateURIs": "https://raw.githubusercontent.com/mayurshintre/Blueprints/master/ase-ilb-blueprint/templates/",
     "VaultName": "[concat('ILBaseVault',uniqueString(resourceGroup().id))]",
     "VaultSKU": "Premium",
     "vnetAddressSpace": "[concat(parameters('vnetAddressPrefix'), '/', parameters('vnetAddressPrefixCIDR'))]",
     "subnet1AddressSpace": "[concat(parameters('subnet1Prefix'), '/', parameters('subnet1PrefixCIDR'))]",
-    "subnet2AddressSpace": "[concat(parameters('subnet2Prefix'), '/', parameters('subnet2PrefixCIDR'))]"
+    "subnet2AddressSpace": "[concat(parameters('subnet2Prefix'), '/', parameters('subnet2PrefixCIDR'))]",
+    "subnet3AddressSpace": "[concat(parameters('subnet3Prefix'), '/', parameters('subnet3PrefixCIDR'))]",
+    "subnet4AddressSpace": "[concat(parameters('subnet4Prefix'), '/', parameters('subnet4PrefixCIDR'))]",
+    "subnet5AddressSpace": "[concat(parameters('subnet5Prefix'), '/', parameters('subnet5PrefixCIDR'))]"
   },
   "resources": [
     {
@@ -124,12 +196,24 @@
           "vnetAddressPrefixCIDR": { "value": "[parameters('vnetAddressPrefixCIDR')]" },
           "subnet1AddressSpace": { "value": "[variables('subnet1AddressSpace')]" },
           "subnet1Name": { "value": "[parameters('subnet1name')]" },
+          "subnet1PrefixCIDR": { "value": "[parameters('subnet1PrefixCIDR')]" },
+          "subnet1Prefix": { "value": "[parameters('subnet1Prefix')]" },
           "subnet2AddressSpace": { "value": "[variables('subnet2AddressSpace')]" },
           "subnet2Name": { "value": "[parameters('subnet2Name')]" },
-          "subnet1Prefix": { "value": "[parameters('subnet1Prefix')]" },
           "subnet2Prefix": { "value": "[parameters('subnet2Prefix')]" },
           "subnet2PrefixCIDR": { "value": "[parameters('subnet2PrefixCIDR')]" },
-          "subnet1PrefixCIDR": { "value": "[parameters('subnet1PrefixCIDR')]" },
+          "subnet3AddressSpace": { "value": "[variables('subnet3AddressSpace')]" },
+          "subnet3Name": { "value": "[parameters('subnet3Name')]" },
+          "subnet3Prefix": { "value": "[parameters('subnet3Prefix')]" },
+          "subnet3PrefixCIDR": { "value": "[parameters('subnet3PrefixCIDR')]" },
+          "subnet4AddressSpace": { "value": "[variables('subnet4AddressSpace')]" },
+          "subnet4Name": { "value": "[parameters('subnet4Name')]" },
+          "subnet4Prefix": { "value": "[parameters('subnet4Prefix')]" },
+          "subnet4PrefixCIDR": { "value": "[parameters('subnet4PrefixCIDR')]" },
+          "subnet5AddressSpace": { "value": "[variables('subnet5AddressSpace')]" },
+          "subnet5Name": { "value": "[parameters('subnet5Name')]" },
+          "subnet5Prefix": { "value": "[parameters('subnet5Prefix')]" },
+          "subnet5PrefixCIDR": { "value": "[parameters('subnet5PrefixCIDR')]" },
           "customDNSIP": { "value": "[parameters('customDNSIP')]" }
         }
       }

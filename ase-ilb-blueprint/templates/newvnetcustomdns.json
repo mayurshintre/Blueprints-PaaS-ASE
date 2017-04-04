@@ -15,9 +15,9 @@
       }
     },
     "vnetAddressPrefixCIDR": {
-      "type": "string",
+      "type": "int",
       "metadata": {
-        "description": "Address prefix"
+        "description": "Address CIDR Prefix"
       }
     },
     "vnetAddressSpace": {
@@ -28,15 +28,14 @@
     },
     "subnet1Prefix": {
       "type": "string",
-      "defaultValue": "10.0.0.0",
       "metadata": {
         "description": "Subnet 1 Prefix"
       }
     },
     "subnet1PrefixCIDR": {
-      "type": "string",
+      "type": "int",
       "metadata": {
-        "description": "Subnet 1 Prefix"
+        "description": "Subnet 1 CIDR Prefix"
       }
     },
     "subnet1AddressSpace": {
@@ -53,27 +52,98 @@
     },
     "subnet2Prefix": {
       "type": "string",
-      "defaultValue": "10.0.1.0",
       "metadata": {
         "description": "Subnet 2 Prefix"
       }
     },
     "subnet2PrefixCIDR": {
-      "type": "string",
+      "type": "int",
       "metadata": {
-        "description": "Subnet 2 Address Space"
+        "description": "Subnet 2 CIDR Prefix"
       }
     },
     "subnet2AddressSpace": {
       "type": "string",
       "metadata": {
-        "description": "Subnet 1 Prefix"
+        "description": "Subnet 2 Address Space"
       }
     },
     "subnet2Name": {
       "type": "string",
       "metadata": {
         "description": "Subnet 2 Name"
+      }
+    },
+    "subnet3Prefix": {
+      "type": "string",
+      "metadata": {
+        "description": "Subnet 3 Prefix"
+      }
+    },
+    "subnet3PrefixCIDR": {
+      "type": "int",
+      "metadata": {
+        "description": "Subnet 3 CIDR Prefix"
+      }
+    },
+    "subnet3Name": {
+      "type": "string",
+      "metadata": {
+        "description": "Subnet 3 Name"
+      }
+    },
+    "subnet3AddressSpace": {
+      "type": "string",
+      "metadata": {
+        "description": "Subnet 3 Address Space"
+      }
+    },
+    "subnet4Prefix": {
+      "type": "string",
+      "metadata": {
+        "description": "Subnet 4 Prefix"
+      }
+    },
+    "subnet4PrefixCIDR": {
+      "type": "int",
+      "metadata": {
+        "description": "Subnet 4 CIDR Prefix"
+      }
+    },
+    "subnet4Name": {
+      "type": "string",
+      "metadata": {
+        "description": "Subnet 4 Name"
+      }
+    },
+    "subnet4AddressSpace": {
+      "type": "string",
+      "metadata": {
+        "description": "Subnet 4 Address Space"
+      }
+    },
+    "subnet5Prefix": {
+      "type": "string",
+      "metadata": {
+        "description": "Subnet 5 Prefix"
+      }
+    },
+    "subnet5PrefixCIDR": {
+      "type": "int",
+      "metadata": {
+        "description": "Subnet 5 CIDR Prefix"
+      }
+    },
+    "subnet5Name": {
+      "type": "string",
+      "metadata": {
+        "description": "Subnet 5 Name"
+      }
+    },
+    "subnet5AddressSpace": {
+      "type": "string",
+      "metadata": {
+        "description": "Subnet 5 Address Space"
       }
     },
     "customDNSIP": {
@@ -114,6 +184,24 @@
             "name": "[parameters('subnet2Name')]",
             "properties": {
               "addressPrefix": "[parameters('subnet2AddressSpace')]"
+            }
+          },
+          {
+            "name": "[parameters('subnet3Name')]",
+            "properties": {
+              "addressPrefix": "[parameters('subnet3AddressSpace')]"
+            }
+          },
+          {
+            "name": "[parameters('subnet4Name')]",
+            "properties": {
+              "addressPrefix": "[parameters('subnet4AddressSpace')]"
+            }
+          },
+          {
+            "name": "[parameters('subnet5Name')]",
+            "properties": {
+              "addressPrefix": "[parameters('subnet5AddressSpace')]"
             }
           }
         ]
