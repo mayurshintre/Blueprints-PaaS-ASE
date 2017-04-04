@@ -258,6 +258,25 @@
           "customDNSIP": { "value": "[parameters('customDNSIP')]" }
         }
       }
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "name": "RedisCachePremium",
+      "apiVersion": "2016-09-01",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(variables('TemplateURIs'),'rediscache.json')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "redisCacheName": { "value": "[parameters('redisCacheName')]" },
+          "redisShardCount": { "value": "[parameters('redisShardCount')]" },
+          "redisCacheCapacity": { "value": "[parameters('redisCacheCapacity')]" },
+          "redisCachevirtualNetwork": { "value": "[parameters('vnetName')]" },
+          "redisCachesubnet": {}
+        }
+      }
     }
   ]
  }
