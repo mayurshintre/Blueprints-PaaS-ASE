@@ -332,7 +332,9 @@
           "redisShardCount": { "value": "[parameters('redisShardCount')]" },
           "redisCacheCapacity": { "value": "[parameters('redisCacheCapacity')]" },
           "redisCachevirtualNetwork": { "value": "[parameters('vnetName')]" },
-          "redisCachesubnet": {}
+          "redisCachesubnet": {},
+          "redisCacheStaticIP": {},
+
         }
       }
     }
