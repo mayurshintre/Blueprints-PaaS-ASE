@@ -57,6 +57,34 @@
       "metadata": {
         "description": "Set to true to allow access to redis on port 6379, without SSL tunneling (less secure)."
       }
+    },
+    "redisCachemaxclients": {
+      "type": "int",
+      "defaultValue": "7500",
+      "metadata": {
+        "description": "Set to true to allow access to redis on port 6379, without SSL tunneling (less secure)."
+      }
+    },
+    "redisCachemaxmemoryreserved": {
+      "type": "int",
+      "defaultValue": "200",
+      "metadata": {
+        "description": "Set to true to allow access to redis on port 6379, without SSL tunneling (less secure)."
+      }
+    },
+    "redisCachemaxfragmentationmemory-reserved": {
+      "type": "int",
+      "defaultValue": "300",
+      "metadata": {
+        "description": "Set to true to allow access to redis on port 6379, without SSL tunneling (less secure)."
+      }
+    },
+    "redisCachemaxmemory-delta": {
+      "type": "int",
+      "defaultValue": "200",
+      "metadata": {
+        "description": "Set to true to allow access to redis on port 6379, without SSL tunneling (less secure)."
+      }
     }
   },
   "resources": [
