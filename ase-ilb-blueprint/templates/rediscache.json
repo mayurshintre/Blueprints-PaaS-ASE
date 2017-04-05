@@ -86,13 +86,13 @@
       "properties": {
         "enableNonSslPort": "[parameters('enableNonSslPort')]",
         "shardCount": "[parameters('redisShardCount')]",
+        "subnetId": "[concat(parameters('virtualNetwork'),'/subnets/',parameters('subnet'))]",
         "sku": {
           "capacity": "[parameters('redisCacheCapacity')]",
           "family": "P",
           "name": "Premium"
-        },
+           },
         "staticIP": "[parameters('redisCacheStaticIP')]",
-        "subnet": "[parameters('subnet')]",
         "virtualNetwork": "[parameters('virtualNetwork')]",
         "redisConfiguration": {
           "maxclients": "[parameters('redisCachemaxclients')]",
@@ -100,7 +100,7 @@
           "maxfragmentationmemory-reserved": "[parameters('redisCachemaxfragmentationmemory-reserved')]",
           "maxmemory-delta": "[parameters('redisCachemaxmemory-delta')]"
         }
-      },
+      }
     }
   ]
 }

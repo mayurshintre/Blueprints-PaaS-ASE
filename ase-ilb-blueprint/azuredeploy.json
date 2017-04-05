@@ -153,13 +153,6 @@
         "description": "The size of the new Azure Redis Cache instance. Valid family and capacity combinations are (C0..C6, P1..P4)."
       }
     },
-    "enableNonSslPort": {
-      "type": "bool",
-      "defaultValue": false,
-      "metadata": {
-        "description": "Set to true to allow access to redis on port 6379, without SSL tunneling (less secure)."
-      }
-    },
     "redisCachemaxclients": {
       "type": "int",
       "defaultValue": 7500,
@@ -206,7 +199,8 @@
     "RedisCacheConvert": "[int(variables('RedisCacheSplit')[3])]",
     "RedisCacheAdd": "[add(variables('RedisCacheConvert'),3)]",
     "RedisCacheLastOctet": "[string(variables('RedisCacheAdd'))]",
-    "RedisCacheStaticIP": "[concat(variables('RedisCacheSplit')[0],'.',variables('RedisCacheSplit')[1],'.',variables('RedisCacheSplit')[2],'.',variables('RedisCacheLastOctet'))]"
+    "RedisCacheStaticIP": "[concat(variables('RedisCacheSplit')[0],'.',variables('RedisCacheSplit')[1],'.',variables('RedisCacheSplit')[2],'.',variables('RedisCacheLastOctet'))]",
+    "enableNonSSLPort": false
   },
   "resources": [
     {
@@ -279,9 +273,9 @@
           "redisShardCount": { "value": "[parameters('redisShardCount')]" },
           "redisCacheCapacity": { "value": "[parameters('redisCacheCapacity')]" },
           "virtualNetwork": { "value": "[variables('VnetID')]" },
-          "subnet": { "value": "[concat(variables('SubNetID'),parameters('RedisCacheSubnetName'))]" },
+          "subnet": { "value": "[parameters('RedisCacheSubnetName')]" },
           "redisCacheStaticIP": { "value": "[variables('redisCacheStaticIP')]" },
-          "enableNonSslPort": { "value": "[parameters('enableNonSslPort')]" },
+          "enableNonSslPort": { "value": "[variables('enableNonSslPort')]" },
           "redisCachemaxclients": { "value": "[parameters('redisCachemaxclients')]" },
           "redisCachemaxmemoryreserved": { "value": "[parameters('redisCachemaxmemoryreserved')]" },
           "redisCachemaxfragmentationmemory-reserved": { "value": "[parameters('redisCachemaxfragmentationmemory-reserved')]" },
