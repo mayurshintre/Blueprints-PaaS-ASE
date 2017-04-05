@@ -94,6 +94,7 @@
            },
         "staticIP": "[parameters('redisCacheStaticIP')]",
         "virtualNetwork": "[parameters('virtualNetwork')]",
+        "subnet": "[parameters('subnet')]",
         "redisConfiguration": {
           "maxclients": "[parameters('redisCachemaxclients')]",
           "maxmemory-reserved": "[parameters('redisCachemaxmemoryreserved')]",
