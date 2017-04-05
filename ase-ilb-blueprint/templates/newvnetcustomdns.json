@@ -5,19 +5,19 @@
     "vnetName": {
       "type": "string",
       "metadata": {
-        "description": "VNet name"
+        "description": "Name of Virtual Network"
       }
     },
     "vnetAddressPrefix": {
       "type": "string",
       "metadata": {
-        "description": "Address prefix"
+        "description": "IP Address Of Virtual Network Without CIDR"
       }
     },
     "vnetAddressPrefixCIDR": {
       "type": "int",
       "metadata": {
-        "description": "Address CIDR Prefix"
+        "description": "Virtual Network CIDR Block"
       }
     },
     "vnetAddressSpace": {
@@ -29,109 +29,109 @@
     "WAFSubnetPrefix": {
       "type": "string",
       "metadata": {
-        "description": "Subnet 1 Prefix"
+        "description": "WAF Subnet IP Address Without CIDR Block"
       }
     },
     "WAFSubnetPrefixCIDR": {
       "type": "int",
       "metadata": {
-        "description": "Subnet 1 CIDR Prefix"
+        "description": "WAF Subnet CIDR Block"
       }
     },
     "WAFSubnetAddressSpace": {
       "type": "string",
       "metadata": {
-        "description": "Subnet 1 Address Space"
+        "description": "IP Address And CIDR Block Combined"
       }
     },
     "WAFSubnetName": {
       "type": "string",
       "metadata": {
-        "description": "Subnet 1 Name"
+        "description": "WAF Subnet Name"
       }
     },
     "WebAppSubnetPrefix": {
       "type": "string",
       "metadata": {
-        "description": "Subnet 2 Prefix"
+        "description": "Web App Subnet IP Address Without CIDR Block"
       }
     },
     "WebAppSubnetPrefixCIDR": {
       "type": "int",
       "metadata": {
-        "description": "Subnet 2 CIDR Prefix"
+        "description": "Web App Subnet CIDR Block"
       }
     },
     "WebAppSubnetAddressSpace": {
       "type": "string",
       "metadata": {
-        "description": "Subnet 2 Address Space"
+        "description": "IP Address And CIDR Block Combined"
       }
     },
     "WebAppSubnetName": {
       "type": "string",
       "metadata": {
-        "description": "Subnet 2 Name"
+        "description": "Web App Subnet Name"
       }
     },
     "APIAppSubnetPrefix": {
       "type": "string",
       "metadata": {
-        "description": "Subnet 3 Prefix"
+        "description": "API App Subnet IP Address Without CIDR Block"
       }
     },
     "APIAppSubnetPrefixCIDR": {
       "type": "int",
       "metadata": {
-        "description": "Subnet 3 CIDR Prefix"
+        "description": "API App Subnet CIDR Block"
       }
     },
     "APIAppSubnetName": {
       "type": "string",
       "metadata": {
-        "description": "Subnet 3 Name"
+        "description": "API App Subnet Name"
       }
     },
     "APIAppSubnetAddressSpace": {
       "type": "string",
       "metadata": {
-        "description": "Subnet 3 Address Space"
+        "description": "IP Address And CIDR Block Combined"
       }
     },
     "RedisCacheSubnetPrefix": {
       "type": "string",
       "metadata": {
-        "description": "Subnet 4 Prefix"
+        "description": "Redis Cache Subnet IP Address Without CIDR Block"
       }
     },
     "RedisCacheSubnetPrefixCIDR": {
       "type": "int",
       "metadata": {
-        "description": "Subnet 4 CIDR Prefix"
+        "description": "Redis Cache Subnet CIDR Block"
       }
     },
     "RedisCacheSubnetName": {
       "type": "string",
       "metadata": {
-        "description": "Subnet 4 Name"
+        "description": "Redis Cache Subnet Name"
       }
     },
     "RedisCacheSubnetAddressSpace": {
       "type": "string",
       "metadata": {
-        "description": "Subnet 4 Address Space"
+        "description": "IP Address And CIDR Block Combined"
       }
     },
     "GatewaySubnetPrefix": {
       "type": "string",
       "metadata": {
-        "description": "Subnet 5 Prefix"
+        "description": "Gateways Subnet IP Address Without CIDR Block"
       }
     },
     "GatewaySubnetPrefixCIDR": {
       "type": "int",
       "metadata": {
-        "description": "Subnet 5 CIDR Prefix"
+        "description": "Gateway Subnet CIDR Block"
       }
     },
     "GatewaySubnetName": {
@@ -143,13 +143,13 @@
     "GatewayAddressSpace": {
       "type": "string",
       "metadata": {
-        "description": "Subnet 5 Address Space"
+        "description": "IP Address And CIDR Block Combined"
       }
     },
     "GatewayName": {
       "type": "string",
       "metadata": {
-        "description": "Name for the new gateway"
+        "description": "Name Of The Gateway"
       }
     },
     "gatewayPublicIPName": {
@@ -167,7 +167,7 @@
     "GatewayType": {
       "type": "string",
       "metadata": {
-        "description": "Set either VPN or ExpressRoute"
+        "description": "Set either VPN or Expressroute"
       }
     },
     "VPNType": {
