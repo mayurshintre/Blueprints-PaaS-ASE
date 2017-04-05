@@ -347,6 +347,9 @@
       "type": "Microsoft.Resources/deployments",
       "name": "RedisCachePremium",
       "apiVersion": "2016-09-01",
+      "dependsOn": [
+        "Vnet"
+      ],
       "properties": {
         "mode": "Incremental",
         "templateLink": {
