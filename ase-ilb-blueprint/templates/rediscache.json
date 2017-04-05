@@ -92,8 +92,8 @@
           "name": "Premium"
         },
         "staticIP": "[parameters('redisCacheStaticIP')]",
-        "subnet": "[concat(resourceId('Microsoft.Network/VirtualNetworks',parameters('virtualNetwork')),'/subnets/',parameters('subnet'))]",
-        "virtualNetwork": "[resourceId('Microsoft.Network/VirtualNetworks',parameters('virtualNetwork'))]",
+        "subnet": "[parameters('subnet')]",
+        "virtualNetwork": "[parameters('virtualNetwork')]",
         "redisConfiguration": {
           "maxclients": "[parameters('redisCachemaxclients')]",
           "maxmemory-reserved": "[parameters('redisCachemaxmemoryreserved')]",
