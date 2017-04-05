@@ -177,7 +177,7 @@
       }
     },
     "enableBGP": {
-      "type": "bool",
+      "type": "string",
       "metadata": {
         "description": "RouteBased or PolicyBased"
       }
@@ -247,34 +247,34 @@
         ]
       }
     },
+    {
+      "apiVersion": "2016-03-30",
+      "type": "Microsoft.Network/virtualNetworkGateways",
+      "name": "[parameters('GatewayName')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[concat('Microsoft.Network/publicIPAddresses/', parameters('gatewayPublicIPName'))]",
+        "[concat('Microsoft.Network/virtualNetworks/', parameters('vnetName'))]"
+      ],
+      "properties": {
+        "ipConfigurations": [
           {
-            "apiVersion": "2016-03-30",
-            "type": "Microsoft.Network/virtualNetworkGateways",
-            "name": "[parameters('GatewayName')]",
-            "location": "[resourceGroup().location]",
-            "dependsOn": [
-              "[concat('Microsoft.Network/publicIPAddresses/', parameters('gatewayPublicIPName'))]",
-              "[concat('Microsoft.Network/virtualNetworks/', parameters('vnetName'))]"
-            ],
             "properties": {
-              "ipConfigurations": [
-                {
-                  "properties": {
-                    "privateIPAllocationMethod": "Dynamic",
-                    "subnet": {
-                      "id": "[variables('gatewaySubnetRef')]"
-                    },
-                    "publicIPAddress": {
-                      "id": "[resourceId('Microsoft.Network/publicIPAddresses',parameters('gatewayPublicIPName'))]"
-                    }
-                  },
-                  "name": "vnetGatewayConfig"
-                }
-              ],
-              "gatewayType": "[parameters('GatewayType')]",
-              "vpnType": "[parameters('vpnType')]",
-              "enableBgp": "[parameters('enableBGP')]"
-            }
+              "privateIPAllocationMethod": "Dynamic",
+              "subnet": {
+                "id": "[variables('gatewaySubnetRef')]"
+              },
+              "publicIPAddress": {
+                "id": "[resourceId('Microsoft.Network/publicIPAddresses',parameters('gatewayPublicIPName'))]"
+              }
+            },
+            "name": "vnetGatewayConfig"
           }
-        ]
+        ],
+        "gatewayType": "[parameters('GatewayType')]",
+        "vpnType": "[parameters('vpnType')]",
+        "enableBgp": "[parameters('enableBGP')]"
       }
+    }
+  ]
+}
