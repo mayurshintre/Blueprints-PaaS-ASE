@@ -184,8 +184,21 @@
       "metadata": {
         "description": "Set to true to allow access to redis on port 6379, without SSL tunneling (less secure)."
       }
+    },
+    "aseName": {
+      "type": "string",
+      "defaultValue": "aseDemo",
+      "metadata": {
+        "description": "Name of the App Service Environment."
+      }
+    },
+    "aspName": {
+      "type": "string",
+      "defaultValue": "aspDemo",
+      "metadata": {
+        "description": "Name of the App Service Plan."
+      }
     }
-
   },
   "variables": {
     "Region": "[resourceGroup().location]",
