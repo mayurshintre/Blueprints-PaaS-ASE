@@ -177,7 +177,7 @@
       }
     },
     "enableBGP": {
-      "type": "string",
+      "type": "bool",
       "metadata": {
         "description": "RouteBased or PolicyBased"
       }
