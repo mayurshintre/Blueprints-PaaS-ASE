@@ -19,7 +19,7 @@
     "vnetAddressPrefixCIDR": {
       "type": "int",
       "defaultValue": 16,
-      "maxValue": 32,
+      "maxValue": 28,
       "metadata": {
         "description": "Virtual Network CIDR Block"
       }
@@ -34,7 +34,7 @@
     "WAFSubnetPrefixCIDR": {
       "type": "int",
       "defaultValue": 24,
-      "maxValue": 32,
+      "maxValue": 28,
       "metadata": {
         "description": "WAF Subnet CIDR Block"
       }
@@ -56,7 +56,7 @@
     "WebAppSubnetPrefixCIDR": {
       "type": "int",
       "defaultValue": 24,
-      "maxValue": 32,
+      "maxValue": 28,
       "metadata": {
         "description": "Web App Subnet CIDR Block"
       }
@@ -78,7 +78,7 @@
     "APIAppSubnetPrefixCIDR": {
       "type": "int",
       "defaultValue": 24,
-      "maxValue": 32,
+      "maxValue": 28,
       "metadata": {
         "description": "API App Subnet CIDR Block"
       }
@@ -122,6 +122,10 @@
     "dnsOption": {
       "type": "string",
       "defaultValue": "customdns",
+      "allowedValues": [
+        "customdns",
+        "azuredns"
+      ],
       "metadata": {
         "description": "Pick either azuredns or customdns. This is Case Sensitive. "
       }
