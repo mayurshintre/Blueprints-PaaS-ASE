@@ -45,12 +45,6 @@
         "description": "The static IP address the redis cache should have, for a cache in a virtual network subnet. Requires configuring a virtualNetwork."
       }
     },
-    "existingDiagnosticsStorageAccountName": {
-      "type": "string",
-      "metadata": {
-        "description": "Name of an existing storage account for diagnostics. Must be in the same subscription."
-      }
-    },
     "enableNonSslPort": {
       "type": "bool",
       "defaultValue": false,
@@ -58,30 +52,26 @@
         "description": "Set to true to allow access to redis on port 6379, without SSL tunneling (less secure)."
       }
     },
-    "redisCachemaxclients": {
+    "redisCacheMaxClients": {
       "type": "int",
-      "defaultValue": "7500",
       "metadata": {
         "description": "Set to true to allow access to redis on port 6379, without SSL tunneling (less secure)."
       }
     },
-    "redisCachemaxmemoryreserved": {
+    "redisCacheMaxMemoryReserved": {
       "type": "int",
-      "defaultValue": "200",
       "metadata": {
         "description": "Set to true to allow access to redis on port 6379, without SSL tunneling (less secure)."
       }
     },
     "redisCachemaxfragmentationmemory-reserved": {
       "type": "int",
-      "defaultValue": "300",
       "metadata": {
         "description": "Set to true to allow access to redis on port 6379, without SSL tunneling (less secure)."
       }
     },
     "redisCachemaxmemory-delta": {
       "type": "int",
-      "defaultValue": "200",
       "metadata": {
         "description": "Set to true to allow access to redis on port 6379, without SSL tunneling (less secure)."
       }
@@ -103,29 +93,14 @@
         },
         "staticIP": "[parameters('redisCacheStaticIP')]",
         "subnet": "[parameters('subnet')]",
-        "virtualNetwork": "[parameters('virtualNetwork')]",
+        "virtualNetwork": "[resourceId('Microsoft.Network/VirtualNetworks',parameters('virtualNetwork'))]",
         "redisConfiguration": {
-          "maxclients": "7500",
-          "maxmemory-reserved": "200",
-          "maxfragmentationmemory-reserved": "300",
-          "maxmemory-delta": "200"
+          "maxclients": "[parameters('redisCachemaxclients')]",
+          "maxmemory-reserved": "[parameters('redisCachemaxmemoryreserved')]",
+          "maxfragmentationmemory-reserved": "[parameters('redisCachemaxfragmentationmemory-reserved')]",
+          "maxmemory-delta": "[parameters('redisCachemaxmemory-delta')]"
         }
       },
-      "resources": [
-        {
-          "apiVersion": "2015-07-01",
-          "name": "[concat(parameters('redisCacheName'), '/Microsoft.Insights/service')]",
-          "type": "Microsoft.Cache/redis/providers/diagnosticsettings",
-          "location": "[resourceGroup().location]",
-          "dependsOn": [
-            "[concat('Microsoft.Cache/Redis/', parameters('redisCacheName'))]"
-          ],
-          "properties": {
-            "status": "ON",
-            "storageAccountName": "[parameters('existingDiagnosticsStorageAccountName')]"
-          }
-        }
-      ]
     }
   ]
 }

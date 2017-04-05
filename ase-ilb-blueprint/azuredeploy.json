@@ -174,7 +174,7 @@
       }
     },
     "enableBGP": {
-      "type": "string",
+      "type": "bool",
       "defaultValue": false,
       "allowedValues": [
         false,
@@ -199,12 +199,14 @@
       }
     },
     "redisCacheName": {
+      "defaultValue": "RedisCache1",
       "type": "string",
       "metadata": {
         "description": "The name of the Azure Redis Cache to create."
       }
     },
     "redisShardCount": {
+      "defaultValue": 2,
       "type": "int",
       "metadata": {
         "description": "Number of highly available shards to create in the cluster. Requires Premium SKU. Set to 0 to not set up clustering."
@@ -223,37 +225,42 @@
         "description": "The size of the new Azure Redis Cache instance. Valid family and capacity combinations are (C0..C6, P1..P4)."
       }
     },
-    "redisCachevirtualNetwork": {
-      "type": "string",
-      "metadata": {
-        "description": "Name of an existing virtual network to join, in same subscription and region. Requires Premium SKU."
-      }
-    },
-    "redisCachesubnet": {
-      "type": "string",
-      "metadata": {
-        "description": "Name of an existing subnet to join in the virtual network. Requires configuring a virtualNetwork."
-      }
-    },
-    "redisCacheStaticIP": {
-      "type": "string",
-      "metadata": {
-        "description": "The static IP address the redis cache should have, for a cache in a virtual network subnet. Requires configuring a virtualNetwork."
-      }
-    },
-    "existingDiagnosticsStorageAccountName": {
-      "type": "string",
-      "metadata": {
-        "description": "Name of an existing storage account for diagnostics. Must be in the same subscription."
-      }
-    },
     "enableNonSslPort": {
       "type": "bool",
       "defaultValue": false,
       "metadata": {
         "description": "Set to true to allow access to redis on port 6379, without SSL tunneling (less secure)."
       }
+    },
+    "redisCachemaxclients": {
+      "type": "int",
+      "defaultValue": 7500,
+      "metadata": {
+        "description": "Set to true to allow access to redis on port 6379, without SSL tunneling (less secure)."
+      }
+    },
+    "redisCachemaxmemoryreserved": {
+      "type": "int",
+      "defaultValue": 200,
+      "metadata": {
+        "description": "Set to true to allow access to redis on port 6379, without SSL tunneling (less secure)."
+      }
+    },
+    "redisCachemaxfragmentationmemory-reserved": {
+      "type": "int",
+      "defaultValue": 300,
+      "metadata": {
+        "description": "Set to true to allow access to redis on port 6379, without SSL tunneling (less secure)."
+      }
+    },
+    "redisCachemaxmemory-delta": {
+      "type": "int",
+      "defaultValue": 200,
+      "metadata": {
+        "description": "Set to true to allow access to redis on port 6379, without SSL tunneling (less secure)."
+      }
     }
+
   },
   "variables": {
     "Region": "[resourceGroup().location]",
@@ -266,7 +273,11 @@
     "APIAppSubnetAddressSpace": "[concat(parameters('APIAppSubnetPrefix'), '/', parameters('APIAppSubnetPrefixCIDR'))]",
     "RedisCacheSubnetAddressSpace": "[concat(parameters('RedisCacheSubnetPrefix'), '/', parameters('RedisCacheSubnetPrefixCIDR'))]",
     "GatewayAddressSpace": "[concat(parameters('GatewaySubnetPrefix'), '/', parameters('GatewaySubnetPrefixCIDR'))]",
-    "redisCacheStaticIP": "[concat(parameters('RedisCacheSubnetPrefix'))]"
+    "RedisCacheSplit": "[split(parameters('RedisCacheSubnetPrefix'),'.')]",
+    "RedisCacheConvert": "[int(variables('RedisCacheSplit')[3])]",
+    "RedisCacheAdd": "[add(variables('RedisCacheConvert'),3)]",
+    "RedisCacheLastOctet": "[string(variables('RedisCacheAdd'))]",
+    "RedisCacheStaticIP": "[concat(variables('RedisCacheSplit')[0],'.',variables('RedisCacheSplit')[1],'.',variables('RedisCacheSplit')[2],'.',variables('RedisCacheLastOctet'))]"
   },
   "resources": [
     {
@@ -344,11 +355,14 @@
           "redisCacheName": { "value": "[parameters('redisCacheName')]" },
           "redisShardCount": { "value": "[parameters('redisShardCount')]" },
           "redisCacheCapacity": { "value": "[parameters('redisCacheCapacity')]" },
-          "redisCachevirtualNetwork": { "value": "[parameters('vnetName')]" },
-          "redisCachesubnet": { "value": "[variables('RedisCacheSubnetAddressSpace')]" },
-          "redisCacheStaticIP": {},
-          "existingDiagnosticsStorageAccountName": {},
-          "enableNonSslPort": {}
+          "virtualNetwork": { "value": "[parameters('vnetName')]" },
+          "subnet": { "value": "[variables('RedisCacheSubnetAddressSpace')]" },
+          "redisCacheStaticIP": { "value": "[variables('redisCacheStaticIP')]" },
+          "enableNonSslPort": { "value": "[parameters('enableNonSslPort')]" },
+          "redisCachemaxclients": { "value": "[parameters('redisCachemaxclients')]" },
+          "redisCachemaxmemoryreserved": { "value": "[parameters('redisCachemaxmemoryreserved')]" },
+          "redisCachemaxfragmentationmemory-reserved": { "value": "[parameters('redisCachemaxfragmentationmemory-reserved')]" },
+          "redisCachemaxmemory-delta": { "value": "[parameters('redisCachemaxmemory-delta')]" }
         }
       }
     }
