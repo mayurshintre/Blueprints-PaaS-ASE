@@ -13,144 +13,209 @@
   "variables": { },
   "resources": [
     {
-      "name": "[variables('nsgName')]",
+      "name": "[parameters('nsgName')]",
       "type": "Microsoft.Network/networkSecurityGroups",
       "apiVersion": "2016-03-30",
       "location": "[resourceGroup().location]",
       "properties": {
         "securityRules": [
           {
-            "name": "rule1",
+            "name": "Rule1",
             "properties": {
-              "protocol": "Tcp",
+              "protocol": "TCP",
               "sourcePortRange": "*",
-              "destinationPortRange": "*",
+              "destinationPortRange": "80",
               "sourceAddressPrefix": "*",
               "destinationAddressPrefix": "*",
               "access": "Allow",
-              "priority": 101,
+              "priority": 100,
+              "direction": "Outbound"
+            }
+          },
+          {
+            "name": "Rule2",
+            "properties": {
+              "protocol": "TCP",
+              "sourcePortRange": "*",
+              "destinationPortRange": "443",
+              "sourceAddressPrefix": "*",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 110,
+              "direction": "Outbound"
+            }
+          },
+          {
+            "name": "Rule3",
+            "properties": {
+              "protocol": "*",
+              "sourcePortRange": "*",
+              "destinationPortRange": "53",
+              "sourceAddressPrefix": "*",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 120,
+              "direction": "Outbound"
+            }
+          },
+          {
+            "name": "Rule4",
+            "properties": {
+              "protocol": "TCP",
+              "sourcePortRange": "*",
+              "destinationPortRange": "8443",
+              "sourceAddressPrefix": "*",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 130,
+              "direction": "Outbound"
+            }
+          },
+          {
+            "name": "Rule5",
+            "properties": {
+              "protocol": "TCP",
+              "sourcePortRange": "*",
+              "destinationPortRange": "10221-10231",
+              "sourceAddressPrefix": "*",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 140,
+              "direction": "Outbound"
+            }
+          },
+          {
+            "name": "Rule6",
+            "properties": {
+              "protocol": "*",
+              "sourcePortRange": "*",
+              "destinationPortRange": "20226",
+              "sourceAddressPrefix": "*",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 150,
+              "direction": "Outbound"
+            }
+          },
+          {
+            "name": "Rule7",
+            "properties": {
+              "protocol": "TCP",
+              "sourcePortRange": "*",
+              "destinationPortRange": "6379-6380",
+              "sourceAddressPrefix": "*",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 100,
               "direction": "Inbound"
             }
           },
           {
-            "name": "rule2",
+            "name": "Rule8",
             "properties": {
-              "protocol": "*",
+              "protocol": "TCP",
               "sourcePortRange": "*",
-              "destinationPortRange": "*",
+              "destinationPortRange": "8443",
               "sourceAddressPrefix": "*",
               "destinationAddressPrefix": "*",
               "access": "Allow",
-              "priority": 101,
+              "priority": 110,
               "direction": "Inbound"
             }
           },
           {
-            "name": "rule3",
+            "name": "Rule9",
             "properties": {
               "protocol": "*",
               "sourcePortRange": "*",
-              "destinationPortRange": "*",
+              "destinationPortRange": "8500",
               "sourceAddressPrefix": "*",
               "destinationAddressPrefix": "*",
               "access": "Allow",
-              "priority": 101,
+              "priority": 120,
               "direction": "Inbound"
             }
           },
           {
-            "name": "rule4",
+            "name": "Rule10",
             "properties": {
-              "protocol": "*",
+              "protocol": "TCP",
               "sourcePortRange": "*",
-              "destinationPortRange": "*",
+              "destinationPortRange": "10221-10231",
               "sourceAddressPrefix": "*",
               "destinationAddressPrefix": "*",
               "access": "Allow",
-              "priority": 101,
+              "priority": 130,
               "direction": "Inbound"
             }
           },
           {
-            "name": "rule5",
+            "name": "Rule11",
             "properties": {
-              "protocol": "*",
+              "protocol": "TCP",
               "sourcePortRange": "*",
-              "destinationPortRange": "*",
+              "destinationPortRange": "13000-13999",
               "sourceAddressPrefix": "*",
               "destinationAddressPrefix": "*",
               "access": "Allow",
-              "priority": 101,
+              "priority": 140,
               "direction": "Inbound"
             }
           },
           {
-            "name": "rule6",
+            "name": "Rule12",
             "properties": {
-              "protocol": "*",
+              "protocol": "TCP",
               "sourcePortRange": "*",
-              "destinationPortRange": "*",
+              "destinationPortRange": "13000-13999",
               "sourceAddressPrefix": "*",
               "destinationAddressPrefix": "*",
               "access": "Allow",
-              "priority": 101,
+              "priority": 150,
               "direction": "Inbound"
             }
           },
           {
-            "name": "rule7",
+            "name": "Rule13",
             "properties": {
-              "protocol": "*",
+              "protocol": "TCP",
               "sourcePortRange": "*",
-              "destinationPortRange": "*",
+              "destinationPortRange": "15000-15999",
               "sourceAddressPrefix": "*",
               "destinationAddressPrefix": "*",
               "access": "Allow",
-              "priority": 101,
+              "priority": 160,
               "direction": "Inbound"
             }
           },
           {
-            "name": "rule8",
+            "name": "Rule14",
             "properties": {
               "protocol": "*",
               "sourcePortRange": "*",
-              "destinationPortRange": "*",
+              "destinationPortRange": "16001",
               "sourceAddressPrefix": "*",
               "destinationAddressPrefix": "*",
               "access": "Allow",
-              "priority": 101,
+              "priority": 170,
               "direction": "Inbound"
             }
           },
           {
-            "name": "rule9",
+            "name": "Rule15",
             "properties": {
-              "protocol": "*",
+              "protocol": "TCP",
               "sourcePortRange": "*",
-              "destinationPortRange": "*",
+              "destinationPortRange": "20226",
               "sourceAddressPrefix": "*",
               "destinationAddressPrefix": "*",
               "access": "Allow",
-              "priority": 101,
+              "priority": 180,
               "direction": "Inbound"
+                      }
+                    }
+                ]
             }
-          },
-          {
-            "name": "rule10",
-            "properties": {
-              "protocol": "*",
-              "sourcePortRange": "*",
-              "destinationPortRange": "*",
-              "sourceAddressPrefix": "*",
-              "destinationAddressPrefix": "*",
-              "access": "Allow",
-              "priority": 101,
-              "direction": "Inbound"
-            }
-          }
-        ]
-       }
-    }
-  ]
+        }
+    ]
 }
