@@ -93,7 +93,7 @@
         },
         "staticIP": "[parameters('redisCacheStaticIP')]",
         "subnet": "[parameters('subnet')]",
-        "virtualNetwork": "[parameters('virtualNetwork')]",
+        "virtualNetwork": "[resourceId('Microsoft.Network/VirtualNetworks',parameters('virtualNetwork'))]",
         "redisConfiguration": {
           "maxclients": "[parameters('redisCachemaxclients')]",
           "maxmemory-reserved": "[parameters('redisCachemaxmemoryreserved')]",
