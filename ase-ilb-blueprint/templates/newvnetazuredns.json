@@ -5,19 +5,19 @@
     "vnetName": {
       "type": "string",
       "metadata": {
-        "description": "VNet name"
+        "description": "Name of Virtual Network"
       }
     },
     "vnetAddressPrefix": {
       "type": "string",
       "metadata": {
-        "description": "Address prefix"
+        "description": "IP Address Of Virtual Network Without CIDR"
       }
     },
     "vnetAddressPrefixCIDR": {
-      "type": "string",
+      "type": "int",
       "metadata": {
-        "description": "Address prefix"
+        "description": "Virtual Network CIDR Block"
       }
     },
     "vnetAddressSpace": {
@@ -26,53 +26,100 @@
         "description": "Address space for Vnet"
       }
     },
-    "subnet1Prefix": {
+    "WAFSubnetPrefix": {
       "type": "string",
-      "defaultValue": "10.0.0.0",
       "metadata": {
-        "description": "Subnet 1 Prefix"
+        "description": "WAF Subnet IP Address Without CIDR Block"
       }
     },
-    "subnet1PrefixCIDR": {
-      "type": "string",
+    "WAFSubnetPrefixCIDR": {
+      "type": "int",
       "metadata": {
-        "description": "Subnet 1 Prefix"
+        "description": "WAF Subnet CIDR Block"
       }
     },
-    "subnet1AddressSpace": {
+    "WAFSubnetAddressSpace": {
       "type": "string",
       "metadata": {
-        "description": "Subnet 1 Address Space"
+        "description": "IP Address And CIDR Block Combined"
       }
     },
-    "subnet1Name": {
+    "WAFSubnetName": {
       "type": "string",
       "metadata": {
-        "description": "Subnet 1 Name"
+        "description": "WAF Subnet Name"
       }
     },
-    "subnet2Prefix": {
+    "WebAppSubnetPrefix": {
       "type": "string",
       "metadata": {
-        "description": "Subnet 2 Prefix"
+        "description": "Web App Subnet IP Address Without CIDR Block"
       }
     },
-    "subnet2PrefixCIDR": {
-      "type": "string",
+    "WebAppSubnetPrefixCIDR": {
+      "type": "int",
       "metadata": {
-        "description": "Subnet 2 Address Space"
+        "description": "Web App Subnet CIDR Block"
       }
     },
-    "subnet2AddressSpace": {
+    "WebAppSubnetAddressSpace": {
       "type": "string",
       "metadata": {
-        "description": "Subnet 1 Prefix"
+        "description": "IP Address And CIDR Block Combined"
       }
     },
-    "subnet2Name": {
+    "WebAppSubnetName": {
       "type": "string",
       "metadata": {
-        "description": "Subnet 2 Name"
+        "description": "Web App Subnet Name"
+      }
+    },
+    "APIAppSubnetPrefix": {
+      "type": "string",
+      "metadata": {
+        "description": "API App Subnet IP Address Without CIDR Block"
+      }
+    },
+    "APIAppSubnetPrefixCIDR": {
+      "type": "int",
+      "metadata": {
+        "description": "API App Subnet CIDR Block"
+      }
+    },
+    "APIAppSubnetName": {
+      "type": "string",
+      "metadata": {
+        "description": "API App Subnet Name"
+      }
+    },
+    "APIAppSubnetAddressSpace": {
+      "type": "string",
+      "metadata": {
+        "description": "IP Address And CIDR Block Combined"
+      }
+    },
+    "RedisCacheSubnetPrefix": {
+      "type": "string",
+      "metadata": {
+        "description": "Redis Cache Subnet IP Address Without CIDR Block"
+      }
+    },
+    "RedisCacheSubnetPrefixCIDR": {
+      "type": "int",
+      "metadata": {
+        "description": "Redis Cache Subnet CIDR Block"
+      }
+    },
+    "RedisCacheSubnetName": {
+      "type": "string",
+      "metadata": {
+        "description": "Redis Cache Subnet Name"
+      }
+    },
+    "RedisCacheSubnetAddressSpace": {
+      "type": "string",
+      "metadata": {
+        "description": "IP Address And CIDR Block Combined"
       }
     },
     "customDNSIP": {
@@ -83,11 +130,11 @@
     }
   },
   "variables": {
-    "apiVersion": "2015-06-15"
+    "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',parameters('vnetName'))]",
   },
   "resources": [
     {
-      "apiVersion": "[variables('apiVersion')]",
+      "apiVersion": "2016-03-30",
       "type": "Microsoft.Network/virtualNetworks",
       "name": "[parameters('vnetName')]",
       "location": "[resourceGroup().location]",
@@ -99,15 +146,27 @@
         },
         "subnets": [
           {
-            "name": "[parameters('subnet1Name')]",
+            "name": "[parameters('WAFSubnetName')]",
             "properties": {
-              "addressPrefix": "[parameters('subnet1AddressSpace')]"
+              "addressPrefix": "[parameters('WAFSubnetAddressSpace')]"
             }
           },
           {
-            "name": "[parameters('subnet2Name')]",
+            "name": "[parameters('WebAppSubnetName')]",
             "properties": {
-              "addressPrefix": "[parameters('subnet2AddressSpace')]"
+              "addressPrefix": "[parameters('WebAppSubnetAddressSpace')]"
+            }
+          },
+          {
+            "name": "[parameters('APIAppSubnetName')]",
+            "properties": {
+              "addressPrefix": "[parameters('APIAppSubnetAddressSpace')]"
+            }
+          },
+          {
+            "name": "[parameters('RedisCacheSubnetName')]",
+            "properties": {
+              "addressPrefix": "[parameters('RedisCacheSubnetAddressSpace')]"
             }
           }
         ]

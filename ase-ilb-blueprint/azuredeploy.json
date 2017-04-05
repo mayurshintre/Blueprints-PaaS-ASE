@@ -112,78 +112,6 @@
         "description": "Redis Cache Subnet Name"
       }
     },
-    "GatewaySubnetPrefix": {
-      "type": "string",
-      "defaultValue": "10.0.4.0",
-      "metadata": {
-        "description": "Gateways Subnet IP Address Without CIDR Block"
-      }
-    },
-    "GatewaySubnetPrefixCIDR": {
-      "type": "int",
-      "defaultValue": 24,
-      "maxValue": 32,
-      "metadata": {
-        "description": "Gateway Subnet CIDR Block"
-      }
-    },
-    "GatewaySubnetName": {
-      "type": "string",
-      "defaultValue": "GatewaySubnet",
-      "allowedValues": [
-        "GatewaySubnet"
-      ],
-      "metadata": {
-        "description": "Gateway Subnet Name"
-      }
-    },
-    "GatewayName": {
-      "type": "string",
-      "defaultValue": "gateway1",
-      "metadata": {
-        "description": "Name Of The Gateway"
-      }
-    },
-    "gatewayPublicIPName": {
-      "type": "string",
-      "defaultValue": "GWPublicIP",
-      "metadata": {
-        "description": "Name for public IP object used for the new gateway"
-      }
-    },
-    "GatewayType": {
-      "type": "string",
-      "defaultValue": "vpn",
-      "allowedValues": [
-        "vpn",
-        "ExpressRoute"
-      ],
-      "metadata": {
-        "description": "Set either VPN or Expressroute"
-      }
-    },
-    "VPNType": {
-      "type": "string",
-      "defaultValue": "RouteBased",
-      "allowedValues": [
-        "RouteBased",
-        "PolicyBased"
-      ],
-      "metadata": {
-        "description": "RouteBased or PolicyBased"
-      }
-    },
-    "enableBGP": {
-      "type": "bool",
-      "defaultValue": false,
-      "allowedValues": [
-        false,
-        true
-      ],
-      "metadata": {
-        "description": "RouteBased or PolicyBased"
-      }
-    },
     "customDNSIP": {
       "type": "string",
       "defaultValue": "10.0.0.4",
@@ -272,7 +200,6 @@
     "WebAppSubnetAddressSpace": "[concat(parameters('WebAppSubnetPrefix'), '/', parameters('WebAppSubnetPrefixCIDR'))]",
     "APIAppSubnetAddressSpace": "[concat(parameters('APIAppSubnetPrefix'), '/', parameters('APIAppSubnetPrefixCIDR'))]",
     "RedisCacheSubnetAddressSpace": "[concat(parameters('RedisCacheSubnetPrefix'), '/', parameters('RedisCacheSubnetPrefixCIDR'))]",
-    "GatewayAddressSpace": "[concat(parameters('GatewaySubnetPrefix'), '/', parameters('GatewaySubnetPrefixCIDR'))]",
     "VnetID": "[concat(resourceId('Microsoft.Network/VirtualNetworks', parameters('vnetName')))]",
     "SubNetID": "[concat(variables('VnetID'), '/subnets/')]",
     "RedisCacheSplit": "[split(parameters('RedisCacheSubnetPrefix'),'.')]",
@@ -330,15 +257,6 @@
           "RedisCacheSubnetName": { "value": "[parameters('RedisCacheSubnetName')]" },
           "RedisCacheSubnetPrefix": { "value": "[parameters('RedisCacheSubnetPrefix')]" },
           "RedisCacheSubnetPrefixCIDR": { "value": "[parameters('RedisCacheSubnetPrefixCIDR')]" },
-          "GatewayAddressSpace": { "value": "[variables('GatewayAddressSpace')]" },
-          "GatewaySubnetName": { "value": "[parameters('GatewaySubnetName')]" },
-          "GatewaySubnetPrefix": { "value": "[parameters('GatewaySubnetPrefix')]" },
-          "GatewaySubnetPrefixCIDR": { "value": "[parameters('GatewaySubnetPrefixCIDR')]" },
-          "GatewayName": { "value": "[parameters('GatewayName')]" },
-          "GatewayType": { "value": "[parameters('GatewayType')]" },
-          "enableBGP": { "value": "[parameters('enableBGP')]" },
-          "VPNType": { "value": "[parameters('VPNType')]" },
-          "gatewayPublicIPName": { "value": "[parameters('gatewayPublicIPName')]" },
           "customDNSIP": { "value": "[parameters('customDNSIP')]" }
         }
       }

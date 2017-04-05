@@ -122,81 +122,17 @@
         "description": "IP Address And CIDR Block Combined"
       }
     },
-    "GatewaySubnetPrefix": {
-      "type": "string",
-      "metadata": {
-        "description": "Gateways Subnet IP Address Without CIDR Block"
-      }
-    },
-    "GatewaySubnetPrefixCIDR": {
-      "type": "int",
-      "metadata": {
-        "description": "Gateway Subnet CIDR Block"
-      }
-    },
-    "GatewaySubnetName": {
-      "type": "string",
-      "metadata": {
-        "description": "Gateway Subnet Name"
-      }
-    },
-    "GatewayAddressSpace": {
-      "type": "string",
-      "metadata": {
-        "description": "IP Address And CIDR Block Combined"
-      }
-    },
-    "GatewayName": {
-      "type": "string",
-      "metadata": {
-        "description": "Name Of The Gateway"
-      }
-    },
-    "gatewayPublicIPName": {
-      "type": "string",
-      "metadata": {
-        "description": "Name for public IP object used for the new gateway"
-      }
-    },
     "customDNSIP": {
       "type": "string",
       "metadata": {
         "description": "IP Address of Custom DNS Server"
       }
-    },
-    "GatewayType": {
-      "type": "string",
-      "metadata": {
-        "description": "Set either VPN or Expressroute"
-      }
-    },
-    "VPNType": {
-      "type": "string",
-      "metadata": {
-        "description": "RouteBased or PolicyBased"
-      }
-    },
-    "enableBGP": {
-      "type": "bool",
-      "metadata": {
-        "description": "RouteBased or PolicyBased"
-      }
     }
   },
   "variables": {
     "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',parameters('vnetName'))]",
-    "gatewaySubnetRef": "[concat(variables('vnetID'),'/subnets/',parameters('GatewaySubnetName'))]"
   },
   "resources": [
-    {
-      "apiVersion": "2016-03-30",
-      "type": "Microsoft.Network/publicIPAddresses",
-      "name": "[parameters('gatewayPublicIPName')]",
-      "location": "[resourceGroup().location]",
-      "properties": {
-        "publicIPAllocationMethod": "Dynamic"
-      }
-    },
     {
       "apiVersion": "2016-03-30",
       "type": "Microsoft.Network/virtualNetworks",
@@ -237,43 +173,8 @@
             "properties": {
               "addressPrefix": "[parameters('RedisCacheSubnetAddressSpace')]"
             }
-          },
-          {
-            "name": "[parameters('GatewaySubnetName')]",
-            "properties": {
-              "addressPrefix": "[parameters('GatewayAddressSpace')]"
-            }
           }
         ]
-      }
-    },
-    {
-      "apiVersion": "2016-03-30",
-      "type": "Microsoft.Network/virtualNetworkGateways",
-      "name": "[parameters('GatewayName')]",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[concat('Microsoft.Network/publicIPAddresses/', parameters('gatewayPublicIPName'))]",
-        "[concat('Microsoft.Network/virtualNetworks/', parameters('vnetName'))]"
-      ],
-      "properties": {
-        "ipConfigurations": [
-          {
-            "properties": {
-              "privateIPAllocationMethod": "Dynamic",
-              "subnet": {
-                "id": "[variables('gatewaySubnetRef')]"
-              },
-              "publicIPAddress": {
-                "id": "[resourceId('Microsoft.Network/publicIPAddresses',parameters('gatewayPublicIPName'))]"
-              }
-            },
-            "name": "vnetGatewayConfig"
-          }
-        ],
-        "gatewayType": "[parameters('GatewayType')]",
-        "vpnType": "[parameters('vpnType')]",
-        "enableBgp": "[parameters('enableBGP')]"
       }
     }
   ]
