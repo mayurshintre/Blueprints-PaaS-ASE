@@ -197,7 +197,7 @@
     "SubNetID": "[concat(variables('VnetID'), '/subnets/')]",
     "RedisCacheSplit": "[split(parameters('RedisCacheSubnetPrefix'),'.')]",
     "RedisCacheConvert": "[int(variables('RedisCacheSplit')[3])]",
-    "RedisCacheAdd": "[add(variables('RedisCacheConvert'),3)]",
+    "RedisCacheAdd": "[add(variables('RedisCacheConvert'),4)]",
     "RedisCacheLastOctet": "[string(variables('RedisCacheAdd'))]",
     "RedisCacheStaticIP": "[concat(variables('RedisCacheSplit')[0],'.',variables('RedisCacheSplit')[1],'.',variables('RedisCacheSplit')[2],'.',variables('RedisCacheLastOctet'))]",
     "enableNonSSLPort": false
