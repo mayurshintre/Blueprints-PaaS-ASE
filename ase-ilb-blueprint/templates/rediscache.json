@@ -92,7 +92,7 @@
           "name": "Premium"
         },
         "staticIP": "[parameters('redisCacheStaticIP')]",
-        "subnet": "[parameters('subnet')]",
+        "subnet": "[concat(resourceId('Microsoft.Network/VirtualNetworks',parameters('virtualNetwork')),'/subnets/',parameters('subnet'))]",
         "virtualNetwork": "[resourceId('Microsoft.Network/VirtualNetworks',parameters('virtualNetwork'))]",
         "redisConfiguration": {
           "maxclients": "[parameters('redisCachemaxclients')]",
