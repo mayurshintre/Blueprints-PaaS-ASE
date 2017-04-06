@@ -1,11 +1,14 @@
 ﻿{
-  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "$schema": "https://schema.management.azure.com/schemas/2017-03-01-preview/deploymentTemplate.json",
   "contentVersion": "1.0.0.0",
   "parameters": {
     "vnetName": {
       "type": "string"
     },
     "WAFSubnetName": {
+      "type": "string"
+    },
+    "Location": {
       "type": "string"
     },
     "addressPrefix": {
@@ -120,37 +123,16 @@
         "apiVersion": "2017-03-01",
         "type": "Microsoft.Network/publicIPAddresses",
         "name": "[variables('publicIPAddressName')]",
-        "location": "[resourceGroup().location]",
+        "location": "[parameters('Location')]",
         "properties": {
           "publicIPAllocationMethod": "Dynamic"
         }
       },
       {
         "apiVersion": "2017-03-01",
-        "type": "Microsoft.Network/virtualNetworks",
-        "name": "[parameters('vnetName')]",
-        "location": "[resourceGroup().location]",
-        "properties": {
-          "addressSpace": {
-            "addressPrefixes": [
-              "[parameters('addressPrefix')]"
-            ]
-          },
-          "subnets": [
-            {
-              "name": "[parameters('WAFSubnetName')]",
-              "properties": {
-                "addressPrefix": "[parameters('subnetPrefix')]"
-              }
-            }
-          ]
-        }
-      },
-      {
-        "apiVersion": "2017-03-01",
         "name": "[parameters('applicationGatewayName')]",
         "type": "Microsoft.Network/applicationGateways",
-        "location": "[resourceGroup().location]",
+        "location": "[parameters('Location')]",
         "dependsOn": [
           "[concat('Microsoft.Network/virtualNetworks/', parameters('vnetName'))]",
           "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]"
