@@ -81,6 +81,19 @@
             "dependsOn": [
               "[variables('sqlServerName')]"
             ]
+          },
+          {
+            "name": "AllowIlbAseWebAppOutboundIP",
+            "type": "firewallrules",
+            "apiVersion": "2014-04-01",
+            "location": "[resourceGroup().location]",
+            "properties": {
+              "endIpAddress": "0.0.0.0",
+              "startIpAddress": "0.0.0.0"
+            },
+            "dependsOn": [
+              "[variables('sqlServerName')]"
+            ]
           }
         ]
       }
