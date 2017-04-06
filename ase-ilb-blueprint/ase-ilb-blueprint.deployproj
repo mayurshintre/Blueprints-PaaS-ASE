@@ -53,4 +53,9 @@
     <Folder Include="obj\Debug\" />
   </ItemGroup>
   <Target Name="GetReferenceAssemblyPaths" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties templates_4waf_1json__JSONSchema="https://schema.management.azure.com/schemas/2017-03-01-preview/deploymentTemplate.json#" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>
