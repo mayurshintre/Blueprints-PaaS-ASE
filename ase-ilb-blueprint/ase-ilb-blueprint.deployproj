@@ -43,6 +43,7 @@
     <None Include="templates\ilbasewebapp.json" />
     <None Include="templates\newvnetazuredns.json" />
     <None Include="templates\newvnetcustomdns.json" />
+    <None Include="templates\nsg.json" />
     <None Include="templates\nsgrediscache.json" />
     <None Include="templates\rediscache.json" />
     <None Include="templates\waf.json" />
