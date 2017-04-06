@@ -458,13 +458,21 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[concat(variables('TemplateURIs'),'keyvault.json')]",
+          "uri": "[concat(variables('TemplateURIs'),'waf.json')]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
+          "vnetName": { "value": "[parameters('vnetName')]" },
+          "WAFSubnetName": { "value": "[parameters('WAFSubnetName')]" },
           "subnetPrefix": { "value": "[variables('WAFSubnetAddressSpace')]" },
           "addressPrefix": { "value": "[variables('vnetAddressSpace')]" },
-          "applicationGatewaySize": { "value": "[parameters('applicationGatewaySize')]" }
+          "applicationGatewayName": { "value": "[parameters('applicationGatewayName')]" },
+          "applicationGatewaySize": { "value": "[parameters('applicationGatewaySize')]" },
+          "capacity": { "value": "[parameters('capacity')]" },
+          "wafMode": { "value": "[parameters('wafMode')]" },
+          "wafRuleSetType": { "value": "[parameters('wafRuleSetType')]" },
+          "wafRuleSetVersion": { "value": "[parameters('wafRuleSetVersion')]" }
+
         }
       }
     },
