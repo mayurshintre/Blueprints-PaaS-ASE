@@ -226,8 +226,77 @@
       "metadata": {
         "description": "Name of the ApiApp."
       }
+    },
+    "applicationGatewayName": {
+      "type": "string",
+      "defaultValue": "WAFAppGateway",
+      "metadata": {
+        "description": "Name of WAF Application Gateway"
+      }
+    },
+    "applicationGatewaySize": {
+      "type": "string",
+      "allowedValues": [
+        "WAF_Medium",
+        "WAF_Large"
+      ],
+      "defaultValue": "WAF_Medium",
+      "metadata": {
+        "description": "WAF Appliaction Gateway Size"
+      }
+    },
+    "capacity": {
+      "type": "int",
+      "allowedValues": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "defaultValue": 2,
+      "metadata": {
+        "description": "Number of WAF Instances"
+      }
+    },
+    "wafMode": {
+      "type": "string",
+      "allowedValues": [
+        "Detection",
+        "Prevention"
+      ],
+      "defaultValue": "Prevention",
+      "metadata": {
+        "description": "WAF Mode"
+      }
+    },
+    "wafRuleSetType": {
+      "type": "string",
+      "allowedValues": [
+        "OWASP"
+      ],
+      "defaultValue": "OWASP",
+      "metadata": {
+        "description": "WAF Rule Set Type"
+      }
+    },
+    "wafRuleSetVersion": {
+      "type": "string",
+      "allowedValues": [
+        "2.2.9",
+        "3.0"
+      ],
+      "defaultValue": "3.0",
+      "metadata": {
+        "description": "WAF Rule Set Version"
+      }
     }
-  },
+},
   "variables": {
     "Region": "[resourceGroup().location]",
     "TemplateURIs": "https://raw.githubusercontent.com/mayurshintre/Blueprints/master/ase-ilb-blueprint/templates/",
@@ -393,9 +462,9 @@
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
-          "VaultName": { "value": "[variables('VaultName')]" },
-          "Region": { "value": "[variables('Region')]" },
-          "VaultSku": { "value": "[variables('VaultSKU')]" }
+          "subnetPrefix": { "value": "[variables('WAFSubnetAddressSpace')]" },
+          "addressPrefix": { "value": "[variables('vnetAddressSpace')]" },
+          "applicationGatewaySize": { "value": "[parameters('applicationGatewaySize')]" }
         }
       }
     },

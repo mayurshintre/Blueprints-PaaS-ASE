@@ -4,16 +4,20 @@
   "parameters": {
     "addressPrefix": {
       "type": "string",
-      "defaultValue": "10.0.0.0/16",
       "metadata": {
         "description": "Address prefix for the Virtual Network"
       }
     },
     "subnetPrefix": {
       "type": "string",
-      "defaultValue": "10.0.0.0/28",
       "metadata": {
         "description": "Subnet prefix"
+      }
+    },
+    "applicationGatewayName": {
+      "type": "string",
+      "metadata": {
+        "description": "WAF Enabled"
       }
     },
     "applicationGatewaySize": {
@@ -44,18 +48,6 @@
       "defaultValue": 2,
       "metadata": {
         "description": "Number of instances"
-      }
-    },
-    "backendIpAddress1": {
-      "type": "string",
-      "metadata": {
-        "description": "IP Address for Backend Server 1"
-      }
-    },
-    "backendIpAddress2": {
-      "type": "string",
-      "metadata": {
-        "description": "IP Address for Backend Server 2"
       }
     },
     "wafEnabled": {
@@ -100,7 +92,7 @@
   },
   "variables": {
     "applicationGatewayName": "applicationGateway1",
-    "publicIPAddressName": "publicIp1",
+    "publicIPAddressName": "WAFAppGatewayPublicIP1",
     "virtualNetworkName": "virtualNetwork1",
     "subnetName": "appGatewaySubnet",
     "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
@@ -179,21 +171,6 @@
             "name": "appGatewayFrontendPort",
             "properties": {
               "Port": 80
-            }
-          }
-        ],
-        "backendAddressPools": [
-          {
-            "name": "appGatewayBackendPool",
-            "properties": {
-              "BackendAddresses": [
-                {
-                  "IpAddress": "[parameters('backendIpAddress1')]"
-                },
-                {
-                  "IpAddress": "[parameters('backendIpAddress2')]"
-                }
-              ]
             }
           }
         ],
