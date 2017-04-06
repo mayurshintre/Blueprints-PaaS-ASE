@@ -2,100 +2,112 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-      "vnetName": {
+    "vnetName": {
       "type": "string"
-      },
-      "WAFSubnetName": {
+    },
+    "WAFSubnetName": {
       "type": "string"
-      },
-      "addressPrefix": {
-        "type": "string",
-        "metadata": {
-          "description": "Address prefix for the Virtual Network"
-        }
-      },
-      "subnetPrefix": {
-        "type": "string",
-        "metadata": {
-          "description": "Subnet prefix"
-        }
-      },
-      "applicationGatewayName": {
-        "type": "string",
-        "metadata": {
-          "description": "WAF Enabled"
-        }
-      },
-      "applicationGatewaySize": {
-        "type": "string",
-        "allowedValues": [
-          "WAF_Medium",
-          "WAF_Large"
-        ],
-        "defaultValue": "WAF_Medium",
-        "metadata": {
-          "description": "application gateway size"
-        }
-      },
-      "capacity": {
-        "type": "int",
-        "allowedValues": [
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7,
-          8,
-          9,
-          10
-        ],
-        "defaultValue": 2,
-        "metadata": {
-          "description": "Number of instances"
-        }
-      },
-      "wafEnabled": {
-        "type": "bool",
-        "defaultValue": true,
-        "metadata": {
-          "description": "WAF Enabled"
-        }
-      },
-      "wafMode": {
-        "type": "string",
-        "allowedValues": [
-          "Detection",
-          "Prevention"
-        ],
-        "defaultValue": "Detection",
-        "metadata": {
-          "description": "WAF Mode"
-        }
-      },
-      "wafRuleSetType": {
-        "type": "string",
-        "allowedValues": [
-          "OWASP"
-        ],
-        "defaultValue": "OWASP",
-        "metadata": {
-          "description": "WAF Rule Set Type"
-        }
-      },
-      "wafRuleSetVersion": {
-        "type": "string",
-        "allowedValues": [
-          "2.2.9",
-          "3.0"
-        ],
-        "defaultValue": "3.0",
-        "metadata": {
-          "description": "WAF Rule Set Version"
-        }
+    },
+    "addressPrefix": {
+      "type": "string",
+      "metadata": {
+        "description": "Address prefix for the Virtual Network"
       }
     },
+    "subnetPrefix": {
+      "type": "string",
+      "metadata": {
+        "description": "Subnet prefix"
+      }
+    },
+    "applicationGatewayName": {
+      "type": "string",
+      "metadata": {
+        "description": "WAF Enabled"
+      }
+    },
+    "applicationGatewaySize": {
+      "type": "string",
+      "allowedValues": [
+        "WAF_Medium",
+        "WAF_Large"
+      ],
+      "defaultValue": "WAF_Medium",
+      "metadata": {
+        "description": "application gateway size"
+      }
+    },
+    "capacity": {
+      "type": "int",
+      "allowedValues": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "defaultValue": 2,
+      "metadata": {
+        "description": "Number of instances"
+      }
+    },
+    "wafEnabled": {
+      "type": "bool",
+      "defaultValue": true,
+      "metadata": {
+        "description": "WAF Enabled"
+      }
+    },
+    "wafMode": {
+      "type": "string",
+      "allowedValues": [
+        "Detection",
+        "Prevention"
+      ],
+      "defaultValue": "Detection",
+      "metadata": {
+        "description": "WAF Mode"
+      }
+    },
+    "wafRuleSetType": {
+      "type": "string",
+      "allowedValues": [
+        "OWASP"
+      ],
+      "defaultValue": "OWASP",
+      "metadata": {
+        "description": "WAF Rule Set Type"
+      }
+    },
+    "wafRuleSetVersion": {
+      "type": "string",
+      "allowedValues": [
+        "2.2.9",
+        "3.0"
+      ],
+      "defaultValue": "3.0",
+      "metadata": {
+        "description": "WAF Rule Set Version"
+      }
+    },
+    "backendIpAddress1": {
+      "type": "string",
+      "metadata": {
+        "description": "IP Address for Backend Server 1"
+      }
+    },
+    "backendIpAddress2": {
+      "type": "string",
+      "metadata": {
+        "description": "IP Address for Backend Server 2"
+      }
+    }
+  },
   "variables": {
     "publicIPAddressName": "WAFAppGatewayPublicIP1",
     "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',parameters('vnetName'))]",
@@ -174,6 +186,21 @@
               "name": "appGatewayFrontendPort",
               "properties": {
                 "Port": 80
+              }
+            }
+          ],
+          "backendAddressPools": [
+            {
+              "name": "appGatewayBackendPool",
+              "properties": {
+                "BackendAddresses": [
+                  {
+                    "IpAddress": "[parameters('backendIpAddress1')]"
+                  },
+                  {
+                    "IpAddress": "[parameters('backendIpAddress2')]"
+                  }
+                ]
               }
             }
           ],

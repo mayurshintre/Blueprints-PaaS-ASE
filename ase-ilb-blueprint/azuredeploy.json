@@ -296,7 +296,7 @@
         "description": "WAF Rule Set Version"
       }
     }
-},
+  },
   "variables": {
     "Region": "[resourceGroup().location]",
     "TemplateURIs": "https://raw.githubusercontent.com/mayurshintre/Blueprints/master/ase-ilb-blueprint/templates/",
@@ -314,7 +314,20 @@
     "RedisCacheAdd": "[add(variables('RedisCacheConvert'),4)]",
     "RedisCacheLastOctet": "[string(variables('RedisCacheAdd'))]",
     "RedisCacheStaticIP": "[concat(variables('RedisCacheSplit')[0],'.',variables('RedisCacheSplit')[1],'.',variables('RedisCacheSplit')[2],'.',variables('RedisCacheLastOctet'))]",
-    "enableNonSSLPort": false
+    "enableNonSSLPort": false,
+
+    "WAFBackEndPoolSplit": "[split(parameters('WebAppSubnetPrefix'),'.')]",
+    "WAFBackEndPoolConvert": "[int(variables('WAFBackEndPoolSplit')[3])]",
+    "WAFBackEndPoolAdd": "[add(variables('WAFBackEndPoolConvert'),4)]",
+    "WAFBackEndPoolLastOctet": "[string(variables('WAFBackEndPoolAdd'))]",
+    "WAFBackEndPoolStaticIP1": "[concat(variables('WAFBackEndPoolSplit')[0],'.',variables('WAFBackEndPoolSplit')[1],'.',variables('WAFBackEndPoolSplit')[2],'.',variables('WAFBackEndPoolLastOctet'))]",
+
+    "WAFBackEndPoolSplit2": "[split(parameters('APIAppSubnetPrefix'),'.')]",
+    "WAFBackEndPoolConvert2": "[int(variables('WAFBackEndPoolSplit2')[3])]",
+    "WAFBackEndPoolAdd2": "[add(variables('WAFBackEndPoolConvert2'),4)]",
+    "WAFBackEndPoolLastOctet2": "[string(variables('WAFBackEndPoolAdd2'))]",
+    "WAFBackEndPoolStaticIP2": "[concat(variables('WAFBackEndPoolSplit')[0],'.',variables('WAFBackEndPoolSplit')[1],'.',variables('WAFBackEndPoolSplit')[2],'.',variables('WAFBackEndPoolLastOctet'))]",
+
   },
   "resources": [
     {
@@ -451,8 +464,9 @@
           "capacity": { "value": "[parameters('capacity')]" },
           "wafMode": { "value": "[parameters('wafMode')]" },
           "wafRuleSetType": { "value": "[parameters('wafRuleSetType')]" },
-          "wafRuleSetVersion": { "value": "[parameters('wafRuleSetVersion')]" }
-
+          "wafRuleSetVersion": { "value": "[parameters('wafRuleSetVersion')]" },
+          "backendIpAddress1": { "value": "[variables('WAFBackEndPoolStaticIP1')]" },
+          "backendIpAddress2": { "value": "[variables('WAFBackEndPoolStaticIP2')]" }
         }
       }
     },
