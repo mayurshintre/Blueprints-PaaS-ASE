@@ -245,8 +245,7 @@
     "RedisCacheAdd": "[add(variables('RedisCacheConvert'),4)]",
     "RedisCacheLastOctet": "[string(variables('RedisCacheAdd'))]",
     "RedisCacheStaticIP": "[concat(variables('RedisCacheSplit')[0],'.',variables('RedisCacheSplit')[1],'.',variables('RedisCacheSplit')[2],'.',variables('RedisCacheLastOctet'))]",
-    "enableNonSSLPort": false,
-    "IlbAseWebAppOutboundIP": "[reference('ILBASE-Web').outputs]"
+    "enableNonSSLPort": false
   },
   "resources": [
     {
