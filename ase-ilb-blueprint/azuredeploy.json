@@ -478,7 +478,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[concat(variables('TemplateURIs'),'keyvault.json')]",
+          "uri": "[concat(variables('TemplateURIs'),'azuresql.json')]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
