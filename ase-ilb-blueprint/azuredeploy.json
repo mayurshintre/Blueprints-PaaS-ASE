@@ -386,9 +386,7 @@
       "type": "Microsoft.Resources/deployments",
       "name": "RedisCachePremium",
       "apiVersion": "2016-09-01",
-      "dependsOn": [
-        "Vnet"
-      ],
+      "dependsOn": ["Vnet"],
       "properties": {
         "mode": "Incremental",
         "templateLink": {
@@ -414,6 +412,7 @@
       "type": "Microsoft.Resources/deployments",
       "name": "ILBASE-Web",
       "apiVersion": "2015-01-01",
+      "dependsOn": [ "Vnet" ],
       "properties": {
         "mode": "Incremental",
         "templateLink": {
@@ -431,6 +430,7 @@
       "type": "Microsoft.Resources/deployments",
       "name": "ILBASE-API",
       "apiVersion": "2015-01-01",
+      "dependsOn": [ "Vnet" ],
       "properties": {
         "mode": "Incremental",
         "templateLink": {
@@ -448,6 +448,7 @@
       "type": "Microsoft.Resources/deployments",
       "name": "WAF",
       "apiVersion": "2015-01-01",
+      "dependsOn": ["Vnet"],
       "properties": {
         "mode": "Incremental",
         "templateLink": {
