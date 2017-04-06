@@ -198,6 +198,34 @@
       "metadata": {
         "description": "Name of the App Service Plan."
       }
+    },
+    "AseDNS": {
+      "type": "string",
+      "defaultValue": "ASE.demo",
+      "metadata": {
+        "description": "Set to the root internal domain name to associate with this ASE."
+      }
+    },
+    "AspDNS": {
+      "type": "string",
+      "defaultValue": "ASp.demo",
+      "metadata": {
+        "description": "Set to the root internal domain name to associate with this ASP."
+      }
+    },
+    "WebAppName": {
+      "type": "string",
+      "defaultValue": "WebAppDemo",
+      "metadata": {
+        "description": "Name of the WebApp."
+      }
+    },
+    "ApiAppName": {
+      "type": "string",
+      "defaultValue": "ApiAppDemo",
+      "metadata": {
+        "description": "Name of the ApiApp."
+      }
     }
   },
   "variables": {
