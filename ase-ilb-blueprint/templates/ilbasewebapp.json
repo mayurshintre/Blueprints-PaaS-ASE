@@ -1,6 +1,6 @@
 ﻿{
-    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
-    "contentVersion": "1.0.0.0",
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
+  "contentVersion": "1.0.0.0",
   "parameters": {
     "aseName": {
       "type": "string",
@@ -34,13 +34,6 @@
       ],
       "metadata": {
         "description": "Location of the App Service Environment"
-      }
-    },
-    "ipSslAddressCount": {
-      "type": "int",
-      "defaultValue": 0,
-      "metadata": {
-        "description": "Number of IP addresses for the IP-SSL address pool.  This value *must* be zero when internalLoadBalancing mode is set to either 1 or 3."
       }
     },
     "existingVnetResourceId": {
@@ -151,42 +144,45 @@
       }
     }
   },
-    "resources": [
-      {
-        "apiVersion": "2015-08-01",
-        "type": "Microsoft.Web/hostingEnvironments",
+  "variables": {
+    "ipSslAddressCount": "0"
+  },
+  "resources": [
+    {
+      "apiVersion": "2015-08-01",
+      "type": "Microsoft.Web/hostingEnvironments",
+      "name": "[parameters('aseName')]",
+      "location": "[parameters('aseLocation')]",
+      "properties": {
         "name": "[parameters('aseName')]",
         "location": "[parameters('aseLocation')]",
-        "properties": {
-          "name": "[parameters('aseName')]",
-          "location": "[parameters('aseLocation')]",
-          "ipSslAddressCount": "[parameters('ipSslAddressCount')]",
-          "internalLoadBalancingMode": "[parameters('internalLoadBalancingMode')]",
-          "dnsSuffix" : "[parameters('dnsSuffix')]",
-          "virtualNetwork": {
-            "Id": "[parameters('existingVnetResourceId')]",
-            "Subnet": "[parameters('subnetName')]"
+        "ipSslAddressCount": "[variables('ipSslAddressCount')]",
+        "internalLoadBalancingMode": "[parameters('internalLoadBalancingMode')]",
+        "dnsSuffix": "[parameters('dnsSuffix')]",
+        "virtualNetwork": {
+          "Id": "[parameters('existingVnetResourceId')]",
+          "Subnet": "[parameters('subnetName')]"
+        },
+        "multiSize": "[parameters('frontEndSize')]",
+        "multiRoleCount": "[parameters('frontEndCount')]",
+        "workerPools": [
+          {
+            "workerSizeId": 0,
+            "workerSize": "[parameters('workerPoolOneInstanceSize')]",
+            "workerCount": "[parameters('workerPoolOneInstanceCount')]"
           },
-          "multiSize": "[parameters('frontEndSize')]",
-          "multiRoleCount": "[parameters('frontEndCount')]",
-          "workerPools": [
-            {
-              "workerSizeId": 0,
-              "workerSize": "[parameters('workerPoolOneInstanceSize')]",
-              "workerCount": "[parameters('workerPoolOneInstanceCount')]"
-            },
-            {
-              "workerSizeId": 1,
-              "workerSize": "[parameters('workerPoolTwoInstanceSize')]",
-              "workerCount": "[parameters('workerPoolTwoInstanceCount')]"
-            },
-            {
-              "workerSizeId": 2,
-              "workerSize": "[parameters('workerPoolThreeInstanceSize')]",
-              "workerCount": "[parameters('workerPoolThreeInstanceCount')]"
-            }
-          ]
-        }
+          {
+            "workerSizeId": 1,
+            "workerSize": "[parameters('workerPoolTwoInstanceSize')]",
+            "workerCount": "[parameters('workerPoolTwoInstanceCount')]"
+          },
+          {
+            "workerSizeId": 2,
+            "workerSize": "[parameters('workerPoolThreeInstanceSize')]",
+            "workerCount": "[parameters('workerPoolThreeInstanceCount')]"
+          }
+        ]
       }
-    ]
+    }
+  ]
 }
