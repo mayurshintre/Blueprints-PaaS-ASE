@@ -399,26 +399,6 @@
     },
     {
       "type": "Microsoft.Resources/deployments",
-      "name": "NSG",
-      "apiVersion": "2015-01-01",
-      "copy": {
-        "count": 
-      },
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[concat(variables('TemplateURIs'),'.json')]",
-          "contentVersion": "1.0.0.0"
-        },
-        "parameters": {
-          "VaultName": { "value": "[variables('VaultName')]" },
-          "Region": { "value": "[variables('Region')]" },
-          "VaultSku": { "value": "[variables('VaultSKU')]" }
-        }
-      }
-    },
-    {
-      "type": "Microsoft.Resources/deployments",
       "name": "ILBASE-Web",
       "apiVersion": "2015-01-01",
       "properties": {
