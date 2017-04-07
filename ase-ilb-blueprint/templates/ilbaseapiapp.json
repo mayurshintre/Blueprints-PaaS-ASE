@@ -1,70 +1,41 @@
 ﻿{
-  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
+  "$schema": "http://schema.management.azure.com/schemas/2014-04-01-preview/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
-    "parameters": {
-      "name": {
-        "type": "string"
-      },
-      "hostingPlanName": {
-        "type": "string"
-      },
-      "hostingEnvironment": {
-        "type": "string"
-      },
-      "Region": {
-        "type": "string"
-      },
-      "sku": {
-        "type": "string"
-      },
-      "skuCode": {
-        "type": "string"
-      },
-      "workerSize": {
-        "type": "string"
-      },
-      "serverFarmResourceGroup": {
-        "type": "string"
-      },
-      "subscriptionId": {
-        "type": "string"
-      }
+  "parameters": {
+    "websiteName": {
+      "type": "string"
     },
-    "resources": [
-      {
-        "apiVersion": "2016-03-01",
-        "name": "[parameters('name')]",
-        "type": "Microsoft.Web/sites",
-        "properties": {
-          "name": "[parameters('name')]",
-          "serverFarmId": "[concat('/subscriptions/', parameters('subscriptionId'),'/resourcegroups/', parameters('serverFarmResourceGroup'), '/providers/Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]",
-          "hostingEnvironment": "[parameters('hostingEnvironment')]"
-        },
-        "location": "[parameters('Region')]",
-        "tags": {
-          "[concat('hidden-related:', '/subscriptions/', parameters('subscriptionId'),'/resourcegroups/', parameters('serverFarmResourceGroup'), '/providers/Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]": "empty"
-        },
-        "kind": "api",
-        "dependsOn": [
-          "[concat('Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]"
-        ]
+    "hostingPlanName": {
+      "type": "string"
+    },
+    "location": {
+      "type": "string"
+    },
+    "hostingEnvironment": {
+      "type": "string"
+    },
+    "serverFarmResourceGroup": {
+      "type": "string"
+    },
+    "subscriptionId": {
+      "type": "string"
+    }
+  },
+  "resources": [
+    {
+      "apiVersion": "2016-03-01",
+      "name": "[parameters('websiteName')]",
+      "type": "Microsoft.Web/sites",
+      "properties": {
+        "name": "[parameters('websiteName')]",
+        "serverFarmId": "[concat('/subscriptions/', parameters('subscriptionId'),'/resourcegroups/', parameters('serverFarmResourceGroup'), '/providers/Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]",
+        "hostingEnvironment": "[parameters('hostingEnvironment')]"
       },
-      {
-        "apiVersion": "2016-09-01",
-        "name": "[parameters('hostingPlanName')]",
-        "type": "Microsoft.Web/serverfarms",
-        "location": "[parameters('Region')]",
-        "properties": {
-          "name": "[parameters('hostingPlanName')]",
-          "workerSizeId": "[parameters('workerSize')]",
-          "reserved": false,
-          "numberOfWorkers": "1",
-          "hostingEnvironment": "[parameters('hostingEnvironment')]"
-        },
-        "sku": {
-          "Tier": "[parameters('sku')]",
-          "Name": "[parameters('skuCode')]"
-        }
-      }
-    ]
-  }
+      "location": "[parameters('location')]",
+      "tags": {
+        "[concat('hidden-related:', '/subscriptions/', parameters('subscriptionId'),'/resourcegroups/', parameters('serverFarmResourceGroup'), '/providers/Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]": "empty"
+      },
+      "kind": "api"
+    }
+  ]
+}
