@@ -99,10 +99,10 @@ The following resources are deployed as part of the solution
 
 ## Configuration Values
 
-  Parameter | Configuration
+  Resource| Parameter | Configuration
   ---|---
-  All | **No spaces or special characters. Lower case alphabets and numbers only. Adding special characters will break deployment for Azure SQL.**
-  Prefix | Prefix name for the entire solution. Prepended to all presource names. Kepp it short. Lower case alphabets and numbers only. No spaces or special characters.
+  All | All | **No spaces or special characters. Lower case alphabets and numbers only. Adding special characters will break deployment for Azure SQL.**
+  All | Prefix | Prefix name for the entire solution. Prepended to all presource names. Kepp it short. Lower case alphabets and numbers only. No spaces or special characters.
 
 ## Deployment steps
 You can either click the "deploy to Azure" button at the beginning of this document or deploy the solution from PowerShell with the following PowerShell script.
