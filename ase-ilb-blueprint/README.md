@@ -2,19 +2,26 @@
 
 ## Contents
 
-- [Solution Overview](##solution-overview)
-	- [NIST 800-66 Based Assurance Framework Azure PaaS](###nist-800-66-based-assurance-framework-for-azure-blueprint-deployment))
+- [Solution Overview](#solution-overview)
+	- [NIST 800-66 Based Assurance Framework Azure PaaS](#nist-800-66-based-assurance-framework-for-azure-blueprint-deployment))
 	- 
-- [Solution Design and Deployed Resources](##soution-design-and-deployed-resources)
+- [Solution Design and Deployed Resources](#soution-design-and-deployed-resources)
 	- [Architecture](#)
-	- [Security](#)
-		- [Network](#)
 	- [Deployed Azure Resources](#)
 		- [Resource Provider 1]
 		- [Resource Provider 2]
 		- [Resource Provider 3]
+	- [Security](#)
+		- [Virtual Network](#)
+		- [WAF - Application Gateway](#)
+		- [ILB ASE w/ Web Apps](#)
+		- [ILB ASE w/ Api Apps](#)
+		- [Redis Cache](#)
+		- [Azure SQL](#)
+		- [Key Vault](#)
+- [NIST 800-660 Security Compliance Matrix](#nist-800-66-security-matrix-compliance)
 
-- [NIST Security Compliance Matrix](#ncsc-security-matrix-compliance)
+To be filled in by Azure Cloud Health & Security Engineering
 
 - [Deployment Guide](#deployment-and-configuration-activities) 
 	- [Configuration Activities](#)
@@ -34,6 +41,8 @@ This template deploys a NIST 800-66 compliant secure baseline to provision a hig
 Lorem epsum.
 
 ## Solution Design and Deployed Resources
+
+
 
 ### Architecture
 This diagram displays an overview of the solution
