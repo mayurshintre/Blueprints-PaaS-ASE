@@ -326,7 +326,7 @@
     "WAFBackEndPoolConvert2": "[int(variables('WAFBackEndPoolSplit2')[3])]",
     "WAFBackEndPoolAdd2": "[add(variables('WAFBackEndPoolConvert2'),4)]",
     "WAFBackEndPoolLastOctet2": "[string(variables('WAFBackEndPoolAdd2'))]",
-    "WAFBackEndPoolStaticIP2": "[concat(variables('WAFBackEndPoolSplit')[0],'.',variables('WAFBackEndPoolSplit')[1],'.',variables('WAFBackEndPoolSplit')[2],'.',variables('WAFBackEndPoolLastOctet'))]"
+    "WAFBackEndPoolStaticIP2": "[concat(variables('WAFBackEndPoolSplit2')[0],'.',variables('WAFBackEndPoolSplit2')[1],'.',variables('WAFBackEndPoolSplit2')[2],'.',variables('WAFBackEndPoolLastOctet2'))]"
 
   },
   "resources": [
@@ -458,7 +458,7 @@
         "parameters": {
           "vnetName": { "value": "[parameters('vnetName')]" },
           "WAFSubnetName": { "value": "[parameters('WAFSubnetName')]" },
-          "Location": { "value": "[variables('Region')]"}
+          "Location": { "value": "[variables('Region')]"},
           "subnetPrefix": { "value": "[variables('WAFSubnetAddressSpace')]" },
           "addressPrefix": { "value": "[variables('vnetAddressSpace')]" },
           "applicationGatewayName": { "value": "[parameters('applicationGatewayName')]" },
