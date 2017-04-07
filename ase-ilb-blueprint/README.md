@@ -1,21 +1,18 @@
-﻿# NIST 800-66 Assurance PaaS Blueprint for ASE
+﻿# NIST 800-66 Reference PaaS Blueprint Template using ASE
 
 ## Contents
 
 - [Solution Overview](#Overview)
-	- NIST Based Assurance Framework Azure PaaS
+	- [NIST Based Assurance Framework Azure PaaS](#)
 	- 
-- [Architecture Diagram and Deployed Components](#architecture-diagram-and-components)
-	- [Deployed Resources]
+- [Solution Design and Deployed Resources](#architecture-diagram-and-components)
+	- [Architecture](#)
+	- [Security](#)
+		- [Network](#)
+	- [Deployed Azure Resources](#)
 		- [Resource Provider 1]
 		- [Resource Provider 2]
 		- [Resource Provider 3]
-
-- [Guidance and Recommendations](#guidance-and-recommendations)
-	- [Business continuity](#business-continuity)
-	- [Logging and Audit](#logging-and-audit)
-	- [Identity](#identity)
-	- [Security](#security)
 
 - [NIST Security Compliance Matrix](#ncsc-security-matrix-compliance)
 
@@ -32,18 +29,16 @@
 
 This template deploys a NIST 800-66 compliant secure baseline for Azure App service Environment, Web App, API Apps, Redis Cache and Web Application Gateway
 
-### NIST Based Assurance Framework for Azure PaaS
+### NIST 800-66 Based Assurance Framework for Azure PaaS Blueprint Deployment
 
 Lorem epsum.
 
-## Solution Architecture and Deployed Resources
+## Solution Design and Deployed Resources
 
+### Architecture
 This diagram displays an overview of the solution
 
 ![alt text](images/solution.png "Solution Diagram")
-
-This deployment uses nested templates.
-The following resources are deployed as part of the solution
 
 ### Security
 
@@ -51,41 +46,48 @@ The following resources are deployed as part of the solution
 
 #### Passwords & Secrets
 
+## NIST 800-66 Security Compliance Matrix
+
+ Security Control| Azure Configuration | Responsibility
+  ---|---|---
+Control 1 | Mapping | Azure
+Control 2 | Mapping | Customer 
+
 
 ## Deployed Azure Resources
 
-### [VNET]
-[Microsoft.Networks/virtualNetworks]
-+ **[Resource type 1A]**: [Description Resource type 1A]
+### VNET
+[Microsoft.Networks]
++ **[/virtualNetworks]**: [Description Resource type 1A]
 + **[Resource type 1B]**: [Description Resource type 1B]
 + **[Resource type 1C]**: [Description Resource type 1C]
 
-### [Application Gateway]
-[Description Resource Provider 2]
+### Application Gateway
+[Microsoft.Networks]
 + **[Resource type 2A]**: [Description Resource type 2A]
 
-### [Redis Cache]
-[Description Resource Provider 3]
+### Redis Cache
+[Microsoft.Cache]
 + **[Resource type 3A]**: [Description Resource type 3A]
 + **[Resource type 3B]**: [Description Resource type 3B]
 
-### [ILB ASE - Web App]
-[Description Resource Provider 3]
+### ILB ASE - Web App
+[Microsoft.Web]
 + **[Resource type 3A]**: [Description Resource type 3A]
 + **[Resource type 3B]**: [Description Resource type 3B]
 
-### [ILB ASE - API App]
-[Description Resource Provider 3]
+### ILB ASE - API App
+[Microsoft.Web]
 + **[Resource type 3A]**: [Description Resource type 3A]
 + **[Resource type 3B]**: [Description Resource type 3B]
 
-### [Azure SQL]
-[Description Resource Provider 3]
+### Azure SQL
+[Microsoft.Database]
 + **[Resource type 3A]**: [Description Resource type 3A]
 + **[Resource type 3B]**: [Description Resource type 3B]
 
-### [Azure KeyVault]
-[Description Resource Provider 3]
+### Azure KeyVault
+[Microsoft.]
 + **[Resource type 3A]**: [Description Resource type 3A]
 + **[Resource type 3B]**: [Description Resource type 3B]
 
@@ -99,7 +101,7 @@ The following resources are deployed as part of the solution
 
 ## Configuration Values
 
-  Resource| Parameter | Configuration
+  Resource | Parameter | Configuration
   ---|---|---
   All | All | **No spaces or special characters. Lower case alphabets and numbers only. Adding special characters will break deployment for Azure SQL.**
   All | Prefix | Prefix name for the entire solution. Prepended to all resource names. Keep it short (4-6 characters). Lower case alphabets and numbers only. No spaces or special characters.
@@ -136,13 +138,9 @@ New-AzureRmResourceGroupDeployment -Name $DeploymentName -ResourceGroupName $Res
 #### Management
 [How to manage the solution]
 
-## Notes
-[Solution notes]
-
-
 ## Cost
 
-You are responsible for the cost of the Azure services used while running this NIST 800-66 reference PaaS deployment for ASE. There is no additional cost for using this template. The Azure Resource Manager template for this NIST 800-66 reference PaaS deployment for ASE includes configuration parameters that you can customize. Some of these settings will affect the cost of deployment. For cost estimates, see the pricing pages for each AWS service you will be using or the Azure Calculator. Prices are subject to change.
+You are responsible for the cost of the Azure services used while running this NIST 800-66 reference PaaS deployment template for ASE. There is no additional cost for using this template. The Azure Resource Manager template for this NIST 800-66 reference PaaS deployment for ASE includes configuration parameters that you can customize. Some of these settings will affect the cost of deployment. For cost estimates, see the pricing pages for each AWS service you will be using or the [Azure Calculator](https://azure.microsoft.com/en-us/pricing/calculator/) or the [Azure Channel Pricing Calculator](https://azure.microsoft.com/en-us/pricing/calculator/) if you are an enterprise customer with an ELA. Prices are subject to change.
 
 ## Authors
 
@@ -150,4 +148,4 @@ You are responsible for the cost of the Azure services used while running this N
 + Jerad Berhow, Premier Field Engineer, Microsoft
 + Mayur Shintre, Principal Architect, Microsoft
 
-`Tags: [NIST, 800-66, Azure, Templates, PaaS, ASE]`
+`Tags: [Microsoft, Azure, NIST, 800-66, Compliance, ARM, Templates, PaaS, ASE]`
