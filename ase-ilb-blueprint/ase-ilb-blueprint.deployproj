@@ -35,6 +35,7 @@
     <None Include="images\solution.jpg" />
     <None Include="images\vsdx\asesequencevsdx.vsdx" />
     <None Include="images\vsdx\solution.vsdx" />
+    <None Include="NSG.ps1" />
     <None Include="README.md" />
     <None Include="templates\ilbaseasp.json" />
     <None Include="templates\keyvault.json" />
@@ -45,6 +46,7 @@
     <None Include="templates\newvnetcustomdns.json" />
     <None Include="templates\rediscache.json" />
     <None Include="templates\waf.json" />
+    <None Include="UDR.ps1" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\Debug\" />
