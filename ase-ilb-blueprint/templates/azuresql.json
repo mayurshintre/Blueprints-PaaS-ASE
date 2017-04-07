@@ -74,7 +74,7 @@
             "name": "[parameters('databaseName')]",
             "type": "databases",
             "apiVersion": "2015-01-01",
-            "location": "[resourceGroup().location]",
+            "location": "[parameters('Region')]",
             "tags": {
               "displayName": "Database"
             },
@@ -105,7 +105,7 @@
             "name": "AllowAllMicrosoftAzureIps",
             "type": "firewallrules",
             "apiVersion": "2014-04-01",
-            "location": "[resourceGroup().location]",
+            "location": "[parameters('Region')]",
             "properties": {
               "endIpAddress": "0.0.0.0",
               "startIpAddress": "0.0.0.0"
@@ -118,7 +118,7 @@
             "name": "AllowIlbAseWebAppOutboundIP",
             "type": "firewallrules",
             "apiVersion": "2014-04-01",
-            "location": "[resourceGroup().location]",
+            "location": "[parameters('Region')]",
             "properties": {
               "endIpAddress": "0.0.0.0",
               "startIpAddress": "0.0.0.0"

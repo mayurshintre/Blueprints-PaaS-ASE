@@ -4,14 +4,12 @@
   "parameters": {
     "VaultName": {
       "type": "string",
-      "defaultValue": "NISTVault",
       "metadata": {
         "description": "Name of the Azure KeyVault that will house secrets for the NIST deployments."
       }
     },
     "Region": {
       "type": "string",
-      "defaultValue": "EastUS",
       "metadata": {
         "description": "Region that resources will deploy to."
       }
@@ -19,7 +17,6 @@
     "VaultSku": {
       "type": "string",
       "allowedValues": ["Standard","Premium"],
-      "defaultValue": "Standard",
       "metadata": {
         "description": "Select the proper SKU for this Vault. See: https://docs.microsoft.com/en-us/azure/templates/microsoft.keyvault/vaults#Sku"
       }

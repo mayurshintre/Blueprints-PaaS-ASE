@@ -8,6 +8,9 @@
         "description": "The name of the Azure Redis Cache to create."
       }
     },
+    "Region": {
+      "type": "string"
+    },
     "redisShardCount": {
       "type": "int",
       "metadata": {
@@ -82,7 +85,7 @@
       "apiVersion": "2016-04-01",
       "name": "[parameters('redisCacheName')]",
       "type": "Microsoft.Cache/Redis",
-      "location": "[resourceGroup().location]",
+      "location": "[parameters('Region')]",
       "properties": {
         "enableNonSslPort": "[parameters('enableNonSslPort')]",
         "shardCount": "[parameters('redisShardCount')]",
@@ -91,7 +94,7 @@
           "capacity": "[parameters('redisCacheCapacity')]",
           "family": "P",
           "name": "Premium"
-           },
+        },
         "staticIP": "[parameters('redisCacheStaticIP')]",
         "redisConfiguration": {
           "maxclients": "[parameters('redisCachemaxclients')]",

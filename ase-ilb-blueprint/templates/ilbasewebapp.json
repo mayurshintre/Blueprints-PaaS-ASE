@@ -4,12 +4,11 @@
   "parameters": {
     "aseName": {
       "type": "string",
-      "defaultValue": "asev1template",
       "metadata": {
         "description": "Name of the App Service Environment"
       }
     },
-    "aseLocation": {
+    "Region": {
       "type": "string",
       "allowedValues": [
         "Central US",
@@ -37,7 +36,6 @@
       }
     },
     "existingVnetResourceId": {
-      "defaultValue": "/subscriptions/960e1588-d82e-47d5-8c2c-342cd071e172/resourceGroups/JeradisJohnCena/providers/Microsoft.Network/virtualNetworks/VNet1",
       "type": "string",
       "metadata": {
         "description": "ARM Url reference for the virtual network that will contain the ASE.  Use Microsoft.Network for ARM vnets.  Use Microsoft.ClassicNetwork for older ASM vnets.  /subscriptions/subIDGoesHere/resourceGroups/rgNameGoesHere/providers/Microsoft.Network/virtualNetworks/vnetnamegoeshere"
@@ -45,21 +43,18 @@
     },
     "subnetName": {
       "type": "string",
-      "defaultValue": "WebAppSubnet",
       "metadata": {
         "description": "Subnet name that will contain the App Service Environment"
       }
     },
     "internalLoadBalancingMode": {
       "type": "int",
-      "defaultValue": 1,
       "metadata": {
         "description": "0 = public VIP only, 1 = only ports 80/443 are mapped to ILB VIP, 2 = only FTP ports are mapped to ILB VIP, 3 = both ports 80/443 and FTP ports are mapped to an ILB VIP."
       }
     },
     "dnsSuffix": {
       "type": "string",
-      "defaultValue": "asev1.ilb",
       "metadata": {
         "description": "Used *only* when deploying an ILB enabled ASE.  Set this to the root domain associated with the ASE.  For example: contoso.com"
       }
@@ -71,14 +66,12 @@
         "Large",
         "ExtraLarge"
       ],
-      "defaultValue": "Medium",
       "metadata": {
         "description": "Instance size for the front-end pool.  Maps to P2,P3,P4."
       }
     },
     "frontEndCount": {
       "type": "int",
-      "defaultValue": 2,
       "metadata": {
         "description": "Number of instances in the front-end pool.  Minimum of two."
       }
@@ -91,14 +84,12 @@
         "Large",
         "ExtraLarge"
       ],
-      "defaultValue": "Small",
       "metadata": {
         "description": "Instance size for worker pool one.  Maps to P1,P2,P3,P4."
       }
     },
     "workerPoolOneInstanceCount": {
       "type": "int",
-      "defaultValue": 2,
       "metadata": {
         "description": "Number of instances in worker pool one.  Minimum of two."
       }
@@ -111,14 +102,12 @@
         "Large",
         "ExtraLarge"
       ],
-      "defaultValue": "Small",
       "metadata": {
         "description": "Instance size for worker pool two.  Maps to P1,P2,P3,P4."
       }
     },
     "workerPoolTwoInstanceCount": {
       "type": "int",
-      "defaultValue": 0,
       "metadata": {
         "description": "Number of instances in worker pool two.  Can be zero if not using worker pool two."
       }
@@ -131,14 +120,12 @@
         "Large",
         "ExtraLarge"
       ],
-      "defaultValue": "Small",
       "metadata": {
         "description": "Instance size for worker pool three.  Maps to P1,P2,P3,P4."
       }
     },
     "workerPoolThreeInstanceCount": {
       "type": "int",
-      "defaultValue": 0,
       "metadata": {
         "description": "Number of instances in worker pool three.  Can be zero if not using worker pool three."
       }
@@ -152,10 +139,10 @@
       "apiVersion": "2015-08-01",
       "type": "Microsoft.Web/hostingEnvironments",
       "name": "[parameters('aseName')]",
-      "location": "[parameters('aseLocation')]",
+      "location": "[parameters('Region')]",
       "properties": {
         "name": "[parameters('aseName')]",
-        "location": "[parameters('aseLocation')]",
+        "location": "[parameters('Region')]",
         "ipSslAddressCount": "[variables('ipSslAddressCount')]",
         "internalLoadBalancingMode": "[parameters('internalLoadBalancingMode')]",
         "dnsSuffix": "[parameters('dnsSuffix')]",

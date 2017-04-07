@@ -271,6 +271,7 @@
         },
         "parameters": {
           "vnetName": { "value": "[variables('vnetName')]" },
+          "Region": { "value": "[variables('Region')]" },
           "vnetAddressSpace": { "value": "[variables('vnetAddressSpace')]" },
           "vnetAddressPrefix": { "value": "[parameters('vnetAddressPrefix')]" },
           "vnetAddressPrefixCIDR": { "value": "[parameters('vnetAddressPrefixCIDR')]" },
@@ -307,6 +308,7 @@
         },
         "parameters": {
           "redisCacheName": { "value": "[variables('redisCacheName')]" },
+          "Region": { "value": "[variables('Region')]" },
           "redisShardCount": { "value": "[parameters('redisShardCount')]" },
           "redisCacheCapacity": { "value": "[parameters('redisCacheCapacity')]" },
           "virtualNetwork": { "value": "[variables('VnetID')]" },
@@ -370,7 +372,7 @@
         "parameters": {
           "vnetName": { "value": "[variables('vnetName')]" },
           "WAFSubnetName": { "value": "[variables('WAFSubnetName')]" },
-          "Location": { "value": "[variables('Region')]"},
+          "Region": { "value": "[variables('Region')]" },
           "subnetPrefix": { "value": "[variables('WAFSubnetAddressSpace')]" },
           "addressPrefix": { "value": "[variables('vnetAddressSpace')]" },
           "applicationGatewayName": { "value": "[variables('applicationGatewayName')]" },
