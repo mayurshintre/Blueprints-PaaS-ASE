@@ -2,10 +2,10 @@
 
 ## Contents
 
-- [Solution Overview](#Overview)
-	- [NIST Based Assurance Framework Azure PaaS](#)
+- [Solution Overview](##solution-overview)
+	- [NIST 800-66 Based Assurance Framework Azure PaaS](###nist-800-66-based-assurance-framework-for-azure-blueprint-deployment))
 	- 
-- [Solution Design and Deployed Resources](#architecture-diagram-and-components)
+- [Solution Design and Deployed Resources](##soution-design-and-deployed-resources)
 	- [Architecture](#)
 	- [Security](#)
 		- [Network](#)
@@ -27,7 +27,7 @@
 
 ## Solution Overview
 
-This template deploys a NIST 800-66 compliant secure baseline for Azure App service Environment, Web App, API Apps, Redis Cache and Web Application Gateway
+This template deploys a NIST 800-66 compliant secure baseline to provision a highly secure platform as a service environment that includes Azure App Service Environment with an ILB, Web App, API Apps, Redis Cache Cluster, Web Application Gateway with WAF in Prevention Mode, Azure SQL and a locked down environment with restricted access and communication between services and subnets as described in the security section below.
 
 ### NIST 800-66 Based Assurance Framework for Azure PaaS Blueprint Deployment
 
