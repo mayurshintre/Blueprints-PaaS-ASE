@@ -181,19 +181,19 @@
     }
   },
   "variables": {
-    "vnetName": "[concat(parameters('SystemPrefixName'),'vNet',uniqueString(resourceGroup().id))]",
-    "WafSubnetName": "[concat(parameters('SystemPrefixName'),'WafSubnet')]",
-    "WebAppSubnetName": "[concat(parameters('SystemPrefixName'),'WebAppSubnet')]",
-    "ApiAppSubnetName": "[concat(parameters('SystemPrefixName'),'ApiAppSubnet')]",
-    "RedisCacheSubnetName": "[concat(parameters('SystemPrefixName'),'RedisCacheSubnet')]",
-    "redisCacheName": "[concat(parameters('SystemPrefixName'),'RedisCache',uniqueString(resourceGroup().id))]",
-    "aseName": "[concat(parameters('SystemPrefixName'),'ASE',uniqueString(resourceGroup().id))]",
-    "aspName": "[concat(parameters('SystemPrefixName'),'ASP',uniqueString(resourceGroup().id))]",
-    "WebAppName": "[concat(parameters('SystemPrefixName'),'WebApp',uniqueString(resourceGroup().id))]",
-    "ApiAppName": "[concat(parameters('SystemPrefixName'),'ApiApp',uniqueString(resourceGroup().id))]",
-    "applicationGatewayName": "[concat(parameters('SystemPrefixName'),'applicationGateway',uniqueString(resourceGroup().id))]",
-    "sqlServerName": "[concat(parameters('SystemPrefixName'),'SqlServer',uniqueString(resourceGroup().id))]",
-    "databaseName": "[concat(parameters('SystemPrefixName'),'Database',uniqueString(resourceGroup().id))]",
+    "vnetName": "[toLower(concat(parameters('SystemPrefixName'),'vNet',uniqueString(resourceGroup().id)))]",
+    "WafSubnetName": "[toLower(concat(parameters('SystemPrefixName'),'WafSubnet'))]",
+    "WebAppSubnetName": "[toLower(concat(parameters('SystemPrefixName'),'WebAppSubnet'))]",
+    "ApiAppSubnetName": "[toLower(concat(parameters('SystemPrefixName'),'ApiAppSubnet'))]",
+    "RedisCacheSubnetName": "[toLower(concat(parameters('SystemPrefixName'),'RedisSubnet'))]",
+    "redisCacheName": "[toLower(concat(parameters('SystemPrefixName'),'RedisCache',uniqueString(resourceGroup().id)))]",
+    "aseName": "[toLower(concat(parameters('SystemPrefixName'),'ASE',uniqueString(resourceGroup().id)))]",
+    "aspName": "[toLower(concat(parameters('SystemPrefixName'),'ASP',uniqueString(resourceGroup().id)))]",
+    "WebAppName": "[toLower(concat(parameters('SystemPrefixName'),'WebApp',uniqueString(resourceGroup().id)))]",
+    "ApiAppName": "[toLower(concat(parameters('SystemPrefixName'),'ApiApp',uniqueString(resourceGroup().id)))]",
+    "applicationGatewayName": "[toLower(concat(parameters('SystemPrefixName'),'WAF',uniqueString(resourceGroup().id)))]",
+    "sqlServerName": "[toLower(concat(parameters('SystemPrefixName'),'AzureSql',uniqueString(resourceGroup().id)))]",
+    "databaseName": "[toLower(concat(parameters('SystemPrefixName'),'Database'))]",
 
     "Region": "[resourceGroup().location]",
     "TemplateURIs": "https://raw.githubusercontent.com/mayurshintre/Blueprints/master/ase-ilb-blueprint/templates/",
@@ -239,8 +239,7 @@
     "WAFBackEndPoolStaticIP2": "[concat(variables('WAFBackEndPoolSplit2')[0],'.',variables('WAFBackEndPoolSplit2')[1],'.',variables('WAFBackEndPoolSplit2')[2],'.',variables('WAFBackEndPoolLastOctet2'))]",
 
     "databaseServiceObjectiveName": "Basic",
-    "databaseEdition": "Basic",
-    "sqlServerName": "[concat(variables('sqlServerName'),uniqueString(resourceGroup().id))]"
+    "databaseEdition": "Basic"
   },
   "resources": [
     {
