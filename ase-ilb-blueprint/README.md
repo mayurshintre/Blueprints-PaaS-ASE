@@ -2,39 +2,45 @@
 
 ##Contents
 
-- [Solution Overview](#Overview) 	
+- [Solution Overview](#Overview)
+	- NIST Based Assurance Framework Azure PaaS
+	- 
 - [Architecture Diagram and Deployed Components](#architecture-diagram-and-components)
-	- Resource Provider 1
-	- Resource Provider 2
-	- Resource Provider 3
+	- [Deployed Resources]
+		- [Resource Provider 1]
+		- [Resource Provider 2]
+		- [Resource Provider 3]
+
 - [Guidance and Recommendations](#guidance-and-recommendations)
 	- [Business continuity](#business-continuity)
 	- [Logging and Audit](#logging-and-audit)
 	- [Identity](#identity)
 	- [Security](#security)
-- [NCSC Security Matrix Compliance](#ncsc-security-matrix-compliance)
-- [Deployment Guide](#deployment-guide])
-- [Deployment and Configuration Activities](#deployment-and-configuration-activities) 
+
+- [NIST Security Compliance Matrix](#ncsc-security-matrix-compliance)
+
+- [Deployment Guide](#deployment-and-configuration-activities) 
+	- [Configuration Activities](#)
+		- [Prefix Value and Tags](#)
+		- [Prefix Value and Tags](#)
 	- [Deployment Process](#deployment-process)
-	- [Deploy Networking Infrastructure](#deploy-networking-infrastructure)
-	- [Deploy Active Directory Domain](#deploy-active-directory-domain)
-	- [Deploy operational workload infrastructure](#deploy-operational-workload-infrastructure)
-	- [(Optional) PowerShell Deployment](#optional-powershell-deployment)
-- [UK Governments Private Network Connectivity](#uk-governments-private-network-connectivity)
+	- [PowerShell Deployment](#optional-powershell-deployment)
+
 - [Cost](#cost)
-- [Further reading](#further-reading)
 
 ## Solution Overview
 
-### NIST Based Assurance Framework Azure PaaS
-
 This template deploys a NIST 800-66 compliant secure baseline for Azure App service Environment, Web App, API Apps, Redis Cache and Web Application Gateway 
 
-## Architecture Diagram and Deployed Components
+### NIST Based Assurance Framework for Azure PaaS
+
+Lorem epsum.
+
+## Solution Architecture and Deployed Resources
 
 This diagram displays an overview of the solution
 
-![alt text](images/solution.png "diagram")
+![alt text](images/solution.png "Solution Diagram")
 
 This deployment uses nested templates.
 The following resources are deployed as part of the solution
@@ -42,29 +48,43 @@ The following resources are deployed as part of the solution
 
 ## Deployed Resources
 
-
-####[Resource provider 1]
-[Description Resource Provider 1]
+####[VNET]
+[Microsoft.Networks/virtualNetworks]
 + **[Resource type 1A]**: [Description Resource type 1A]
 + **[Resource type 1B]**: [Description Resource type 1B]
 + **[Resource type 1C]**: [Description Resource type 1C]
 
-####[Resource provider 2]
+####[Application Gateway]
 [Description Resource Provider 2]
 + **[Resource type 2A]**: [Description Resource type 2A]
 
-####[Resource provider 3]
+####[Redis Cache]
 [Description Resource Provider 3]
 + **[Resource type 3A]**: [Description Resource type 3A]
 + **[Resource type 3B]**: [Description Resource type 3B]
 
+####[ILB ASE - Web App]
+[Description Resource Provider 3]
++ **[Resource type 3A]**: [Description Resource type 3A]
++ **[Resource type 3B]**: [Description Resource type 3B]
+
+####[ILB ASE - API App]
+[Description Resource Provider 3]
++ **[Resource type 3A]**: [Description Resource type 3A]
++ **[Resource type 3B]**: [Description Resource type 3B]
+
+####[Azure SQL]
+[Description Resource Provider 3]
++ **[Resource type 3A]**: [Description Resource type 3A]
++ **[Resource type 3B]**: [Description Resource type 3B]
+
+####[Azure KeyVault]
+[Description Resource Provider 3]
++ **[Resource type 3A]**: [Description Resource type 3A]
++ **[Resource type 3B]**: [Description Resource type 3B]
 
 ## Deployment steps
 You can either click the "deploy to Azure" button at the beginning of this document or deploy the solution from PowerShell with the following PowerShell script.
-
-### Prerequisites
-
-[Decscription of the prerequistes for the deployment]
 
 ``` PowerShell
 # Login to your subscription
