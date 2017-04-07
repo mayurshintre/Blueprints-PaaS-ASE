@@ -52,39 +52,39 @@ The following resources are deployed as part of the solution
 #### Passwords & Secrets
 
 
-## Deployed Resources
+## Deployed Azure Resources
 
-####[VNET]
+### [VNET]
 [Microsoft.Networks/virtualNetworks]
 + **[Resource type 1A]**: [Description Resource type 1A]
 + **[Resource type 1B]**: [Description Resource type 1B]
 + **[Resource type 1C]**: [Description Resource type 1C]
 
-####[Application Gateway]
+### [Application Gateway]
 [Description Resource Provider 2]
 + **[Resource type 2A]**: [Description Resource type 2A]
 
-####[Redis Cache]
+### [Redis Cache]
 [Description Resource Provider 3]
 + **[Resource type 3A]**: [Description Resource type 3A]
 + **[Resource type 3B]**: [Description Resource type 3B]
 
-####[ILB ASE - Web App]
+### [ILB ASE - Web App]
 [Description Resource Provider 3]
 + **[Resource type 3A]**: [Description Resource type 3A]
 + **[Resource type 3B]**: [Description Resource type 3B]
 
-####[ILB ASE - API App]
+### [ILB ASE - API App]
 [Description Resource Provider 3]
 + **[Resource type 3A]**: [Description Resource type 3A]
 + **[Resource type 3B]**: [Description Resource type 3B]
 
-####[Azure SQL]
+### [Azure SQL]
 [Description Resource Provider 3]
 + **[Resource type 3A]**: [Description Resource type 3A]
 + **[Resource type 3B]**: [Description Resource type 3B]
 
-####[Azure KeyVault]
+### [Azure KeyVault]
 [Description Resource Provider 3]
 + **[Resource type 3A]**: [Description Resource type 3A]
 + **[Resource type 3B]**: [Description Resource type 3B]
@@ -102,7 +102,7 @@ The following resources are deployed as part of the solution
   Resource| Parameter | Configuration
   ---|---|---
   All | All | **No spaces or special characters. Lower case alphabets and numbers only. Adding special characters will break deployment for Azure SQL.**
-  All | Prefix | Prefix name for the entire solution. Prepended to all presource names. Kepp it short. Lower case alphabets and numbers only. No spaces or special characters.
+  All | Prefix | Prefix name for the entire solution. Prepended to all resource names. Keep it short (4-6 characters). Lower case alphabets and numbers only. No spaces or special characters.
 
 ## Deployment steps
 You can either click the "deploy to Azure" button at the beginning of this document or deploy the solution from PowerShell with the following PowerShell script.
@@ -139,10 +139,15 @@ New-AzureRmResourceGroupDeployment -Name $DeploymentName -ResourceGroupName $Res
 ## Notes
 [Solution notes]
 
+
+## Cost
+
+You are responsible for the cost of the Azure services used while running this NIST 800-66 reference PaaS deployment for ASE. There is no additional cost for using this template. The Azure Resource Manager template for this NIST 800-66 reference PaaS deployment for ASE includes configuration parameters that you can customize. Some of these settings will affect the cost of deployment. For cost estimates, see the pricing pages for each AWS service you will be using or the Azure Calculator. Prices are subject to change.
+
 ## Authors
 
-Dustin Paulson, Premier Field Engineer, Microsoft
-Jerad Berhow, Premier Field Engineer, Microsoft
-Mayur Shintre, Principal Architect, Microsoft
++ Dustin Paulson, Premier Field Engineer, Microsoft
++ Jerad Berhow, Premier Field Engineer, Microsoft
++ Mayur Shintre, Principal Architect, Microsoft
 
 `Tags: [NIST, 800-66, Azure, Templates, PaaS, ASE]`
