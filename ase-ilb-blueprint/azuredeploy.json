@@ -131,7 +131,14 @@
     },
     "AspDNS": {
       "type": "string",
-      "defaultValue": "ASp.demo",
+      "defaultValue": "ASP.demo",
+      "metadata": {
+        "description": "Set to the root internal domain name to associate with this ASP."
+      }
+    },
+    "WebDNS": {
+      "type": "string",
+      "defaultValue": "Web.demo",
       "metadata": {
         "description": "Set to the root internal domain name to associate with this ASP."
       }
@@ -340,7 +347,7 @@
           "aseName": { "value": "[variables('aseName')]" },
           "VnetID": { "value": "[variables('VnetID')]" },
           "WebAppSubnetName": { "value": "[variables('WebAppSubnetName')]" },
-
+          "webDNS": { "value": "[parameters('WebDNS')]" }
         }
       }
     },
