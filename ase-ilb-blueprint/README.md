@@ -100,7 +100,7 @@ The following resources are deployed as part of the solution
 ## Configuration Values
 
   Resource| Parameter | Configuration
-  ---|---
+  ---|---|---
   All | All | **No spaces or special characters. Lower case alphabets and numbers only. Adding special characters will break deployment for Azure SQL.**
   All | Prefix | Prefix name for the entire solution. Prepended to all presource names. Kepp it short. Lower case alphabets and numbers only. No spaces or special characters.
 
