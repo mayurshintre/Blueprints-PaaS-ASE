@@ -14,6 +14,12 @@
         "description": "The administrator password of the SQL Server."
       }
     },
+    "Region": {
+      "type": "string",
+      "metadata": {
+        "description": "The Location to build resources."
+      }
+    },
     "sqlServerName": {
       "type": "string",
       "metadata": {
@@ -44,7 +50,7 @@
         "description": "The name of the ServiceObjective"
       }
     }
- },
+  },
   "variables": {
     "databaseCollation": "SQL_Latin1_General_CP1_CI_AS",
     "transparentDataEncryption": "Enabled"
@@ -54,7 +60,7 @@
         "name": "[parameters('sqlServerName')]",
         "type": "Microsoft.Sql/servers",
         "apiVersion": "2014-04-01-preview",
-        "location": "[resourceGroup().location]",
+        "location": "[parameters('Region')]",
         "tags": {
           "displayName": "SqlServer"
         },

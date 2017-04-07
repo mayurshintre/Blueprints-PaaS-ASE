@@ -2,11 +2,11 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "vnetName": {
+    "SystemPrefixName": {
       "type": "string",
-      "defaultValue": "PaaSvnet",
+      "defaultValue": "Nist800Demo",
       "metadata": {
-        "description": "Name of Virtual Network"
+        "description": "String to append to all resource names"
       }
     },
     "vnetAddressPrefix": {
@@ -39,13 +39,6 @@
         "description": "WAF Subnet CIDR Block"
       }
     },
-    "WAFSubnetName": {
-      "type": "string",
-      "defaultValue": "WAFSubnet",
-      "metadata": {
-        "description": "WAF Subnet Name"
-      }
-    },
     "WebAppSubnetPrefix": {
       "type": "string",
       "defaultValue": "10.0.1.0",
@@ -59,13 +52,6 @@
       "maxValue": 28,
       "metadata": {
         "description": "Web App Subnet CIDR Block"
-      }
-    },
-    "WebAppSubnetName": {
-      "type": "string",
-      "defaultValue": "WebAppSubnet",
-      "metadata": {
-        "description": "Web App Subnet Name"
       }
     },
     "APIAppSubnetPrefix": {
@@ -83,13 +69,6 @@
         "description": "API App Subnet CIDR Block"
       }
     },
-    "APIAppSubnetName": {
-      "type": "string",
-      "defaultValue": "APIAppSubnet",
-      "metadata": {
-        "description": "API App Subnet Name"
-      }
-    },
     "RedisCacheSubnetPrefix": {
       "type": "string",
       "defaultValue": "10.0.3.0",
@@ -103,13 +82,6 @@
       "maxValue": 32,
       "metadata": {
         "description": "Redis Cache Subnet CIDR Block"
-      }
-    },
-    "RedisCacheSubnetName": {
-      "type": "string",
-      "defaultValue": "RedisCacheSubnet",
-      "metadata": {
-        "description": "Redis Cache Subnet Name"
       }
     },
     "customDNSIP": {
@@ -128,13 +100,6 @@
       ],
       "metadata": {
         "description": "Pick either azuredns or customdns. This is Case Sensitive. "
-      }
-    },
-    "redisCacheName": {
-      "defaultValue": "RedisCache1",
-      "type": "string",
-      "metadata": {
-        "description": "The name of the Azure Redis Cache to create."
       }
     },
     "redisShardCount": {
@@ -157,48 +122,6 @@
         "description": "The size of the new Azure Redis Cache instance. Valid family and capacity combinations are (C0..C6, P1..P4)."
       }
     },
-    "redisCachemaxclients": {
-      "type": "int",
-      "defaultValue": 7500,
-      "metadata": {
-        "description": "Set to true to allow access to redis on port 6379, without SSL tunneling (less secure)."
-      }
-    },
-    "redisCachemaxmemoryreserved": {
-      "type": "int",
-      "defaultValue": 200,
-      "metadata": {
-        "description": "Set to true to allow access to redis on port 6379, without SSL tunneling (less secure)."
-      }
-    },
-    "redisCachemaxfragmentationmemory-reserved": {
-      "type": "int",
-      "defaultValue": 300,
-      "metadata": {
-        "description": "Set to true to allow access to redis on port 6379, without SSL tunneling (less secure)."
-      }
-    },
-    "redisCachemaxmemory-delta": {
-      "type": "int",
-      "defaultValue": 200,
-      "metadata": {
-        "description": "Set to true to allow access to redis on port 6379, without SSL tunneling (less secure)."
-      }
-    },
-    "aseName": {
-      "type": "string",
-      "defaultValue": "aseDemo",
-      "metadata": {
-        "description": "Name of the App Service Environment."
-      }
-    },
-    "aspName": {
-      "type": "string",
-      "defaultValue": "aspDemo",
-      "metadata": {
-        "description": "Name of the App Service Plan."
-      }
-    },
     "AseDNS": {
       "type": "string",
       "defaultValue": "ASE.demo",
@@ -213,30 +136,10 @@
         "description": "Set to the root internal domain name to associate with this ASP."
       }
     },
-    "WebAppName": {
-      "type": "string",
-      "defaultValue": "WebAppDemo",
-      "metadata": {
-        "description": "Name of the WebApp."
-      }
-    },
-    "ApiAppName": {
-      "type": "string",
-      "defaultValue": "ApiAppDemo",
-      "metadata": {
-        "description": "Name of the ApiApp."
-      }
-    },
-    "applicationGatewayName": {
-      "type": "string",
-      "defaultValue": "WAFAppGateway",
-      "metadata": {
-        "description": "Name of WAF Application Gateway"
-      }
-    },
     "applicationGatewaySize": {
       "type": "string",
       "allowedValues": [
+        "WAF_Small",
         "WAF_Medium",
         "WAF_Large"
       ],
@@ -245,7 +148,7 @@
         "description": "WAF Appliaction Gateway Size"
       }
     },
-    "capacity": {
+    "WafCapacity": {
       "type": "int",
       "allowedValues": [
         1,
@@ -264,56 +167,63 @@
         "description": "Number of WAF Instances"
       }
     },
-    "wafMode": {
+    "sqlAdministratorLogin": {
       "type": "string",
-      "allowedValues": [
-        "Detection",
-        "Prevention"
-      ],
-      "defaultValue": "Prevention",
       "metadata": {
-        "description": "WAF Mode"
+        "description": "The administrator username of the SQL Server."
       }
     },
-    "wafRuleSetType": {
-      "type": "string",
-      "allowedValues": [
-        "OWASP"
-      ],
-      "defaultValue": "OWASP",
+    "sqlAdministratorLoginPassword": {
+      "type": "securestring",
       "metadata": {
-        "description": "WAF Rule Set Type"
-      }
-    },
-    "wafRuleSetVersion": {
-      "type": "string",
-      "allowedValues": [
-        "2.2.9",
-        "3.0"
-      ],
-      "defaultValue": "3.0",
-      "metadata": {
-        "description": "WAF Rule Set Version"
+        "description": "The administrator password of the SQL Server."
       }
     }
   },
   "variables": {
+    "vnetName": "[concat(parameters('SystemPrefixName'),'vNet',uniqueString(resourceGroup().id))]",
+    "WafSubnetName": "[concat(parameters('SystemPrefixName'),'WafSubnet')]",
+    "WebAppSubnetName": "[concat(parameters('SystemPrefixName'),'WebAppSubnet')]",
+    "ApiAppSubnetName": "[concat(parameters('SystemPrefixName'),'ApiAppSubnet')]",
+    "RedisCacheSubnetName": "[concat(parameters('SystemPrefixName'),'RedisCacheSubnet')]",
+    "redisCacheName": "[concat(parameters('SystemPrefixName'),'RedisCache',uniqueString(resourceGroup().id))]",
+    "aseName": "[concat(parameters('SystemPrefixName'),'ASE',uniqueString(resourceGroup().id))]",
+    "aspName": "[concat(parameters('SystemPrefixName'),'ASP',uniqueString(resourceGroup().id))]",
+    "WebAppName": "[concat(parameters('SystemPrefixName'),'WebApp',uniqueString(resourceGroup().id))]",
+    "ApiAppName": "[concat(parameters('SystemPrefixName'),'ApiApp',uniqueString(resourceGroup().id))]",
+    "applicationGatewayName": "[concat(parameters('SystemPrefixName'),'applicationGateway',uniqueString(resourceGroup().id))]",
+    "sqlServerName": "[concat(parameters('SystemPrefixName'),'SqlServer',uniqueString(resourceGroup().id))]",
+    "databaseName": "[concat(parameters('SystemPrefixName'),'Database',uniqueString(resourceGroup().id))]",
+
     "Region": "[resourceGroup().location]",
     "TemplateURIs": "https://raw.githubusercontent.com/mayurshintre/Blueprints/master/ase-ilb-blueprint/templates/",
+
+    "wafMode": "Prevention",
+    "wafRuleSetType": "OWASP",
+    "wafRuleSetVersion": "3.0",
+
     "VaultName": "[concat('ILBaseVault',uniqueString(resourceGroup().id))]",
     "VaultSKU": "Premium",
+
     "vnetAddressSpace": "[concat(parameters('vnetAddressPrefix'), '/', parameters('vnetAddressPrefixCIDR'))]",
     "WAFSubnetAddressSpace": "[concat(parameters('WAFSubnetPrefix'), '/', parameters('WAFSubnetPrefixCIDR'))]",
     "WebAppSubnetAddressSpace": "[concat(parameters('WebAppSubnetPrefix'), '/', parameters('WebAppSubnetPrefixCIDR'))]",
     "APIAppSubnetAddressSpace": "[concat(parameters('APIAppSubnetPrefix'), '/', parameters('APIAppSubnetPrefixCIDR'))]",
     "RedisCacheSubnetAddressSpace": "[concat(parameters('RedisCacheSubnetPrefix'), '/', parameters('RedisCacheSubnetPrefixCIDR'))]",
-    "VnetID": "[concat(resourceId('Microsoft.Network/VirtualNetworks', parameters('vnetName')))]",
+    "VnetID": "[concat(resourceId('Microsoft.Network/VirtualNetworks', variables('vnetName')))]",
     "SubNetID": "[concat(variables('VnetID'), '/subnets/')]",
+
+    "redisCachemaxclients": 7500,
+    "redisCachemaxmemoryreserved": 200,
+    "redisCachemaxfragmentationmemory-reserved": 300,
+    "redisCachemaxmemory-delta": 200,
+
     "RedisCacheSplit": "[split(parameters('RedisCacheSubnetPrefix'),'.')]",
     "RedisCacheConvert": "[int(variables('RedisCacheSplit')[3])]",
     "RedisCacheAdd": "[add(variables('RedisCacheConvert'),4)]",
     "RedisCacheLastOctet": "[string(variables('RedisCacheAdd'))]",
     "RedisCacheStaticIP": "[concat(variables('RedisCacheSplit')[0],'.',variables('RedisCacheSplit')[1],'.',variables('RedisCacheSplit')[2],'.',variables('RedisCacheLastOctet'))]",
+
     "enableNonSSLPort": false,
 
     "WAFBackEndPoolSplit": "[split(parameters('WebAppSubnetPrefix'),'.')]",
@@ -326,8 +236,11 @@
     "WAFBackEndPoolConvert2": "[int(variables('WAFBackEndPoolSplit2')[3])]",
     "WAFBackEndPoolAdd2": "[add(variables('WAFBackEndPoolConvert2'),4)]",
     "WAFBackEndPoolLastOctet2": "[string(variables('WAFBackEndPoolAdd2'))]",
-    "WAFBackEndPoolStaticIP2": "[concat(variables('WAFBackEndPoolSplit2')[0],'.',variables('WAFBackEndPoolSplit2')[1],'.',variables('WAFBackEndPoolSplit2')[2],'.',variables('WAFBackEndPoolLastOctet2'))]"
+    "WAFBackEndPoolStaticIP2": "[concat(variables('WAFBackEndPoolSplit2')[0],'.',variables('WAFBackEndPoolSplit2')[1],'.',variables('WAFBackEndPoolSplit2')[2],'.',variables('WAFBackEndPoolLastOctet2'))]",
 
+    "databaseServiceObjectiveName": "Basic",
+    "databaseEdition": "Basic",
+    "sqlServerName": "[concat(variables('sqlServerName'),uniqueString(resourceGroup().id))]"
   },
   "resources": [
     {
@@ -358,24 +271,24 @@
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
-          "vnetName": { "value": "[parameters('vnetName')]" },
+          "vnetName": { "value": "[variables('vnetName')]" },
           "vnetAddressSpace": { "value": "[variables('vnetAddressSpace')]" },
           "vnetAddressPrefix": { "value": "[parameters('vnetAddressPrefix')]" },
           "vnetAddressPrefixCIDR": { "value": "[parameters('vnetAddressPrefixCIDR')]" },
           "WAFSubnetAddressSpace": { "value": "[variables('WAFSubnetAddressSpace')]" },
-          "WAFSubnetName": { "value": "[parameters('WAFSubnetName')]" },
+          "WAFSubnetName": { "value": "[variables('WAFSubnetName')]" },
           "WAFSubnetPrefixCIDR": { "value": "[parameters('WAFSubnetPrefixCIDR')]" },
           "WAFSubnetPrefix": { "value": "[parameters('WAFSubnetPrefix')]" },
           "WebAppSubnetAddressSpace": { "value": "[variables('WebAppSubnetAddressSpace')]" },
-          "WebAppSubnetName": { "value": "[parameters('WebAppSubnetName')]" },
+          "WebAppSubnetName": { "value": "[variables('WebAppSubnetName')]" },
           "WebAppSubnetPrefix": { "value": "[parameters('WebAppSubnetPrefix')]" },
           "WebAppSubnetPrefixCIDR": { "value": "[parameters('WebAppSubnetPrefixCIDR')]" },
           "APIAppSubnetAddressSpace": { "value": "[variables('APIAppSubnetAddressSpace')]" },
-          "APIAppSubnetName": { "value": "[parameters('APIAppSubnetName')]" },
+          "APIAppSubnetName": { "value": "[variables('APIAppSubnetName')]" },
           "APIAppSubnetPrefix": { "value": "[parameters('APIAppSubnetPrefix')]" },
           "APIAppSubnetPrefixCIDR": { "value": "[parameters('APIAppSubnetPrefixCIDR')]" },
           "RedisCacheSubnetAddressSpace": { "value": "[variables('RedisCacheSubnetAddressSpace')]" },
-          "RedisCacheSubnetName": { "value": "[parameters('RedisCacheSubnetName')]" },
+          "RedisCacheSubnetName": { "value": "[variables('RedisCacheSubnetName')]" },
           "RedisCacheSubnetPrefix": { "value": "[parameters('RedisCacheSubnetPrefix')]" },
           "RedisCacheSubnetPrefixCIDR": { "value": "[parameters('RedisCacheSubnetPrefixCIDR')]" },
           "customDNSIP": { "value": "[parameters('customDNSIP')]" }
@@ -394,17 +307,17 @@
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
-          "redisCacheName": { "value": "[parameters('redisCacheName')]" },
+          "redisCacheName": { "value": "[variables('redisCacheName')]" },
           "redisShardCount": { "value": "[parameters('redisShardCount')]" },
           "redisCacheCapacity": { "value": "[parameters('redisCacheCapacity')]" },
           "virtualNetwork": { "value": "[variables('VnetID')]" },
-          "subnet": { "value": "[parameters('RedisCacheSubnetName')]" },
+          "subnet": { "value": "[variables('RedisCacheSubnetName')]" },
           "redisCacheStaticIP": { "value": "[variables('redisCacheStaticIP')]" },
           "enableNonSslPort": { "value": "[variables('enableNonSslPort')]" },
-          "redisCachemaxclients": { "value": "[parameters('redisCachemaxclients')]" },
-          "redisCachemaxmemoryreserved": { "value": "[parameters('redisCachemaxmemoryreserved')]" },
-          "redisCachemaxfragmentationmemory-reserved": { "value": "[parameters('redisCachemaxfragmentationmemory-reserved')]" },
-          "redisCachemaxmemory-delta": { "value": "[parameters('redisCachemaxmemory-delta')]" }
+          "redisCachemaxclients": { "value": "[variables('redisCachemaxclients')]" },
+          "redisCachemaxmemoryreserved": { "value": "[variables('redisCachemaxmemoryreserved')]" },
+          "redisCachemaxfragmentationmemory-reserved": { "value": "[variables('redisCachemaxfragmentationmemory-reserved')]" },
+          "redisCachemaxmemory-delta": { "value": "[variables('redisCachemaxmemory-delta')]" }
         }
       }
     },
@@ -456,17 +369,17 @@
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
-          "vnetName": { "value": "[parameters('vnetName')]" },
-          "WAFSubnetName": { "value": "[parameters('WAFSubnetName')]" },
+          "vnetName": { "value": "[variables('vnetName')]" },
+          "WAFSubnetName": { "value": "[variables('WAFSubnetName')]" },
           "Location": { "value": "[variables('Region')]"},
           "subnetPrefix": { "value": "[variables('WAFSubnetAddressSpace')]" },
           "addressPrefix": { "value": "[variables('vnetAddressSpace')]" },
-          "applicationGatewayName": { "value": "[parameters('applicationGatewayName')]" },
+          "applicationGatewayName": { "value": "[variables('applicationGatewayName')]" },
           "applicationGatewaySize": { "value": "[parameters('applicationGatewaySize')]" },
-          "capacity": { "value": "[parameters('capacity')]" },
-          "wafMode": { "value": "[parameters('wafMode')]" },
-          "wafRuleSetType": { "value": "[parameters('wafRuleSetType')]" },
-          "wafRuleSetVersion": { "value": "[parameters('wafRuleSetVersion')]" },
+          "capacity": { "value": "[parameters('WafCapacity')]" },
+          "wafMode": { "value": "[variables('wafMode')]" },
+          "wafRuleSetType": { "value": "[variables('wafRuleSetType')]" },
+          "wafRuleSetVersion": { "value": "[variables('wafRuleSetVersion')]" },
           "backendIpAddress1": { "value": "[variables('WAFBackEndPoolStaticIP1')]" },
           "backendIpAddress2": { "value": "[variables('WAFBackEndPoolStaticIP2')]" }
         }
@@ -483,11 +396,15 @@
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
-          "VaultName": { "value": "[variables('VaultName')]" },
           "Region": { "value": "[variables('Region')]" },
-          "VaultSku": { "value": "[variables('VaultSKU')]" }
+          "sqlAdministratorLogin": { "value": "[parameters('sqlAdministratorLogin')]" },
+          "sqlAdministratorLoginPassword": { "value": "[parameters('sqlAdministratorLoginPassword')]" },
+          "sqlServerName": { "value": "[variables('sqlServerName')]" },
+          "databaseName": { "value": "[variables('databaseName')]" },
+          "databaseEdition": { "value": "[variables('databaseEdition')]" },
+          "databaseServiceObjectiveName": { "value": "[variables('databaseServiceObjectiveName')]" }
+          }
         }
-      }
     }
   ]
  }
