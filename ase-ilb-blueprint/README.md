@@ -1,6 +1,6 @@
 ﻿# NIST 800-66 Assurance PaaS Blueprint for ASE
 
-##Contents
+## Contents
 
 - [Solution Overview](#Overview)
 	- NIST Based Assurance Framework Azure PaaS
@@ -30,7 +30,7 @@
 
 ## Solution Overview
 
-This template deploys a NIST 800-66 compliant secure baseline for Azure App service Environment, Web App, API Apps, Redis Cache and Web Application Gateway 
+This template deploys a NIST 800-66 compliant secure baseline for Azure App service Environment, Web App, API Apps, Redis Cache and Web Application Gateway
 
 ### NIST Based Assurance Framework for Azure PaaS
 
@@ -44,6 +44,12 @@ This diagram displays an overview of the solution
 
 This deployment uses nested templates.
 The following resources are deployed as part of the solution
+
+### Security
+
+#### Network
+
+#### Passwords & Secrets
 
 
 ## Deployed Resources
@@ -83,6 +89,21 @@ The following resources are deployed as part of the solution
 + **[Resource type 3A]**: [Description Resource type 3A]
 + **[Resource type 3B]**: [Description Resource type 3B]
 
+## Deployment Guide
+
+### Prerequisites
+
+### Deployment Sequence
+
+![alt text](images/asesequencevsdx.png "Template Deployment Sequence")
+
+## Configuration Values
+
+  Parameter | Configuration
+  ---|---
+  All | **No spaces or special characters. Lower case alphabets and numbers only. Adding special characters will break deployment for Azure SQL.**
+  Prefix | Prefix name for the entire solution. Prepended to all presource names. Kepp it short. Lower case alphabets and numbers only. No spaces or special characters.
+
 ## Deployment steps
 You can either click the "deploy to Azure" button at the beginning of this document or deploy the solution from PowerShell with the following PowerShell script.
 
@@ -109,6 +130,7 @@ New-AzureRmResourceGroupDeployment -Name $DeploymentName -ResourceGroupName $Res
 ## Modifying the Templates
 
 ## Usage
+
 #### Connect
 [How to connect to the solution]
 #### Management
@@ -116,5 +138,11 @@ New-AzureRmResourceGroupDeployment -Name $DeploymentName -ResourceGroupName $Res
 
 ## Notes
 [Solution notes]
+
+## Authors
+
+Dustin Paulson, Premier Field Engineer, Microsoft
+Jerad Berhow, Premier Field Engineer, Microsoft
+Mayur Shintre, Principal Architect, Microsoft
 
 `Tags: [NIST, 800-66, Azure, Templates, PaaS, ASE]`
