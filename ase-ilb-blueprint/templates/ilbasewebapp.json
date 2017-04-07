@@ -35,13 +35,13 @@
         "description": "Location of the App Service Environment"
       }
     },
-    "existingVnetResourceId": {
+    "vnetID": {
       "type": "string",
       "metadata": {
         "description": "ARM Url reference for the virtual network that will contain the ASE.  Use Microsoft.Network for ARM vnets.  Use Microsoft.ClassicNetwork for older ASM vnets.  /subscriptions/subIDGoesHere/resourceGroups/rgNameGoesHere/providers/Microsoft.Network/virtualNetworks/vnetnamegoeshere"
       }
     },
-    "subnetName": {
+    "WebAppSubnetName": {
       "type": "string",
       "metadata": {
         "description": "Subnet name that will contain the App Service Environment"
@@ -147,8 +147,8 @@
         "internalLoadBalancingMode": "[parameters('internalLoadBalancingMode')]",
         "dnsSuffix": "[parameters('dnsSuffix')]",
         "virtualNetwork": {
-          "Id": "[parameters('existingVnetResourceId')]",
-          "Subnet": "[parameters('subnetName')]"
+          "Id": "[parameters('vnetID')]",
+          "Subnet": "[parameters('WebAppSubnetName')]"
         },
         "multiSize": "[parameters('frontEndSize')]",
         "multiRoleCount": "[parameters('frontEndCount')]",
