@@ -11,7 +11,7 @@
       "hostingEnvironment": {
         "type": "string"
       },
-      "location": {
+      "Region": {
         "type": "string"
       },
       "sku": {
@@ -40,7 +40,7 @@
           "serverFarmId": "[concat('/subscriptions/', parameters('subscriptionId'),'/resourcegroups/', parameters('serverFarmResourceGroup'), '/providers/Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]",
           "hostingEnvironment": "[parameters('hostingEnvironment')]"
         },
-        "location": "[parameters('location')]",
+        "location": "[parameters('Region')]",
         "tags": {
           "[concat('hidden-related:', '/subscriptions/', parameters('subscriptionId'),'/resourcegroups/', parameters('serverFarmResourceGroup'), '/providers/Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]": "empty"
         },
@@ -53,7 +53,7 @@
         "apiVersion": "2016-09-01",
         "name": "[parameters('hostingPlanName')]",
         "type": "Microsoft.Web/serverfarms",
-        "location": "[parameters('location')]",
+        "location": "[parameters('Region')]",
         "properties": {
           "name": "[parameters('hostingPlanName')]",
           "workerSizeId": "[parameters('workerSize')]",

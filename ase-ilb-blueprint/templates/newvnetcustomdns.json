@@ -8,6 +8,9 @@
         "description": "Name of Virtual Network"
       }
     },
+    "Region": {
+      "type": "string"
+    },
     "vnetAddressPrefix": {
       "type": "string",
       "metadata": {
@@ -137,7 +140,7 @@
       "apiVersion": "2016-03-30",
       "type": "Microsoft.Network/virtualNetworks",
       "name": "[parameters('vnetName')]",
-      "location": "[resourceGroup().location]",
+      "location": "[parameters('Region')]",
       "properties": {
         "addressSpace": {
           "addressPrefixes": [

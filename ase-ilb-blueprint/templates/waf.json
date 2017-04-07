@@ -8,7 +8,7 @@
     "WAFSubnetName": {
       "type": "string"
     },
-    "Location": {
+    "Region": {
       "type": "string"
     },
     "addressPrefix": {
@@ -123,7 +123,7 @@
         "apiVersion": "2017-03-01",
         "type": "Microsoft.Network/publicIPAddresses",
         "name": "[variables('publicIPAddressName')]",
-        "location": "[parameters('Location')]",
+        "location": "[parameters('Region')]",
         "properties": {
           "publicIPAllocationMethod": "Dynamic"
         }
@@ -132,7 +132,7 @@
         "apiVersion": "2017-03-01",
         "name": "[parameters('applicationGatewayName')]",
         "type": "Microsoft.Network/applicationGateways",
-        "location": "[parameters('Location')]",
+        "location": "[parameters('Region')]",
         "dependsOn": [
           "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]"
         ],
@@ -232,7 +232,7 @@
             "firewallMode": "[parameters('wafMode')]",
             "ruleSetType": "[parameters('wafRuleSetType')]",
             "ruleSetVersion": "[parameters('wafRuleSetVersion')]",
-            "disabledRuleGroups": []
+            "disabledRuleGroups": [ ]
           }
         }
       }
