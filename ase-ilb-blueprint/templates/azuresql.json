@@ -13,19 +13,45 @@
       "metadata": {
         "description": "The administrator password of the SQL Server."
       }
-    }
-  },
-  "variables": {
-    "sqlServerName": "[concat('sqlserver', uniqueString(subscription().id, resourceGroup().id))]",
-    "databaseName": "sample-db-with-tde",
-    "databaseEdition": "Basic",
-    "databaseCollation": "SQL_Latin1_General_CP1_CI_AS",
-    "databaseServiceObjectiveName": "Basic",
-    "transparentDataEncryption": "Enabled"
     },
+    "sqlServerName": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of the SQl server"
+      }
+    },
+    "databaseName": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of the SQl Database"
+      }
+    },
+    "databaseEdition": {
+      "type": "string",
+      "allowedValues": [
+        "Basic",
+        "Standard",
+        "Premium",
+        "PremiumRS"
+      ],
+      "metadata": {
+        "description": "The edition of the SQL Database"
+      }
+    },
+    "databaseServiceObjectiveName": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of the ServiceObjective"
+      }
+    }
+ },
+  "variables": {
+    "databaseCollation": "SQL_Latin1_General_CP1_CI_AS",
+    "transparentDataEncryption": "Enabled"
+  },
     "resources": [
       {
-        "name": "[variables('sqlServerName')]",
+        "name": "[parameters('sqlServerName')]",
         "type": "Microsoft.Sql/servers",
         "apiVersion": "2014-04-01-preview",
         "location": "[resourceGroup().location]",
@@ -39,7 +65,7 @@
         },
         "resources": [
           {
-            "name": "[variables('databaseName')]",
+            "name": "[parameters('databaseName')]",
             "type": "databases",
             "apiVersion": "2015-01-01",
             "location": "[resourceGroup().location]",
@@ -47,12 +73,12 @@
               "displayName": "Database"
             },
             "properties": {
-              "edition": "[variables('databaseEdition')]",
+              "edition": "[parameters('databaseEdition')]",
               "collation": "[variables('databaseCollation')]",
-              "requestedServiceObjectiveName": "[variables('databaseServiceObjectiveName')]"
+              "requestedServiceObjectiveName": "[parameters('databaseServiceObjectiveName')]"
             },
             "dependsOn": [
-              "[variables('sqlServerName')]"
+              "[parameters('sqlServerName')]"
             ],
             "resources": [
               {
@@ -64,7 +90,7 @@
                   "status": "[variables('transparentDataEncryption')]"
                 },
                 "dependsOn": [
-                  "[variables('databaseName')]"
+                  "[parameters('databaseName')]"
                 ]
               }
             ]
@@ -79,7 +105,7 @@
               "startIpAddress": "0.0.0.0"
             },
             "dependsOn": [
-              "[variables('sqlServerName')]"
+              "[parameters('sqlServerName')]"
             ]
           },
           {
@@ -92,7 +118,7 @@
               "startIpAddress": "0.0.0.0"
             },
             "dependsOn": [
-              "[variables('sqlServerName')]"
+              "[parameters('sqlServerName')]"
             ]
           }
         ]
@@ -101,11 +127,11 @@
     "outputs": {
       "sqlServerFqdn": {
         "type": "string",
-        "value": "[reference(concat('Microsoft.Sql/servers/', variables('sqlServerName'))).fullyQualifiedDomainName]"
+        "value": "[reference(concat('Microsoft.Sql/servers/', parameters('sqlServerName'))).fullyQualifiedDomainName]"
       },
       "databaseName": {
         "type": "string",
-        "value": "[variables('databaseName')]"
+        "value": "[parameters('databaseName')]"
       }
     }
   }
