@@ -62,33 +62,32 @@ This diagram displays an overview of the solution
 Control 1 | Mapping | Azure
 Control 2 | Mapping | Customer 
 
-
 ## Deployed Azure Resources
 
 ### VNET
 [Microsoft.Networks]
-+ **[/virtualNetworks]**: [Description Resource type 1A]
-+ **[Resource type 1B]**: [Description Resource type 1B]
-+ **[Resource type 1C]**: [Description Resource type 1C]
++ **[/virtualNetworks]**: [1 VIrtual Network and 4 Subnets]
 
 ### Application Gateway
-[Microsoft.Networks]
-+ **[Resource type 2A]**: [Description Resource type 2A]
+[Microsoft.Web]
++ **[Resource type 3A]**: [Description Resource type 3A]
++ **[Resource type 3B]**: [Description Resource type 3B]
 
 ### Redis Cache
 [Microsoft.Cache]
-+ **[Resource type 3A]**: [Description Resource type 3A]
-+ **[Resource type 3B]**: [Description Resource type 3B]
++ **[Redis]**: [Description Resource type 3A]
 
 ### ILB ASE - Web App
 [Microsoft.Web]
-+ **[Resource type 3A]**: [Description Resource type 3A]
-+ **[Resource type 3B]**: [Description Resource type 3B]
++ **[/hostingEnvironments]**: [Description Resource type 2A]
++ **[/serverFarms]**: [Description Resource type 2A]
++ **[/]**: [Description Resource type 2A]
 
 ### ILB ASE - API App
 [Microsoft.Web]
-+ **[Resource type 3A]**: [Description Resource type 3A]
-+ **[Resource type 3B]**: [Description Resource type 3B]
++ **[/hostingEnvironments]**: [Description Resource type 2A]
++ **[/serverFarms]**: [Description Resource type 2A]
++ **[/]**: [Description Resource type 2A]
 
 ### Azure SQL
 [Microsoft.Database]
@@ -96,9 +95,8 @@ Control 2 | Mapping | Customer
 + **[Resource type 3B]**: [Description Resource type 3B]
 
 ### Azure KeyVault
-[Microsoft.]
-+ **[Resource type 3A]**: [Description Resource type 3A]
-+ **[Resource type 3B]**: [Description Resource type 3B]
+[Microsoft.KeyVault]
++ **[/vaults]**: [Description Resource type 3A]
 
 ## Deployment Guide
 

@@ -1,10 +1,10 @@
 ﻿#Update all variables for the resource group, location, UDRName, ExistingVnetName, and RouteName
 
 Login-AzureRmAccount
-$ResourceGroup = "Mayotest"
-$location = "CentralUS"
-$UDRName = "TestUDR"
-$ExistingVnetName = "VNet1"
+$ResourceGroup = "RG Name Here"
+$location = "LOcation Here"
+$UDRName = "ASEInternetOutbound"
+$ExistingVnetName = "VNet name here"
 $routeName = "RouteToInternet"
 
 $route = New-AzureRmRouteConfig -Name $routeName -AddressPrefix 0.0.0.0/0 -NextHopType Internet
