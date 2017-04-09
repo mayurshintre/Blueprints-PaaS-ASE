@@ -48,7 +48,7 @@ Lorem epsum.
 ### Architecture
 This diagram displays an overview of the solution
 
-![alt text](images/solution.png "Solution Diagram")
+![alt text](ase-ilb-blueprint/images/solution.png "Solution Diagram")
 
 ### Security
 
@@ -107,7 +107,7 @@ Control 2 | Mapping | Customer
 
 ### Deployment Sequence
 
-![alt text](images/asesequencevsdx.png "Template Deployment Sequence")
+![alt text](ase-ilb-blueprint/images/asesequencevsdx.png "Template Deployment Sequence")
 
 ## Configuration Values
 
