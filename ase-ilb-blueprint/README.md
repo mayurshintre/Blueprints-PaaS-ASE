@@ -64,14 +64,11 @@ Control 2 | Mapping | Customer
 
 ## Deployed Azure Resources
 
-### VNET
+### VNET & Application Gateway(WAF)
 [Microsoft.Networks]
 + **[/virtualNetworks]**: [1 VIrtual Network and 4 Subnets]
-
-### Application Gateway
-[Microsoft.Web]
-+ **[Resource type 3A]**: [Description Resource type 3A]
-+ **[Resource type 3B]**: [Description Resource type 3B]
++ **[/publicIPAddresses]**: [1 VIrtual Network and 4 Subnets]
++ **[/applicationGateway]**: [1 VIrtual Network and 4 Subnets]
 
 ### Redis Cache
 [Microsoft.Cache]
