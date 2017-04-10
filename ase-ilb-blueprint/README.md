@@ -87,9 +87,10 @@ Control 2 | Mapping | Customer
 + **[/]**: [Description Resource type 2A]
 
 ### Azure SQL
-[Microsoft.Database]
-+ **[Resource type 3A]**: [Description Resource type 3A]
-+ **[Resource type 3B]**: [Description Resource type 3B]
+[Microsoft.Sql]
++ **[/servers]**: [Description Resource type 3A]
++ **[/servers/databases]**: [Description Resource type 3B]
++ **[/servers/firewallRules]**: [Description Resource type 3B]
 
 ### Azure KeyVault
 [Microsoft.KeyVault]
@@ -98,6 +99,9 @@ Control 2 | Mapping | Customer
 ## Deployment Guide
 
 ### Prerequisites
+
+In order to deploy the solution, you must install the latest version of PowerShell 
+
 
 ### Deployment Sequence
 
