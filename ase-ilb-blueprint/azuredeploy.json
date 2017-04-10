@@ -256,6 +256,12 @@
         "description": "WAF Appliaction Gateway Size"
       }
     },
+    "wafEnabled": {
+      "type": "bool",
+      "metadata": {
+        "description": "WAF Enabled"
+      }
+    },
     "WafCapacity": {
       "type": "int",
       "allowedValues": [
@@ -542,6 +548,7 @@
           "wafRuleSetVersion": { "value": "[variables('wafRuleSetVersion')]" },
           "backendIpAddress1": { "value": "[variables('WAFBackEndPoolStaticIP1')]" },
           "backendIpAddress2": { "value": "[variables('WAFBackEndPoolStaticIP2')]" }
+          "wafEnabled": { "value": "[parameters('wafEnabled')]"}
         }
       }
     },

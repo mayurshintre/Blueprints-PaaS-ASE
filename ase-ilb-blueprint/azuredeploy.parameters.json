@@ -194,6 +194,12 @@
         "description": "WAF Appliaction Gateway Size"
       }
     },
+    "wafEnabled": {
+      "value": false,
+      "metadata": {
+        "description": "WAF Enabled"
+      }
+    },
     "WafCapacity": {
       "value": 2,
       "metadata": {
