@@ -38,10 +38,11 @@
     <None Include="NSG.ps1" />
     <None Include="README.md" />
     <None Include="templates\ilbaseasp.json" />
+    <None Include="templates\ilbasewebapp.json" />
     <None Include="templates\keyvault.json" />
     <None Include="templates\azuresql.json" />
     <None Include="templates\ilbaseapiapp.json" />
-    <None Include="templates\ilbasewebapp.json" />
+    <None Include="templates\ilbase.json" />
     <None Include="templates\newvnetazuredns.json" />
     <None Include="templates\newvnetcustomdns.json" />
     <None Include="templates\rediscache.json" />

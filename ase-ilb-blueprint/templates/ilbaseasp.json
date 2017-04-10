@@ -63,22 +63,6 @@
         "family": "P",
         "capacity": "[parameters('numberOfWorkersFromWorkerPool')]"
       }
-    },
-    {
-      "apiVersion": "2015-08-01",
-      "name": "[parameters('siteName')]",
-      "type": "Microsoft.Web/sites",
-      "location": "[parameters('Region')]",
-      "properties": {
-        "name": "[parameters('siteName')]",
-        "serverFarmId": "[resourceId('Microsoft.Web/serverFarms',parameters('appServicePlanName'))]",
-        "hostingEnvironmentProfile": {
-          "id": "[resourceId('Microsoft.Web/hostingEnvironments', parameters('appServiceEnvironmentName'))]"
-        }
-      },
-      "dependsOn": [
-        "[concat('Microsoft.Web/serverFarms/',parameters('appServicePlanName'))]"
-      ]
     }
   ]
 }
