@@ -232,6 +232,12 @@
         "description": "Number of instances in worker pool three.  Can be zero if not using worker pool three."
       }
     },
+    "numberOfWorkersFromWorkerPool": {
+      "type": "int",
+      "metadata": {
+        "description": "Defines the number of workers from the worker pool that will be used by the app service plan."
+      }
+    },
     "applicationGatewaySize": {
       "type": "string",
       "allowedValues": [
@@ -481,7 +487,8 @@
           "Region": { "value": "[variables('Region')]" },
           "ApiAppName": { "value": "[variables('ApiAppName')]" },
           "appServicePlanName": { "value": "[parameters('appServicePlanName')]" },
-          "appServiceEnvironmentName": { "value": "[parameters('appServiceEnvironmentName')]" }
+          "appServiceEnvironmentName": { "value": "[parameters('appServiceEnvironmentName')]" },
+          "numberOfWorkersFromWorkerPool": { "value": "[parameters('numberOfWorkersFromWorkerPool')]" }
         }
       }
     },
