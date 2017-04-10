@@ -19,6 +19,7 @@
       "metadata": {
         "description": "The name of the App Service Environment where the app service plan will be created."
       }
+    }
     },
     "resources": [
       {
