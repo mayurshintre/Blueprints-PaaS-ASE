@@ -238,6 +238,12 @@
         "description": "Defines the number of workers from the worker pool that will be used by the app service plan."
       }
     },
+    "workerPool": {
+      "type": "string",
+      "metadata": {
+        "description": "Defines which worker pool's (WP1, WP2 or WP3) resources will be used for the app service plan."
+      }
+    },
     "applicationGatewaySize": {
       "type": "string",
       "allowedValues": [
@@ -428,6 +434,26 @@
     },
     {
       "type": "Microsoft.Resources/deployments",
+      "name": "ILBASP",
+      "apiVersion": "2016-09-01",
+      "dependsOn": [ "ILBASE" ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(variables('TemplateURIs'),'ilbaseasp.json')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "appServicePlanName": { "value": "[parameters('appServicePlanName')]" },
+          "appServiceEnvironmentName": { "value": "[parameters('appServiceEnvironmentName')]" },
+          "Region": { "value": "[variables('region')]" },
+          "workerPool": { "value": "[parameters('workerPool')]" },
+          "numberOfWorkersFromWorkerPool": { "value": "[parameters('numberOfWorkersFromWorkerPool')]" }
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
       "name": "RedisCachePremium",
       "apiVersion": "2016-09-01",
       "dependsOn": [ "Vnet" ],
@@ -487,8 +513,7 @@
           "Region": { "value": "[variables('Region')]" },
           "ApiAppName": { "value": "[variables('ApiAppName')]" },
           "appServicePlanName": { "value": "[parameters('appServicePlanName')]" },
-          "appServiceEnvironmentName": { "value": "[parameters('appServiceEnvironmentName')]" },
-          "numberOfWorkersFromWorkerPool": { "value": "[parameters('numberOfWorkersFromWorkerPool')]" }
+          "appServiceEnvironmentName": { "value": "[parameters('appServiceEnvironmentName')]" }
         }
       }
     },

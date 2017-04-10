@@ -9,7 +9,10 @@
       }
     },
     "Region": {
-      "type": "string"
+      "type": "string",
+      "metadata": {
+        "description": "The Location to build resources."
+      }
     },
     "appServicePlanName": {
       "type": "string",

@@ -16,7 +16,6 @@
     },
     "VaultSku": {
       "type": "string",
-      "allowedValues": ["Standard","Premium"],
       "metadata": {
         "description": "Select the proper SKU for this Vault. See: https://docs.microsoft.com/en-us/azure/templates/microsoft.keyvault/vaults#Sku"
       }

@@ -19,13 +19,6 @@
     },
     "redisCacheCapacity": {
       "type": "int",
-      "allowedValues": [
-        1,
-        2,
-        3,
-        4
-      ],
-      "defaultValue": 1,
       "metadata": {
         "description": "The size of the new Azure Redis Cache instance. Valid family and capacity combinations are (C0..C6, P1..P4)."
       }
@@ -50,7 +43,6 @@
     },
     "enableNonSslPort": {
       "type": "bool",
-      "defaultValue": false,
       "metadata": {
         "description": "Set to true to allow access to redis on port 6379, without SSL tunneling (less secure)."
       }

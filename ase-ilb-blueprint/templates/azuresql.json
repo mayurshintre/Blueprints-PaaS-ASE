@@ -34,12 +34,6 @@
     },
     "databaseEdition": {
       "type": "string",
-      "allowedValues": [
-        "Basic",
-        "Standard",
-        "Premium",
-        "PremiumRS"
-      ],
       "metadata": {
         "description": "The edition of the SQL Database"
       }
