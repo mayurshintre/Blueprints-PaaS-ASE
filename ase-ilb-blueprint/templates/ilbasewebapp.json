@@ -34,7 +34,7 @@
         "serverFarmId": "[resourceId('Microsoft.Web/serverFarms',parameters('appServicePlanName'))]",
         "hostingEnvironment": "[parameters('appServiceEnvironmentName')]"
       },
-      "location": "[parameters('Region')]",
+      "location": "[parameters('Region')]"
     }
   ]
 }
