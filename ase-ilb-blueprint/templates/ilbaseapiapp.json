@@ -2,40 +2,37 @@
   "$schema": "http://schema.management.azure.com/schemas/2014-04-01-preview/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "websiteName": {
+    "ApiAppName": {
       "type": "string"
     },
-    "hostingPlanName": {
+    "Region": {
       "type": "string"
     },
-    "location": {
-      "type": "string"
+    "appServicePlanName": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of the App Service plan to use for hosting the web app."
+      }
     },
-    "hostingEnvironment": {
-      "type": "string"
+    "appServiceEnvironmentName": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of the App Service Environment where the app service plan will be created."
+      }
     },
-    "serverFarmResourceGroup": {
-      "type": "string"
-    },
-    "subscriptionId": {
-      "type": "string"
-    }
-  },
-  "resources": [
-    {
-      "apiVersion": "2016-03-01",
-      "name": "[parameters('websiteName')]",
-      "type": "Microsoft.Web/sites",
-      "properties": {
-        "name": "[parameters('websiteName')]",
-        "serverFarmId": "[concat('/subscriptions/', parameters('subscriptionId'),'/resourcegroups/', parameters('serverFarmResourceGroup'), '/providers/Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]",
-        "hostingEnvironment": "[parameters('hostingEnvironment')]"
-      },
-      "location": "[parameters('location')]",
-      "tags": {
-        "[concat('hidden-related:', '/subscriptions/', parameters('subscriptionId'),'/resourcegroups/', parameters('serverFarmResourceGroup'), '/providers/Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]": "empty"
-      },
-      "kind": "api"
-    }
-  ]
+    "resources": [
+      {
+        "apiVersion": "2016-03-01",
+        "name": "[parameters('ApiAppName')]",
+        "type": "Microsoft.Web/sites",
+        "properties": {
+          "name": "[parameters('ApiAppName')]",
+          "serverFarmId": "[resourceId('Microsoft.Web/serverFarms',parameters('appServicePlanName'))]",
+          "hostingEnvironment": "[parameters('appServiceEnvironmentName')]"
+        },
+        "location": "[parameters('Region')]",
+        "kind": "api"
+      }
+    ]
+  }
 }
