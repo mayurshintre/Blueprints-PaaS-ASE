@@ -413,7 +413,7 @@
           "Region": { "value": "[variables('Region')]" },
           "vnetID": { "value": "[variables('vnetID')]" },
           "WebAppSubnetName": { "value": "[variables('WebAppSubnetName')]" },
-          "internalLoadBalancingMode": { "value": "variables('internalLoadBalancingMode')" },
+          "internalLoadBalancingMode": { "value": "[parameters('internalLoadBalancingMode')]" },
           "WebDNS": { "value": "[parameters('WebDNS')]" },
           "frontEndSize": { "value": "[parameters('frontEndSize')]" },
           "frontEndCount": { "value": "[parameters('frontEndCount')]" },

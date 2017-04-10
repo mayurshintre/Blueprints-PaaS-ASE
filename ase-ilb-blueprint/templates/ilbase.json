@@ -97,8 +97,6 @@
       "name": "[parameters('aseName')]",
       "location": "[parameters('Region')]",
       "properties": {
-        "name": "[parameters('aseName')]",
-        "location": "[parameters('Region')]",
         "ipSslAddressCount": "[variables('ipSslAddressCount')]",
         "internalLoadBalancingMode": "[parameters('internalLoadBalancingMode')]",
         "dnsSuffix": "[parameters('WebDNS')]",
