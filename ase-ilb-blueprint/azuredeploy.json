@@ -122,6 +122,18 @@
         "description": "The size of the new Azure Redis Cache instance. Valid family and capacity combinations are (C0..C6, P1..P4)."
       }
     },
+    "appServicePlanName": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of the App Service plan to use for hosting the web app."
+      }
+    },
+    "appServiceEnvironmentName": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of the App Service Environment where the app service plan will be created."
+      }
+    },
     "AseDNS": {
       "type": "string",
       "defaultValue": "ASE.demo",
@@ -141,6 +153,83 @@
       "defaultValue": "Web.demo",
       "metadata": {
         "description": "Set to the root internal domain name to associate with this ASP."
+      }
+    },
+    "internalLoadBalancingMode": {
+      "type": "int",
+      "metadata": {
+        "description": "0 = public VIP only, 1 = only ports 80/443 are mapped to ILB VIP, 2 = only FTP ports are mapped to ILB VIP, 3 = both ports 80/443 and FTP ports are mapped to an ILB VIP."
+      }
+    },
+    "frontEndSize": {
+      "type": "string",
+      "allowedValues": [
+        "Medium",
+        "Large",
+        "ExtraLarge"
+      ],
+      "metadata": {
+        "description": "Instance size for the front-end pool.  Maps to P2,P3,P4."
+      }
+    },
+    "frontEndCount": {
+      "type": "int",
+      "metadata": {
+        "description": "Number of instances in the front-end pool.  Minimum of two."
+      }
+    },
+    "workerPoolOneInstanceSize": {
+      "type": "string",
+      "allowedValues": [
+        "Small",
+        "Medium",
+        "Large",
+        "ExtraLarge"
+      ],
+      "metadata": {
+        "description": "Instance size for worker pool one.  Maps to P1,P2,P3,P4."
+      }
+    },
+    "workerPoolOneInstanceCount": {
+      "type": "int",
+      "metadata": {
+        "description": "Number of instances in worker pool one.  Minimum of two."
+      }
+    },
+    "workerPoolTwoInstanceSize": {
+      "type": "string",
+      "allowedValues": [
+        "Small",
+        "Medium",
+        "Large",
+        "ExtraLarge"
+      ],
+      "metadata": {
+        "description": "Instance size for worker pool two.  Maps to P1,P2,P3,P4."
+      }
+    },
+    "workerPoolTwoInstanceCount": {
+      "type": "int",
+      "metadata": {
+        "description": "Number of instances in worker pool two.  Can be zero if not using worker pool two."
+      }
+    },
+    "workerPoolThreeInstanceSize": {
+      "type": "string",
+      "allowedValues": [
+        "Small",
+        "Medium",
+        "Large",
+        "ExtraLarge"
+      ],
+      "metadata": {
+        "description": "Instance size for worker pool three.  Maps to P1,P2,P3,P4."
+      }
+    },
+    "workerPoolThreeInstanceCount": {
+      "type": "int",
+      "metadata": {
+        "description": "Number of instances in worker pool three.  Can be zero if not using worker pool three."
       }
     },
     "applicationGatewaySize": {
@@ -337,17 +426,24 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[concat(variables('TemplateURIs'),'ilbasewebapp.json.json')]",
+          "uri": "[concat(variables('TemplateURIs'),'ilbasewebapp.json')]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
-          "VaultName": { "value": "[variables('VaultName')]" },
-          "Region": { "value": "[variables('Region')]" },
-          "VaultSku": { "value": "[variables('VaultSKU')]" },
           "aseName": { "value": "[variables('aseName')]" },
+          "Region": { "value": "[variables('Region')]" },
           "VnetID": { "value": "[variables('VnetID')]" },
           "WebAppSubnetName": { "value": "[variables('WebAppSubnetName')]" },
-          "webDNS": { "value": "[parameters('WebDNS')]" }
+          "internalLoadBalancingMode": { "value": "[parameters('internalLoadBalancingMode')]" },
+          "webDNS": { "value": "[parameters('WebDNS')]" },
+          "frontEndSize": { "value": "[parameters('frontEndSize')]" },
+          "frontEndCount": { "value": "[parameters('frontEndCount')]" },
+          "workerPoolOneInstanceSize": { "value": "parameters['workerPoolOneInstanceSize']" },
+          "workerPoolOneInstanceCount": { "value": "[parameters('workerPoolOneInstanceCount')]" },
+          "workerPoolTwoInstanceSize": { "value": "[parameters('workerPoolTwoInstanceSize')]" },
+          "workerPoolTwoInstanceCount": { "value": "[parameters('workerPoolTwoInstanceCount')]" },
+          "workerPoolThreeInstanceSize": { "value": "[parameters('workerPoolThreeInstanceSize')]" },
+          "workerPoolThreeInstanceCount": { "value": "[parameters('workerPoolThreeInstanceCount')]" }
         }
       }
     },
@@ -359,13 +455,14 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[concat(variables('TemplateURIs'),'ilbaseapiapp.json.json')]",
+          "uri": "[concat(variables('TemplateURIs'),'ilbaseapiapp.json')]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
-          "VaultName": { "value": "[variables('VaultName')]" },
           "Region": { "value": "[variables('Region')]" },
-          "VaultSku": { "value": "[variables('VaultSKU')]" }
+          "ApiAppName": { "value": "[variables('ApiAppName')]" },
+          "appServicePlanName": { "value": "[parameters('appServicePlanName')]" },
+          "appServiceEnvironmentName": { "value": "[parameters('appServiceEnvironmentName')]"}
         }
       }
     },
