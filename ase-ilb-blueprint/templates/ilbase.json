@@ -10,27 +10,6 @@
     },
     "Region": {
       "type": "string",
-      "allowedValues": [
-        "Central US",
-        "East US",
-        "East US 2",
-        "North Central US",
-        "South Central US",
-        "West US",
-        "Canada Central",
-        "North Europe",
-        "West Europe",
-        "East Asia",
-        "Southeast Asia",
-        "Japan East",
-        "Japan West",
-        "Brazil South",
-        "Australia East",
-        "Australia Southeast",
-        "West India",
-        "Central India",
-        "South India"
-      ],
       "metadata": {
         "description": "Location of the App Service Environment"
       }
@@ -61,11 +40,6 @@
     },
     "frontEndSize": {
       "type": "string",
-      "allowedValues": [
-        "Medium",
-        "Large",
-        "ExtraLarge"
-      ],
       "metadata": {
         "description": "Instance size for the front-end pool.  Maps to P2,P3,P4."
       }
@@ -78,12 +52,6 @@
     },
     "workerPoolOneInstanceSize": {
       "type": "string",
-      "allowedValues": [
-        "Small",
-        "Medium",
-        "Large",
-        "ExtraLarge"
-      ],
       "metadata": {
         "description": "Instance size for worker pool one.  Maps to P1,P2,P3,P4."
       }
@@ -96,12 +64,6 @@
     },
     "workerPoolTwoInstanceSize": {
       "type": "string",
-      "allowedValues": [
-        "Small",
-        "Medium",
-        "Large",
-        "ExtraLarge"
-      ],
       "metadata": {
         "description": "Instance size for worker pool two.  Maps to P1,P2,P3,P4."
       }
@@ -114,12 +76,6 @@
     },
     "workerPoolThreeInstanceSize": {
       "type": "string",
-      "allowedValues": [
-        "Small",
-        "Medium",
-        "Large",
-        "ExtraLarge"
-      ],
       "metadata": {
         "description": "Instance size for worker pool three.  Maps to P1,P2,P3,P4."
       }

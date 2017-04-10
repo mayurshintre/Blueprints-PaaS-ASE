@@ -393,9 +393,38 @@
     },
     {
       "type": "Microsoft.Resources/deployments",
+      "name": "ILBASE",
+      "apiVersion": "2016-09-01",
+      "dependsOn": [ "Vnet" ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(variables('TemplateURIs'),'ilbase.json')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "aseName": { "value": "[variables('aseName')]" },
+          "Region": { "value": "[variables('Region')]" },
+          "vnetID": { "value": "[variables('vnetID')]" },
+          "WebAppSubnetName": { "value": "[variables('WebAppSubnetName')]" },
+          "internalLoadBalancingMode": { "value": "variables('internalLoadBalancingMode')" },
+          "WebDNS": { "value": "[parameters('WebDNS')]" },
+          "frontEndSize": { "value": "[parameters('frontEndSize')]" },
+          "frontEndCount": { "value": "[parameters('frontEndCount')]" },
+          "workerPoolOneInstanceSize": { "value": "[parameters('workerPoolOneInstanceSize')]" },
+          "workerPoolOneInstanceCount": { "value": "[parameters('workerPoolOneInstanceCount')]" },
+          "workerPoolTwoInstanceSize": { "value": "[parameters('workerPoolTwoInstanceSize')]" },
+          "workerPoolTwoInstanceCount": { "value": "[parameters('workerPoolTwoInstanceCount')]" },
+          "workerPoolThreeInstanceSize": { "value": "[parameters('workerPoolThreeInstanceSize')]" },
+          "workerPoolThreeInstanceCount": { "value": "[parameters('workerPoolThreeInstanceCount')]" }
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
       "name": "RedisCachePremium",
       "apiVersion": "2016-09-01",
-      "dependsOn": ["Vnet"],
+      "dependsOn": [ "Vnet" ],
       "properties": {
         "mode": "Incremental",
         "templateLink": {
@@ -422,7 +451,7 @@
       "type": "Microsoft.Resources/deployments",
       "name": "ILBASE-Web",
       "apiVersion": "2015-01-01",
-      "dependsOn": [ "Vnet" ],
+      "dependsOn": [ "ILBASE" ],
       "properties": {
         "mode": "Incremental",
         "templateLink": {
@@ -441,7 +470,7 @@
       "type": "Microsoft.Resources/deployments",
       "name": "ILBASE-API",
       "apiVersion": "2015-01-01",
-      "dependsOn": [ "Vnet" ],
+      "dependsOn": [ "ILBASE" ],
       "properties": {
         "mode": "Incremental",
         "templateLink": {
@@ -452,7 +481,7 @@
           "Region": { "value": "[variables('Region')]" },
           "ApiAppName": { "value": "[variables('ApiAppName')]" },
           "appServicePlanName": { "value": "[parameters('appServicePlanName')]" },
-          "appServiceEnvironmentName": { "value": "[parameters('appServiceEnvironmentName')]"}
+          "appServiceEnvironmentName": { "value": "[parameters('appServiceEnvironmentName')]" }
         }
       }
     },
@@ -460,7 +489,7 @@
       "type": "Microsoft.Resources/deployments",
       "name": "WAF",
       "apiVersion": "2015-01-01",
-      "dependsOn": ["Vnet"],
+      "dependsOn": [ "ILBASE" ],
       "properties": {
         "mode": "Incremental",
         "templateLink": {
@@ -502,8 +531,8 @@
           "databaseName": { "value": "[variables('databaseName')]" },
           "databaseEdition": { "value": "[variables('databaseEdition')]" },
           "databaseServiceObjectiveName": { "value": "[variables('databaseServiceObjectiveName')]" }
-          }
         }
+      }
     }
   ]
  }
