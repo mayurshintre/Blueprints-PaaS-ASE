@@ -32,5 +32,6 @@
           "hostingEnvironmentProfile": "[resourceId('Microsoft.Web/hostingEnvironments', parameters('appServiceEnvironmentName'))]"
         }
       }
-     ]
+    ]
+   }
   }
