@@ -547,7 +547,7 @@
           "wafRuleSetType": { "value": "[variables('wafRuleSetType')]" },
           "wafRuleSetVersion": { "value": "[variables('wafRuleSetVersion')]" },
           "backendIpAddress1": { "value": "[variables('WAFBackEndPoolStaticIP1')]" },
-          "backendIpAddress2": { "value": "[variables('WAFBackEndPoolStaticIP2')]" }
+          "backendIpAddress2": { "value": "[variables('WAFBackEndPoolStaticIP2')]" },
           "wafEnabled": { "value": "[parameters('wafEnabled')]"}
         }
       }
