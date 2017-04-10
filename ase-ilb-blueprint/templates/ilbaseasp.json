@@ -28,11 +28,6 @@
     },
     "workerPool": {
       "type": "string",
-      "allowedValues": [
-        "1",
-        "2",
-        "3"
-      ],
       "metadata": {
         "description": "Defines which worker pool's (WP1, WP2 or WP3) resources will be used for the app service plan."
       }
