@@ -2,39 +2,136 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "vnetName": {
-      "value": "JeradNet"
+    "SystemPrefixName": {
+      "value": "Nist800Demo",
+      "metadata": {
+        "description": "String to append to all resource names"
+      }
     },
     "vnetAddressPrefix": {
-      "value": "10.1.1.0"
+      "value": "10.0.0.0",
+      "metadata": {
+        "description": "IP Address Of Virtual Network Without CIDR"
+      }
     },
     "vnetAddressPrefixCIDR": {
-      "value": "16"
+      "value": 16,
+      "metadata": {
+        "description": "Virtual Network CIDR Block"
+      }
     },
-    "subnet1Prefix": {
-      "value": "10.1.1.0"
+    "WAFSubnetPrefix": {
+      "value": "10.0.0.0",
+      "metadata": {
+        "description": "WAF Subnet IP Address Without CIDR Block"
+      }
     },
-    "subnet1PrefixCIDR": {
-      "value": "24"
+    "WAFSubnetPrefixCIDR": {
+      "value": 24,
+      "metadata": {
+        "description": "WAF Subnet CIDR Block"
+      }
     },
-    "subnet1Name": {
-      "value": "subMegatron"
+    "WebAppSubnetPrefix": {
+      "value": "10.0.1.0",
+      "metadata": {
+        "description": "Web App Subnet IP Address Without CIDR Block"
+      }
     },
-    "subnet2Prefix": {
-      "value": "10.1.2.0"
+    "WebAppSubnetPrefixCIDR": {
+      "value": 24,
+      "metadata": {
+        "description": "Web App Subnet CIDR Block"
+      }
     },
-    "subnet2PrefixCIDR": {
-      "value": "24"
+    "APIAppSubnetPrefix": {
+      "value": "10.0.2.0",
+      "metadata": {
+        "description": "API App Subnet IP Address Without CIDR Block"
+      }
     },
-    "subnet2Name": {
-      "value": "subStarScream"
+    "APIAppSubnetPrefixCIDR": {
+      "value": 24,
+      "metadata": {
+        "description": "API App Subnet CIDR Block"
+      }
+    },
+    "RedisCacheSubnetPrefix": {
+      "value": "10.0.3.0",
+      "metadata": {
+        "description": "Redis Cache Subnet IP Address Without CIDR Block"
+      }
+    },
+    "RedisCacheSubnetPrefixCIDR": {
+      "value": 24,
+      "metadata": {
+        "description": "Redis Cache Subnet CIDR Block"
+      }
     },
     "customDNSIP": {
-      "value": "10.0.0.4"
+      "value": "10.0.0.4",
+      "metadata": {
+        "description": "IP Address of Custom DNS Server"
+      }
     },
-    "dnsOption": 
-    {
-      "value": "customdns"
+    "dnsOption": {
+      "value": "customdns",
+      "metadata": {
+        "description": "Pick either azuredns or customdns. This is Case Sensitive. "
+      }
+    },
+    "redisShardCount": {
+      "value": 2,
+      "metadata": {
+        "description": "Number of highly available shards to create in the cluster. Requires Premium SKU. Set to 0 to not set up clustering."
+      }
+    },
+    "redisCacheCapacity": {
+      "value": 1,
+      "metadata": {
+        "description": "The size of the new Azure Redis Cache instance. Valid family and capacity combinations are (C0..C6, P1..P4)."
+      }
+    },
+    "AseDNS": {
+      "value": "ASE.demo",
+      "metadata": {
+        "description": "Set to the root internal domain name to associate with this ASE."
+      }
+    },
+    "AspDNS": {
+      "value": "ASP.demo",
+      "metadata": {
+        "description": "Set to the root internal domain name to associate with this ASP."
+      }
+    },
+    "WebDNS": {
+      "value": "Web.demo",
+      "metadata": {
+        "description": "Set to the root internal domain name to associate with this ASP."
+      }
+    },
+    "applicationGatewaySize": {
+      "value": "WAF_Medium",
+      "metadata": {
+        "description": "WAF Appliaction Gateway Size"
+      }
+    },
+    "WafCapacity": {
+      "value": 2,
+      "metadata": {
+        "description": "Number of WAF Instances"
+      }
+    },
+    "sqlAdministratorLogin": {
+      "value": "SQLMaster",
+      "metadata": {
+        "description": "The administrator username of the SQL Server."
+      }
+    },
+    "sqlAdministratorLoginPassword": {
+      "value": "JeradistheCoolestCatEver",
+      "metadata": {
+        "description": "The administrator password of the SQL Server."
+      }
     }
-  }
 }
