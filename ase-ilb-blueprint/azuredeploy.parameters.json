@@ -141,7 +141,7 @@
       }
     },
     "workerPoolOneInstanceSize": {
-      "value": "small",
+      "value": "Small",
       "metadata": {
         "description": "Instance size for worker pool one.  Maps to P1,P2,P3,P4."
       }
@@ -153,7 +153,7 @@
       }
     },
     "workerPoolTwoInstanceSize": {
-      "value": "small",
+      "value": "Small",
       "metadata": {
         "description": "Instance size for worker pool two.  Maps to P1,P2,P3,P4."
       }
