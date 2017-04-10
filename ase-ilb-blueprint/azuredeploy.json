@@ -337,7 +337,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[concat(variables('TemplateURIs'),'ilbasewebapp.json.json')]",
+          "uri": "[concat(variables('TemplateURIs'),'ilbasewebapp.json')]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
@@ -359,7 +359,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[concat(variables('TemplateURIs'),'ilbaseapiapp.json.json')]",
+          "uri": "[concat(variables('TemplateURIs'),'ilbaseapiapp.json')]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {

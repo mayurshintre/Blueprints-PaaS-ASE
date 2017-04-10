@@ -134,4 +134,5 @@
         "description": "The administrator password of the SQL Server."
       }
     }
+  }
 }
