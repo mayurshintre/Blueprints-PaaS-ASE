@@ -37,7 +37,7 @@
       ],
       "defaultValue": "WAF_Medium",
       "metadata": {
-        "description": "application gateway size"
+        "description": "WAF Appliaction Gateway Size"
       }
     },
     "capacity": {

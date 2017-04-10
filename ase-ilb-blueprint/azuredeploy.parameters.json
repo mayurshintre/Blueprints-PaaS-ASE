@@ -77,7 +77,7 @@
     "dnsOption": {
       "value": "customdns",
       "metadata": {
-        "description": "Pick either azuredns or customdns. This is Case Sensitive. "
+        "description": "This will set a custom DNS server or use Azure Fabric DNS (not Azure DNS service). Pick either azuredns or customdns. This is Case Sensitive."
       }
     },
     "redisShardCount": {
@@ -90,6 +90,18 @@
       "value": 1,
       "metadata": {
         "description": "The size of the new Azure Redis Cache instance. Valid family and capacity combinations are (C0..C6, P1..P4)."
+      }
+    },
+    "appServicePlanName": {
+      "value": "ASPName",
+      "metadata": {
+        "description": "The name of the App Service plan to use for hosting the web app."
+      }
+    },
+    "appServiceEnvironmentName": {
+      "value": "ASEName",
+      "metadata": {
+        "description": "The name of the App Service Environment where the app service plan will be created."
       }
     },
     "AseDNS": {
@@ -107,7 +119,61 @@
     "WebDNS": {
       "value": "Web.demo",
       "metadata": {
-        "description": "Set to the root internal domain name to associate with this ASP."
+        "description": "Set this to the root domain associated with the Web App."
+      }
+    },
+    "internalLoadBalancingMode": {
+      "value": 1,
+      "metadata": {
+        "description": "0 = public VIP only, 1 = only ports 80/443 are mapped to ILB VIP, 2 = only FTP ports are mapped to ILB VIP, 3 = both ports 80/443 and FTP ports are mapped to an ILB VIP."
+      }
+    },
+    "frontEndSize": {
+      "value": "Medium",
+      "metadata": {
+        "description": "Instance size for the front-end pool.  Maps to P2,P3,P4."
+      }
+    },
+    "frontEndCount": {
+      "value": 2,
+      "metadata": {
+        "description": "Number of instances in the front-end pool.  Minimum of two."
+      }
+    },
+    "workerPoolOneInstanceSize": {
+      "value": "small",
+      "metadata": {
+        "description": "Instance size for worker pool one.  Maps to P1,P2,P3,P4."
+      }
+    },
+    "workerPoolOneInstanceCount": {
+      "value": 2,
+      "metadata": {
+        "description": "Number of instances in worker pool one.  Minimum of two."
+      }
+    },
+    "workerPoolTwoInstanceSize": {
+      "value": "small",
+      "metadata": {
+        "description": "Instance size for worker pool two.  Maps to P1,P2,P3,P4."
+      }
+    },
+    "workerPoolTwoInstanceCount": {
+      "value": 2,
+      "metadata": {
+        "description": "Number of instances in worker pool two.  Can be zero if not using worker pool two."
+      }
+    },
+    "workerPoolThreeInstanceSize": {
+      "value": "Small",
+      "metadata": {
+        "description": "Instance size for worker pool three.  Maps to P1,P2,P3,P4."
+      }
+    },
+    "workerPoolThreeInstanceCount": {
+      "value": 0,
+      "metadata": {
+        "description": "Number of instances in worker pool three.  Can be zero if not using worker pool three."
       }
     },
     "applicationGatewaySize": {

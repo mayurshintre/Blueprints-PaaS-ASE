@@ -99,7 +99,7 @@
         "azuredns"
       ],
       "metadata": {
-        "description": "Pick either azuredns or customdns. This is Case Sensitive. "
+        "description": "This will set a custom DNS server or use Azure Fabric DNS (not Azure DNS service). Pick either azuredns or customdns. This is Case Sensitive."
       }
     },
     "redisShardCount": {
@@ -125,7 +125,7 @@
     "appServicePlanName": {
       "type": "string",
       "metadata": {
-        "description": "The name of the App Service plan to use for hosting the web app."
+        "description": "The name of the App Service plan to use for hosting the web and api app."
       }
     },
     "appServiceEnvironmentName": {
@@ -152,7 +152,7 @@
       "type": "string",
       "defaultValue": "Web.demo",
       "metadata": {
-        "description": "Set to the root internal domain name to associate with this ASP."
+        "description": "Set this to the root domain associated with the Web App."
       }
     },
     "internalLoadBalancingMode": {

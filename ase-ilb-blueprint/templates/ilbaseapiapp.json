@@ -11,7 +11,7 @@
     "appServicePlanName": {
       "type": "string",
       "metadata": {
-        "description": "The name of the App Service plan to use for hosting the web app."
+        "description": "The name of the App Service plan to use for hosting the web and api app."
       }
     },
     "appServiceEnvironmentName": {
