@@ -430,20 +430,10 @@
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
-          "aseName": { "value": "[variables('aseName')]" },
+          "WebAppName": { "value": "[variables('WebAppName')]" },
           "Region": { "value": "[variables('Region')]" },
-          "VnetID": { "value": "[variables('VnetID')]" },
-          "WebAppSubnetName": { "value": "[variables('WebAppSubnetName')]" },
-          "internalLoadBalancingMode": { "value": "[parameters('internalLoadBalancingMode')]" },
-          "webDNS": { "value": "[parameters('WebDNS')]" },
-          "frontEndSize": { "value": "[parameters('frontEndSize')]" },
-          "frontEndCount": { "value": "[parameters('frontEndCount')]" },
-          "workerPoolOneInstanceSize": { "value": "parameters['workerPoolOneInstanceSize']" },
-          "workerPoolOneInstanceCount": { "value": "[parameters('workerPoolOneInstanceCount')]" },
-          "workerPoolTwoInstanceSize": { "value": "[parameters('workerPoolTwoInstanceSize')]" },
-          "workerPoolTwoInstanceCount": { "value": "[parameters('workerPoolTwoInstanceCount')]" },
-          "workerPoolThreeInstanceSize": { "value": "[parameters('workerPoolThreeInstanceSize')]" },
-          "workerPoolThreeInstanceCount": { "value": "[parameters('workerPoolThreeInstanceCount')]" }
+          "appServicePlanName": { "value": "[parameters('appServicePlanName')]" },
+          "appServiceEnvironmentName": { "value": "[parameters('appServiceEnvironmentName')]" }
         }
       }
     },
