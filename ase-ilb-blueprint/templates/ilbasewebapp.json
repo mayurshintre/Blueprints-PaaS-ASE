@@ -9,35 +9,32 @@
       }
     },
     "Region": {
-      "type": "string",
-      "metadata": {
-        "description": "Set this to the same location as the App Service Environment"
-      }
+      "type": "string"
     },
     "appServicePlanName": {
       "type": "string",
       "metadata": {
         "description": "The name of the App Service plan to use for hosting the web and api app."
       }
-    }
-  },
-  "appServiceEnvironmentName": {
-    "type": "string",
-    "metadata": {
-      "description": "The name of the App Service Environment where the app service plan will be created."
+    },
+    "appServiceEnvironmentName": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of the App Service Environment where the app service plan will be created."
+      }
     }
   },
   "resources": [
     {
-      "apiVersion": "2015-08-01",
+      "apiVersion": "2016-03-01",
       "name": "[parameters('WebAppName')]",
       "type": "Microsoft.Web/sites",
-      "location": "[parameters('Region')]",
       "properties": {
         "name": "[parameters('WebAppName')]",
         "serverFarmId": "[resourceId('Microsoft.Web/serverFarms',parameters('appServicePlanName'))]",
-        "hostingEnvironmentProfile": "[resourceId('Microsoft.Web/hostingEnvironments', parameters('appServiceEnvironmentName'))]"
-      }
+        "hostingEnvironment": "[parameters('appServiceEnvironmentName')]"
+      },
+      "location": "[parameters('Region')]",
     }
   ]
 }
