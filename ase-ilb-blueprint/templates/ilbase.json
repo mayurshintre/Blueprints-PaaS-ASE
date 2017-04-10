@@ -95,10 +95,10 @@
       "apiVersion": "2015-08-01",
       "type": "Microsoft.Web/hostingEnvironments",
       "name": "[parameters('aseName')]",
-      "location": "[parameters('Region')]",
+      "location": "West US",
       "properties": {
         "name": "[parameters('aseName')]",
-        "location": "[parameters('Region')]",
+        "location": "West US",
         "ipSslAddressCount": "[variables('ipSslAddressCount')]",
         "internalLoadBalancingMode": "[parameters('internalLoadBalancingMode')]",
         "dnsSuffix": "[parameters('WebDNS')]",
