@@ -88,6 +88,7 @@ New-AzureRMResourceGroupDeployment -Name $DeploymentName `
     -ResourceGroupName $RgName `
     -TemplateUri $TemplateUri `
     -TemplateParameterFile $ParameterFile `
+    -Region $Region `
     -Mode Incremental `
     -Verbose
 Write-Host "=> Man that was tense... Good thing we know some Kung-Fu or those fraggles might have been the end of the road..."
@@ -103,9 +104,9 @@ foreach($Domain in $Domains)
 }
 
 ##Get Outputs from Deployment
-$AseName = (Get-AzureRmResourceGroupDeployment -ResourceGroupName $RgName -Name $DeploymentName).Outputs.AseName.Value
-$VnetName = (Get-AzureRmResourceGroupDeployment -ResourceGroupName $RgName -Name $DeploymentName).Outputs.VnetName.Value
-$SqlName = (Get-AzureRmResourceGroupDeployment -ResourceGroupName $RgName -Name $DeploymentName).Outputs.SqlName.Value
+$AseName = (Get-AzureRmResourceGroupDeployment -ResourceGroupName $RgName -Name $DeploymentName).Outputs.aseName.Value
+$VnetName = (Get-AzureRmResourceGroupDeployment -ResourceGroupName $RgName -Name $DeploymentName).Outputs.vnetName.Value
+$SqlName = (Get-AzureRmResourceGroupDeployment -ResourceGroupName $RgName -Name $DeploymentName).Outputs.sqlName.Value
 
 $resourceID = (Get-AzureRmResource | where -Property resourcename -EQ $AseName).resourceID
 
