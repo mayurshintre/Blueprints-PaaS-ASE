@@ -10,15 +10,15 @@
     ##Azure Region to Deploy all resources including the Resource Group
     $Region = "West US"
     ##Name of the Resource Group to deploy
-    $RgName = "rgJerad"
+    $RgName = "blueprint"
     ##Name to give the Deployment that will be ran
-    $DeploymentName = $RgName +"Nist800-66Deployment"
+    $DeploymentName = $RgName +"nist800"
     ##Location of the main azuredeploy.json template
     $TemplateUri = "https://raw.githubusercontent.com/mayurshintre/Blueprints/master/ase-ilb-blueprint/azuredeploy.json"
     ##Location of the local parameters file
-    $ParameterFile = "C:\Temp\azureDeploy.Parameters.json"
+    $ParameterFile = "Local Repository Location\azuredeploy.parameters.json"
     ##Subscription ID that will be used to host the resource group
-    $SubscriptionID = "960e1588-d82e-47d5-8c2c-342cd071e172"
+    $SubscriptionID = "Your Subscription Name Here"
 #endregion
 
 #Function to generate random password

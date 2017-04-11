@@ -52,6 +52,14 @@ This diagram displays an overview of the solution
 
 ### Security
 
++ This solution locks down all subnets with a DenyAll with a weight of 100 by default
++ Generates a secure pasword for Azure SQL and stores it as a secret in Azure KeyVault
++ Applies Firewall Roles to lock down incoming traffic to Azure SQL only from ASE Outbound IP addresses
++ Configures Backend Pools for the Application Gateway to communicate only on Ports 80 and 443 for the ASE ILB IP addresses
++ Blocks all FTP/FTPS 'deployment' access to ASE environments
++ Restricts Azure Redis Cache communication only with the ASE Subnets
++ Turns off non-SSL endpoints for Azure Redis Cache
+
 #### Network
 
 #### Passwords & Secrets
@@ -80,25 +88,25 @@ Control 2 | Mapping | Customer
 
 ### ILB ASE - Web App
 ####Microsoft.Web
-+ **/hostingEnvironments**: App Service Environment
-+ **/serverFarms**: Default Service Plan
-+ **kind: "webapp"**: Default Azure WebApp
++ **/hostingEnvironments**: Deploys App Service Environment v1
++ **/serverFarms**: Deploys a default App Service Plan
++ **kind: "webapp"**: Deploys a default Azure WebApp
 
 ### ILB ASE - API App
 ####Microsoft.Web
-+ **/hostingEnvironments**: [Description Resource type 2A]
-+ **/serverFarms**: [Description Resource type 2A]
-+ **kind: "apiapp"**: [Description Resource type 2A]
++ **/hostingEnvironments**: Deploys App Service Environment v1
++ **/serverFarms**: Deploys a default App Service Plan
++ **kind: "apiapp"**: Deploys a default Azure WebApp
 
 ### Azure SQL
 ####Microsoft.Sql
-+ **/servers**: [Description Resource type 3A]
-+ **/servers/databases**: [Description Resource type 3B]
-+ **/servers/firewallRules**: [Description Resource type 3B]
++ **/servers**: Deploys an Azure SQL Server
++ **/servers/databases**: Deploys an Azure SQL Database
++ **/servers/firewallRules**: Applied Firewall rule for Outbound IP's from both ASE's
 
 ### Azure KeyVault
 ####Microsoft.KeyVault
-+ **/vaults**: Description Resource type 3A
++ **/vaults**: Deploys a Keyvalut with a secret for Azure SQL
 
 ## Deployment Guide
 
@@ -124,7 +132,7 @@ then
 Login to Azure and Azure AD
 Then we set context to the correct subscrition specified
 then we create resource group if it does not exist
-then passowrd is generated for SQL
+then password is generated for SQL
 
 Then the script calls azuredeploy.json --> will call all other child templates in the following order (check azuredeploy for the order)
 we are also giving the SQL password value as a parameter for 
@@ -140,9 +148,9 @@ and then add the ILB's internal IP's to the back end pool of the apps (overwrite
 
 ## Configuration Values
 
-  Resource | Parameter | Configuration
+  Resource | Parameter | Default Value| Allowed Values | Configuration
   ---|---|---
-  All | All | **No spaces or special characters. Lower case alphabets and numbers only. Adding special characters will break deployment for Azure SQL.**
+  All | All | - | - | **No spaces or special characters. Lower case alphabets and numbers only. Adding special characters will break deployment for Azure SQL.**
   All | Prefix | Prefix name for the entire solution. Prepended to all resource names. Keep it short (4-6 characters). Lower case alphabets and numbers only. No spaces or special characters.
 
 ## Deployment steps
@@ -155,24 +163,23 @@ At this time you cannot deploy this solution using just the ARM template (azured
 + Grab a beer and wait for deployment to finish. I can take anywhere between 1-2 hours due to ASE.
 
 ``` PowerShell
-# Login to your subscription
-Login-AzureRmAccount
+##Azure Region to Deploy all resources including the Resource Group
+$Region = "West US"
 
-# Variables, replace these with your own values
-$ResourceGroupLocation = "West Europe"
-$ResourceGroupName = "MyResourceGroup"
-$RepositoryPath = "https://raw.githubusercontent.com/marcvaneijk/arm/master/200-nested/200-template/"
+##Name of the Resource Group to deploy
+$RgName = "demo"
+	
+##Name to give the Deployment that will be ran
+$DeploymentName = $RgName +"nist800ase"
 
-# Variables, used for constructing the required values
-$TemplateFile = $RepositoryPath + "azuredeploy.json"
-$TemplateParameterFile = $RepositoryPath + "azuredeploy.parameters.json"
-$DeploymentName = (Get-ChildItem $TemplateFile).BaseName + ((get-date).ToUniversalTime()).ToString('MMddyyyyHHmmss')
+##Location of the main azuredeploy.json template
+$TemplateUri = "https://raw.githubusercontent.com/mayurshintre/Blueprints/master/ase-ilb-blueprint/azuredeploy.json"
 
-# Create new Resource Group
-New-AzureRmResourceGroup -Name $ResourceGroupName -Location $ResourceGroupLocation
-
-# New Resource Group Deployment
-New-AzureRmResourceGroupDeployment -Name $DeploymentName -ResourceGroupName $ResourceGroupName -TemplateFile $TemplateFile -TemplateParameterFile $TemplateParameterFile
+##Location of the local parameters file
+$ParameterFile = "Repository Location\azureDeploy.parameters.json"
+    
+##Subscription ID that will be used to host the resource group
+$SubscriptionID = "Your Subscription ID here"
 ```
 ## Modifying the Templates
 

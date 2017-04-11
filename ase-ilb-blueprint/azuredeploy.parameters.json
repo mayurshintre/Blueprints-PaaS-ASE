@@ -3,7 +3,7 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "SystemPrefixName": {
-      "value": "Nist800Demo",
+      "value": "blueprint",
       "metadata": {
         "description": "String to append to all resource names"
       }
