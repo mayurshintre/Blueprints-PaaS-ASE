@@ -359,7 +359,8 @@
     "WAFBackEndPoolStaticIP2": "[concat(variables('WAFBackEndPoolSplit2')[0],'.',variables('WAFBackEndPoolSplit2')[1],'.',variables('WAFBackEndPoolSplit2')[2],'.',variables('WAFBackEndPoolLastOctet2'))]",
 
     "databaseServiceObjectiveName": "Basic",
-    "databaseEdition": "Basic"
+    "databaseEdition": "Basic",
+    "Secretname":  "SqlSecret"
   },
   "resources": [
     {
@@ -375,7 +376,9 @@
         "parameters": {
           "VaultName": { "value": "[variables('VaultName')]" },
           "Region": { "value": "[parameters('Region')]" },
-          "VaultSku": { "value": "[variables('VaultSKU')]" }
+          "VaultSku": { "value": "[variables('VaultSKU')]" },
+          "SecretName": { "value": "[variables('SecretName')]" },
+          "SecretValue": { "value": "[parameters('sqlAdministratorLoginPassword')]" }
         }
       }
     },

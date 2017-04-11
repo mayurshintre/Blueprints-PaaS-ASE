@@ -19,29 +19,52 @@
       "metadata": {
         "description": "Select the proper SKU for this Vault. See: https://docs.microsoft.com/en-us/azure/templates/microsoft.keyvault/vaults#Sku"
       }
-    }
-  },  
-  "variables": {
-  },
-  "resources": [
-    {
-      "name": "[parameters('VaultName')]",
-      "type": "Microsoft.KeyVault/vaults",
-      "apiVersion": "2015-06-01",
-      "location": "[parameters('Region')]",
-      "properties": {
-        "tenantId": "[subscription().tenantId]",
-        "sku": {
-          "family": "A",
-          "name": "[parameters('VaultSKU')]"
-        },
-        "accessPolicies": [ ],
-        "enabledForDeployment": "true",
-        "enabledForDiskEncryption": "false",
-        "enabledForTemplateDeployment": "true"
+    },
+    "SecretName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the Secret that will store the SQL password"
+      }
+    },
+    "SecretValue": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Password used for SQl server"
       }
     }
-  ],
+  },
+    "variables": {
+    },
+ "resources": [
+        {
+          "name": "[parameters('VaultName')]",
+          "type": "Microsoft.KeyVault/vaults",
+          "apiVersion": "2015-06-01",
+          "location": "[parameters('Region')]",
+          "properties": {
+            "tenantId": "[subscription().tenantId]",
+            "sku": {
+              "family": "A",
+              "name": "[parameters('VaultSKU')]"
+            },
+            "accessPolicies": [ ],
+            "enabledForDeployment": "true",
+            "enabledForDiskEncryption": "false",
+            "enabledForTemplateDeployment": "true"
+          }
+        },
+        {
+          "type": "Microsoft.KeyVault/vaults/secrets",
+          "name": "[concat(parameters('VaultName'), '/', parameters('SecretName'))]",
+          "apiVersion": "2015-06-01",
+          "properties": {
+            "value": "[parameters('SecretValue')]"
+          },
+          "dependsOn": [
+            "[concat('Microsoft.KeyVault/vaults/', parameters('VaultName'))]"
+          ]
+        }
+      ],
   "outputs": {
   }
 }
