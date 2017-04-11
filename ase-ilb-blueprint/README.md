@@ -45,7 +45,6 @@ Lorem epsum.
 ## Solution Design and Deployed Resources
 
 
-
 ### Architecture
 This diagram displays an overview of the solution
 
@@ -116,6 +115,29 @@ This solution is built using ARM templates and PowerShell. In order to deploy th
 
 ![alt text](images/asesequencevsdx.png "Template Deployment Sequence")
 
+1. User Defined Inputs in PowerShell
+2. Update the Parameters File (azuredeploy.parameters.json) - 99% of values and decisions are made here
+	Define if VNET with Azure DNS or Custom DNS and other values
+
+then
+
+Login to Azure and Azure AD
+Then we set context to the correct subscrition specified
+then we create resource group if it does not exist
+then passowrd is generated for SQL
+
+Then the script calls azuredeploy.json --> will call all other child templates in the following order (check azuredeploy for the order)
+we are also giving the SQL password value as a parameter for 
+
+Once everything is spun up then -
+
+the script determines the default domain (i.e. tenant name)
+then it gets outputs from the deployment
+uses a function to get the internal and OB IP's for the ASE's
+Then it defines NSG rules for each subnet and then apploes it for each subnet
+then set the SQL firewall rules
+and then add the ILB's internal IP's to the back end pool of the apps (overwrites the existing default backendaddresspool)
+
 ## Configuration Values
 
   Resource | Parameter | Configuration
@@ -124,7 +146,13 @@ This solution is built using ARM templates and PowerShell. In order to deploy th
   All | Prefix | Prefix name for the entire solution. Prepended to all resource names. Keep it short (4-6 characters). Lower case alphabets and numbers only. No spaces or special characters.
 
 ## Deployment steps
-You can either click the "deploy to Azure" button at the beginning of this document or deploy the solution from PowerShell with the following PowerShell script.
+At this time you cannot deploy this solution using just the ARM template (azuredeploy.json). The solution is deployed by executing the AzureDeploy.ps1 locally. 
+
++ Clone the solution on your local machine
++ Navigate to azuredeploy.parameters.json and fill in all parameter values for your deployment as defined in the Configuration Values section
++ Update the User Defined values in the AzureDeploy.ps1
++ Execute AzureDeploy.ps1
++ Grab a beer and wait for deployment to finish. I can take anywhere between 1-2 hours due to ASE.
 
 ``` PowerShell
 # Login to your subscription
