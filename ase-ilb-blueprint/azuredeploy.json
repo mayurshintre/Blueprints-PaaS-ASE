@@ -500,7 +500,7 @@
           "WebAppName": { "value": "[variables('WebAppName')]" },
           "Region": { "value": "[variables('Region')]" },
           "appServicePlanName": { "value": "[parameters('appServicePlanName')]" },
-          "appServiceEnvironmentName": { "value": "[parameters('appServiceEnvironmentName')]" }
+          "aseName": { "value": "[variables('aseName')]" }
         }
       }
     },
@@ -519,7 +519,7 @@
           "Region": { "value": "[variables('Region')]" },
           "ApiAppName": { "value": "[variables('ApiAppName')]" },
           "appServicePlanName": { "value": "[parameters('appServicePlanName')]" },
-          "appServiceEnvironmentName": { "value": "[parameters('appServiceEnvironmentName')]" }
+          "aseName": { "value": "[variables('aseName')]" }
         }
       }
     },
