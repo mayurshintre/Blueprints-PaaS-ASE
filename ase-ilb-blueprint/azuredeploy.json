@@ -578,6 +578,10 @@
     "AseName": {
       "type": "string",
       "value": "[variables('aseName')]"
+    },
+    "VnetName": {
+      "type": "string",
+      "value": "[variables('vnetName')]"
     }
   }
  }
