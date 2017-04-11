@@ -548,7 +548,7 @@
           "wafRuleSetVersion": { "value": "[variables('wafRuleSetVersion')]" },
           "backendIpAddress1": { "value": "[variables('WAFBackEndPoolStaticIP1')]" },
           "backendIpAddress2": { "value": "[variables('WAFBackEndPoolStaticIP2')]" },
-          "wafEnabled": { "value": "[parameters('wafEnabled')]"}
+          "wafEnabled": { "value": "[parameters('wafEnabled')]" }
         }
       }
     },
@@ -573,5 +573,11 @@
         }
       }
     }
-  ]
+  ],
+  "outputs": {
+    "AseName": {
+      "type": "string",
+      "value": "[variables('aseName')]"
+    }
+  }
  }
