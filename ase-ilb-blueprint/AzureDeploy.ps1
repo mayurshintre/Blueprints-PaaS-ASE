@@ -12,7 +12,7 @@
     ##Name of the Resource Group to deploy
     $RgName = "blueprint"
     ##Name to give the Deployment that will be ran
-    $DeploymentName = $RgName +"nist800"
+    $DeploymentName = $RgName +"nist800ase"
     ##Location of the main azuredeploy.json template
     $TemplateUri = "https://raw.githubusercontent.com/mayurshintre/Blueprints/master/ase-ilb-blueprint/azuredeploy.json"
     ##Location of the local parameters file
