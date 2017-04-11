@@ -1,5 +1,5 @@
 ﻿{
-  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
+  "$schema": "http://schema.management.azure.com/schemas/2014-04-01-preview/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
     "appServicePlanName": {
@@ -35,7 +35,7 @@
   },
   "resources": [
     {
-      "apiVersion": "2015-08-01",
+      "apiVersion": "2014-06-01",
       "name": "[parameters('appServicePlanName')]",
       "type": "Microsoft.Web/serverfarms",
       "location": "[parameters('Region')]",
@@ -46,9 +46,9 @@
         }
       },
       "sku": {
-        "name": "[concat('P',parameters('workerPool'))]",
+        "name": "[parameters('appServicePlanName')]",
         "tier": "Premium",
-        "size": "[concat('P',parameters('workerPool'))]",
+        "size": "[parameters('workerPool')]",
         "family": "P",
         "capacity": "[parameters('numberOfWorkersFromWorkerPool')]"
       }
