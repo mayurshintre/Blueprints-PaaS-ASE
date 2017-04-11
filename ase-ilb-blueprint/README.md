@@ -8,9 +8,11 @@
 - [Solution Design and Deployed Resources](#soution-design-and-deployed-resources)
 	- [Architecture](#)
 	- [Deployed Azure Resources](#)
-		- [Resource Provider 1]
-		- [Resource Provider 2]
-		- [Resource Provider 3]
+		- Microsoft.Networks
+		- Microsoft.Cache
+		- Microsoft.Web
+		- Microsoft.Sql
+		- Microsoft.KeyVault
 	- [Security](#)
 		- [Virtual Network](#)
 		- [WAF - Application Gateway](#)
@@ -78,13 +80,13 @@ Control 2 | Mapping | Customer
 [Microsoft.Web]
 + **[/hostingEnvironments]**: [Description Resource type 2A]
 + **[/serverFarms]**: [Description Resource type 2A]
-+ **[/]**: [Description Resource type 2A]
++ **[kind: "webapp"]**: [Description Resource type 2A]
 
 ### ILB ASE - API App
 [Microsoft.Web]
 + **[/hostingEnvironments]**: [Description Resource type 2A]
 + **[/serverFarms]**: [Description Resource type 2A]
-+ **[/]**: [Description Resource type 2A]
++ **[kind: "apiapp]**: [Description Resource type 2A]
 
 ### Azure SQL
 [Microsoft.Sql]
@@ -100,8 +102,12 @@ Control 2 | Mapping | Customer
 
 ### Prerequisites
 
-In order to deploy the solution, you must install the latest version of PowerShell 
+This solution is built using ARM templates and PowerShell. In order to deploy the solution, you must have the following packages currectly installed and in working order
 
++ Latest version of PowerShell 
++ Azure Resource Manager PowerShell Module
++ Azure Storage PowerShell Module
++ Optional - PowerShell ISE
 
 ### Deployment Sequence
 
