@@ -451,7 +451,7 @@
         },
         "parameters": {
           "appServicePlanName": { "value": "[parameters('appServicePlanName')]" },
-          "appServiceEnvironmentName": { "value": "[parameters('appServiceEnvironmentName')]" },
+          "aseName": { "value": "[variables('aseName')]" },
           "Region": { "value": "[variables('region')]" },
           "workerPool": { "value": "[parameters('workerPool')]" },
           "numberOfWorkersFromWorkerPool": { "value": "[parameters('numberOfWorkersFromWorkerPool')]" }
@@ -489,7 +489,7 @@
       "type": "Microsoft.Resources/deployments",
       "name": "ILBASE-Web",
       "apiVersion": "2015-01-01",
-      "dependsOn": [ "ILBASE" ],
+      "dependsOn": [ "ILBASP" ],
       "properties": {
         "mode": "Incremental",
         "templateLink": {
@@ -508,7 +508,7 @@
       "type": "Microsoft.Resources/deployments",
       "name": "ILBASE-API",
       "apiVersion": "2015-01-01",
-      "dependsOn": [ "ILBASE" ],
+      "dependsOn": [ "ILBASP" ],
       "properties": {
         "mode": "Incremental",
         "templateLink": {

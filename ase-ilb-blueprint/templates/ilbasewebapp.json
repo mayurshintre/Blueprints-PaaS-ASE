@@ -20,10 +20,10 @@
         "description": "The name of the App Service plan to use for hosting the web and api app."
       }
     },
-    "appServiceEnvironmentName": {
+    "aseName": {
       "type": "string",
       "metadata": {
-        "description": "The name of the App Service Environment where the app service plan will be created."
+        "description": "Name of the App Service Environment"
       }
     }
   },
@@ -35,7 +35,7 @@
       "properties": {
         "name": "[parameters('WebAppName')]",
         "serverFarmId": "[resourceId('Microsoft.Web/serverFarms',parameters('appServicePlanName'))]",
-        "hostingEnvironment": "[parameters('appServiceEnvironmentName')]"
+        "hostingEnvironment": "[parameters('asename')]"
       },
       "location": "[parameters('Region')]"
     }
