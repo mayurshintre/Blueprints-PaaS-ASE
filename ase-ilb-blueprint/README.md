@@ -4,7 +4,7 @@
 
 - [Solution Overview](#solution-overview)
 	- [NIST 800-66 Based Assurance Framework Azure PaaS](#nist-800-66-based-assurance-framework-for-azure-blueprint-deployment))
-	- 
+
 - [Solution Design and Deployed Resources](#soution-design-and-deployed-resources)
 	- [Architecture](#)
 	- [Deployed Azure Resources](#)
@@ -66,37 +66,40 @@ Control 2 | Mapping | Customer
 
 ## Deployed Azure Resources
 
-### VNET & Application Gateway(WAF)
-[Microsoft.Networks]
-+ **[/virtualNetworks]**: [1 VIrtual Network and 4 Subnets]
-+ **[/publicIPAddresses]**: [1 VIrtual Network and 4 Subnets]
-+ **[/applicationGateway]**: [1 VIrtual Network and 4 Subnets]
+### Virtual Network & Application Gateway(WAF)
+####Microsoft.Networks
++ **/virtualNetworks**: 1 Virtual Network and 4 Subnets
++ **/publicIPAddresses**: 1 Public IP Address for Application Gateway WAF
+
+### Application Gateway(WAF)
+####Microsoft.Networks
++ **/applicationGateway**: 1 Application Gateway
 
 ### Redis Cache
-[Microsoft.Cache]
-+ **[Redis]**: [Description Resource type 3A]
+####Microsoft.Cache
++ **Redis**: Redis Cache Cluster
 
 ### ILB ASE - Web App
-[Microsoft.Web]
-+ **[/hostingEnvironments]**: [Description Resource type 2A]
-+ **[/serverFarms]**: [Description Resource type 2A]
-+ **[kind: "webapp"]**: [Description Resource type 2A]
+####Microsoft.Web
++ **/hostingEnvironments**: App Service Environment
++ **/serverFarms**: Default Service Plan
++ **kind: "webapp"**: Default Azure WebApp
 
 ### ILB ASE - API App
-[Microsoft.Web]
-+ **[/hostingEnvironments]**: [Description Resource type 2A]
-+ **[/serverFarms]**: [Description Resource type 2A]
-+ **[kind: "apiapp]**: [Description Resource type 2A]
+####Microsoft.Web
++ **/hostingEnvironments**: [Description Resource type 2A]
++ **/serverFarms**: [Description Resource type 2A]
++ **kind: "apiapp"**: [Description Resource type 2A]
 
 ### Azure SQL
-[Microsoft.Sql]
-+ **[/servers]**: [Description Resource type 3A]
-+ **[/servers/databases]**: [Description Resource type 3B]
-+ **[/servers/firewallRules]**: [Description Resource type 3B]
+####Microsoft.Sql
++ **/servers**: [Description Resource type 3A]
++ **/servers/databases**: [Description Resource type 3B]
++ **/servers/firewallRules**: [Description Resource type 3B]
 
 ### Azure KeyVault
-[Microsoft.KeyVault]
-+ **[/vaults]**: [Description Resource type 3A]
+####Microsoft.KeyVault
++ **/vaults**: Description Resource type 3A
 
 ## Deployment Guide
 
