@@ -98,12 +98,6 @@
         "description": "The name of the App Service plan to use for hosting the web app."
       }
     },
-    "appServiceEnvironmentName": {
-      "value": "ASEName",
-      "metadata": {
-        "description": "The name of the App Service Environment where the app service plan will be created."
-      }
-    },
     "AseDNS": {
       "value": "ASE.demo",
       "metadata": {
@@ -210,12 +204,6 @@
       "value": "SQLMaster",
       "metadata": {
         "description": "The administrator username of the SQL Server."
-      }
-    },
-    "sqlAdministratorLoginPassword": {
-      "value": "JeradistheCoolestCatEver",
-      "metadata": {
-        "description": "The administrator password of the SQL Server."
       }
     }
   }
