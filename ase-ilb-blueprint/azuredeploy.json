@@ -9,6 +9,13 @@
         "description": "String to append to all resource names"
       }
     },
+    "Region": {
+      "type": "string",
+      "defaultValue": "West US",
+      "metadata": {
+        "description": "Region for the deployment"
+      }
+    },
     "vnetAddressPrefix": {
       "type": "string",
       "defaultValue": "10.0.0.0",
@@ -309,7 +316,6 @@
     "sqlServerName": "[toLower(concat(parameters('SystemPrefixName'),'AzureSql',uniqueString(resourceGroup().id)))]",
     "databaseName": "[toLower(concat(parameters('SystemPrefixName'),'Database'))]",
 
-    "Region": "[resourceGroup().location]",
     "TemplateURIs": "https://raw.githubusercontent.com/mayurshintre/Blueprints/master/ase-ilb-blueprint/templates/",
 
     "wafMode": "Prevention",
@@ -368,7 +374,7 @@
         },
         "parameters": {
           "VaultName": { "value": "[variables('VaultName')]" },
-          "Region": { "value": "[variables('Region')]" },
+          "Region": { "value": "[parameters('Region')]" },
           "VaultSku": { "value": "[variables('VaultSKU')]" }
         }
       }
@@ -385,7 +391,7 @@
         },
         "parameters": {
           "vnetName": { "value": "[variables('vnetName')]" },
-          "Region": { "value": "[variables('Region')]" },
+          "Region": { "value": "[parameters('Region')]" },
           "vnetAddressSpace": { "value": "[variables('vnetAddressSpace')]" },
           "vnetAddressPrefix": { "value": "[parameters('vnetAddressPrefix')]" },
           "vnetAddressPrefixCIDR": { "value": "[parameters('vnetAddressPrefixCIDR')]" },
@@ -422,7 +428,7 @@
         },
         "parameters": {
           "aseName": { "value": "[variables('aseName')]" },
-          "Region": { "value": "[variables('Region')]" },
+          "Region": { "value": "[parameters('Region')]" },
           "vnetID": { "value": "[variables('vnetID')]" },
           "WebAppSubnetName": { "value": "[variables('WebAppSubnetName')]" },
           "internalLoadBalancingMode": { "value": "[parameters('internalLoadBalancingMode')]" },
@@ -452,7 +458,7 @@
         "parameters": {
           "appServicePlanName": { "value": "[parameters('appServicePlanName')]" },
           "aseName": { "value": "[variables('aseName')]" },
-          "Region": { "value": "[variables('region')]" },
+          "Region": { "value": "[parameters('Region')]" },
           "workerPool": { "value": "[parameters('workerPool')]" },
           "numberOfWorkersFromWorkerPool": { "value": "[parameters('numberOfWorkersFromWorkerPool')]" }
         }
@@ -471,7 +477,7 @@
         },
         "parameters": {
           "redisCacheName": { "value": "[variables('redisCacheName')]" },
-          "Region": { "value": "[variables('Region')]" },
+          "Region": { "value": "[parameters('Region')]" },
           "redisShardCount": { "value": "[parameters('redisShardCount')]" },
           "redisCacheCapacity": { "value": "[parameters('redisCacheCapacity')]" },
           "virtualNetwork": { "value": "[variables('VnetID')]" },
@@ -498,7 +504,7 @@
         },
         "parameters": {
           "WebAppName": { "value": "[variables('WebAppName')]" },
-          "Region": { "value": "[variables('Region')]" },
+          "Region": { "value": "[parameters('Region')]" },
           "appServicePlanName": { "value": "[parameters('appServicePlanName')]" },
           "aseName": { "value": "[variables('aseName')]" }
         }
@@ -516,7 +522,7 @@
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
-          "Region": { "value": "[variables('Region')]" },
+          "Region": { "value": "[parameters('Region')]" },
           "ApiAppName": { "value": "[variables('ApiAppName')]" },
           "appServicePlanName": { "value": "[parameters('appServicePlanName')]" },
           "aseName": { "value": "[variables('aseName')]" }
@@ -537,7 +543,7 @@
         "parameters": {
           "vnetName": { "value": "[variables('vnetName')]" },
           "WAFSubnetName": { "value": "[variables('WAFSubnetName')]" },
-          "Region": { "value": "[variables('Region')]" },
+          "Region": { "value": "[parameters('Region')]" },
           "subnetPrefix": { "value": "[variables('WAFSubnetAddressSpace')]" },
           "addressPrefix": { "value": "[variables('vnetAddressSpace')]" },
           "applicationGatewayName": { "value": "[variables('applicationGatewayName')]" },
@@ -563,7 +569,7 @@
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
-          "Region": { "value": "[variables('Region')]" },
+          "Region": { "value": "[parameters('Region')]" },
           "sqlAdministratorLogin": { "value": "[parameters('sqlAdministratorLogin')]" },
           "sqlAdministratorLoginPassword": { "value": "[parameters('sqlAdministratorLoginPassword')]" },
           "sqlServerName": { "value": "[variables('sqlServerName')]" },
