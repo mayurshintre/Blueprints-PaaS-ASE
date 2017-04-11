@@ -10,7 +10,7 @@
     ##Azure Region to Deploy all resources including the Resource Group
     $Region = "West US"
     ##Name of the Resource Group to deploy
-    $RgName = "rgJerad"
+    $RgName = "rgAseDemo"
     ##Name to give the Deployment that will be ran
     $DeploymentName = $RgName +"Nist800-66Deployment"
     ##Location of the main azuredeploy.json template
