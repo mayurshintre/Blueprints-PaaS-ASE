@@ -582,6 +582,10 @@
     "VnetName": {
       "type": "string",
       "value": "[variables('vnetName')]"
+    },
+    "SqlName": {
+      "type": "string",
+      "value": "[variables('sqlServerName')]"
     }
   }
  }
