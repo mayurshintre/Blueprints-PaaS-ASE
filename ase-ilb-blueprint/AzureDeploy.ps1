@@ -1,15 +1,16 @@
 ﻿###########################
 ###ILB-ASE Deploy Script###
-###Version: 1.0         ###  
+###Version: 2.0         ###  
 ###Author: Jerad Berhow####
 ###########################
 
-#Parameters Region
+##USER DEFINED
+##MAKE CHANGES HERE TO MATCH YOUR ENVIRONMENT
 #region
     ##Azure Region to Deploy all resources including the Resource Group
     $Region = "West US"
     ##Name of the Resource Group to deploy
-    $RgName = "rgJohnCena"
+    $RgName = "rgJerad"
     ##Name to give the Deployment that will be ran
     $DeploymentName = $RgName +"Nist800-66Deployment"
     ##Location of the main azuredeploy.json template
