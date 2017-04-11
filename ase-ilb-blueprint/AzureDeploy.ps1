@@ -107,6 +107,7 @@ foreach($Domain in $Domains)
 $AseName = (Get-AzureRmResourceGroupDeployment -ResourceGroupName $RgName -Name $DeploymentName).Outputs.aseName.Value
 $VnetName = (Get-AzureRmResourceGroupDeployment -ResourceGroupName $RgName -Name $DeploymentName).Outputs.vnetName.Value
 $SqlName = (Get-AzureRmResourceGroupDeployment -ResourceGroupName $RgName -Name $DeploymentName).Outputs.sqlName.Value
+$AppGWName = (Get-AzureRmResourceGroupDeployment -ResourceGroupName $RgName -Name $DeploymentName).Outputs.AppGWName.Value
 
 $resourceID = (Get-AzureRmResource | where -Property resourcename -EQ $AseName).resourceID
 
@@ -439,3 +440,8 @@ New-AzureRmSqlServerFirewallRule -ResourceGroupName $RgName -ServerName $SQLN
                                  -StartIpAddress $hostingInfo.outboundIpAddresses[0] `
                                  -EndIpAddress $hostingInfo.outboundIpAddresses[0] 
  
+ #Add ILB Internal IP to the Backend Address Pool of the WAF
+
+$AppGW = Get-AzureRmApplicationGateway -Name $AppGWName -ResourceGroupName $RgName
+Set-AzureRmApplicationGatewayBackendAddressPool -Name appGatewayBackendPool -BackendIPAddresses $hostingInfo.internalIpAddress
+Set-AzureRmApplicationGateway -ApplicationGateway $AppGW
