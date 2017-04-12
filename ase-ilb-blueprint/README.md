@@ -131,7 +131,7 @@ This solution utilizes a combination of ARM templates and PowerShell. In order t
 
 + [Install and configure](https://github.com/PowerShell/PowerShell) the latest version of PowerShell
 + [Install and configure](https://technet.microsoft.com/en-us/library/dn975125.aspx#Anchor_1) Windows Azure Active Directory Module for Windows PowerShell - Implement Step-1 only
-_Please Note: The blueprint code does **not** use [Azure Active Directory V2 PowerShell module](https://technet.microsoft.com/en-us/library/dn975125.aspx#Anchor_5)_
+>Please Note: The blueprint code does **not** use [Azure Active Directory V2 PowerShell module](https://technet.microsoft.com/en-us/library/dn975125.aspx#Anchor_5)
 + [Install](https://docs.microsoft.com/en-us/powershell/azure/install-azurerm-ps?) Azure Resource Manager PowerShell Module
 
 ### 4.2 Deployment Steps Overview
@@ -159,7 +159,9 @@ git clone https://github.com/mayurshintre/Blueprints-PaaS-ASE.git somefolder
 ### 4.5 Configure _azuredeploy.parameters.json_
 
 Please update the following values in the _azuredeploy.parameters.json_ file on your local machine. This file holds all configuration and sizing parameters for all services deployed in this Blueprint. Please follow the instructions carefully as any typo's can result in a failed deployment.
+
 >This is the **main** configuration file
+
   Resource | Parameter | Default Value| Allowed Values | Configuration
   ---|---|---|---|---|
   All | All | - | **No spaces or special characters. Lower case alphabets and numbers only.** | Adding special characters will break deployment for Azure SQL.
@@ -235,7 +237,7 @@ You may need to modify the _azuredeploy.json_ template or any other individual r
 + For example, if may need to change the Redis Cache configuration to enable non-SSL ports, you can navigate to the azuredelploy.json template and modify the following parameters in the json code block below 
 + Some values are intentionally hardcoded as variables in _azuredeploy.json_ in order to prevent the end user from modifying those values, to meet the NIST 800-66 security controls, and in other cases, such as the redis cache _max_ values, because they are widely accepted as defaults and do not need end user configuration.
 
->**Please Note: By changing any security related hard-coded variables in _azuredeploy.json_ or any other individual resource teplates, you will break the NIST 800-66 secure baseline compliance assurance provided in the [NIST 800-66 Security Compliance Matrix](#nist-800-66-security-compliance-matrix) section** and the obligation to meet the security control will be transferred on to you, the end user.
+>**Please Note: By changing any security related hard-coded variables in _azuredeploy.json_ or any other individual resource teplates, you will break the NIST 800-66 secure baseline compliance assurance provided in the [NIST 800-66 Security Compliance Matrix](#nist-800-66-security-compliance-matrix) section and the obligation to meet and map any unmet security controls will be transferred on to you, the end user.**
 
 ``` json
     "enableNonSSLPort": false,
@@ -244,7 +246,6 @@ You may need to modify the _azuredeploy.json_ template or any other individual r
     "redisCachemaxmemoryreserved": 200,
     "redisCachemaxfragmentationmemory-reserved": 300,
     "redisCachemaxmemory-delta": 200,
-```
 _Excerpt from azuredeploy.json for hard-coded redis cache variables not exposed in azuredeploy.parameters.json file_
 
 ## 6. Cost
