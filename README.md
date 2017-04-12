@@ -29,7 +29,7 @@
 
 ## 1. Solution Overview
 
-![alt text](ilb-ase-blueprint/images/sequence.png "Template Deployment Sequence")
+![alt text](ase-ilb-blueprint/images/sequence.png "Template Deployment Sequence")
 
 This Blueprint deploys a fully automated secure baseline Azure ARM Template + PowerShell solution to provision a highly secure, orchestrated and configured Platform as a Service environment mapped to a NIST 800-66 assurance security controls matrix, that includes :
 
@@ -53,14 +53,14 @@ This Azure refernce Blueprint deployment guide discusses architectural considera
 
 You can also view the security controls matrix (Microsoft Excel spreadsheet), which maps the architecture decisions, components, and configuration in this Quick Start to security requirements within NIST, TIC, and DoD Cloud SRG publications; indicates which Azure ARM templates and PowerShell scripts affect the controls implementation; and specifies the associated Azure resources within the templates. The excerpt in Figure 1 provides a sample of the available information.
 
-![alt text](ilb-ase-blueprint/scmexcerpt.png "SCM Excerpt")
+![alt text](ase-ilb-blueprint/scmexcerpt.png "SCM Excerpt")
 
 ## 2. Solution Design and Deployed Resources
 
 ### 2.1 Architecture
 This diagram displays an overview of the solution
 
-![alt text](ilb-ase-blueprint/images/solution.png "Solution Diagram")
+![alt text](ase-ilb-blueprint/images/solution.png "Solution Diagram")
 
 ### 2.2 Deployed Azure Resources
 
@@ -157,7 +157,7 @@ This solution utilizes a combination of ARM templates and PowerShell. In order t
 
 ### 4.3 Template Deployment Sequence
 
-![alt text](ilb-ase-blueprint/images/sequence.png "Template Deployment Sequence")
+![alt text](ase-ilb-blueprint/images/sequence.png "Template Deployment Sequence")
 
 ### 4.4 Clone the Solution
 
