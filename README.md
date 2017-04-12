@@ -53,7 +53,7 @@ This Azure refernce Blueprint deployment guide discusses architectural considera
 
 You can also view the security controls matrix (Microsoft Excel spreadsheet), which maps the architecture decisions, components, and configuration in this Quick Start to security requirements within NIST, TIC, and DoD Cloud SRG publications; indicates which Azure ARM templates and PowerShell scripts affect the controls implementation; and specifies the associated Azure resources within the templates. The excerpt in Figure 1 provides a sample of the available information.
 
-![alt text](ase-ilb-blueprint/scmexcerpt.png "SCM Excerpt")
+![alt text](ase-ilb-blueprint/images/scmexcerpt.png "SCM Excerpt")
 
 ## 2. Solution Design and Deployed Resources
 
