@@ -4,7 +4,6 @@
 
 - [Solution Overview](#solution-overview)
 	- [NIST 800-66 Based Assurance Framework Azure PaaS](#nist-800-66-based-assurance-framework-for-azure-blueprint-deployment))
-
 - [Solution Design and Deployed Resources](#soution-design-and-deployed-resources)
 	- [Architecture](#architecture)
 	- [Deployed Azure Resources](#deployed-azure-resources)
@@ -18,12 +17,12 @@
 	- [Security](###security)
 		- [Virtual Network](#virtualnetwork)
 		- [Application Gateway w/ WAF](#waf---application-gateway)
+		- [Redis Cache](#rediscache)
 		- [ILB ASE w/ Web Apps](#ilb-ase-w/-web-apps)
 		- [ILB ASE w/ Api Apps](#ilb-ase-w/-api-apps)
-		- [Redis Cache](#rediscache)
 		- [Azure SQL](#azuresql)
 		- [Azure KeyVault](#azure-keyvault)
-- [NIST 800-660 Security Compliance Matrix](#nist-800-66-security-matrix-compliance)
+- [NIST 800-66 Assurance - Security Compliance Matrix](#nist-800-66-security-matrix-compliance)
 - [Deployment Guide](#deployment-and-configuration-activities) 
 	- [Prerequisites](#prerequisites)
 	- [Configuration Activities](#)
@@ -31,7 +30,6 @@
 		- [Prefix Value and Tags](#)
 	- [Deployment Process](#deployment-process)
 	- [PowerShell Deployment](#optional-powershell-deployment)
-
 - [Cost](#cost)
 
 ## Solution Overview
@@ -49,7 +47,7 @@ The solution deploys a fully automated secure baseline Azure ARM Blueprint to pr
 
 The environment is locked down with restricted access and communication between all provisioned Azure services and also between subnets, as described in the security section below.
 
-### NIST 800-66 Based Assurance Framework for Azure PaaS Blueprint Deployment
+### NIST 800-66 Based Assurance Framework for Azure PaaS Blueprint
 Lorem epsum.
 
 ## Solution Design and Deployed Resources
@@ -130,48 +128,20 @@ This diagram displays an overview of the solution
 Control 1 | Mapping | Azure
 Control 2 | Mapping | Customer 
 
-
-
 ## Deployment Guide
 
-### Prerequisites
+###Prerequisites
 
-This solution is built using ARM templates and PowerShell. In order to deploy the solution, you must have the following packages currectly installed and in working order
-The code 
+This solution is built using ARM templates and PowerShell. In order to deploy the solution, you must have the following packages currectly installed and in working order on our machine
 
-+ [Install and configure](https://docs.microsoft.com/en-us/powershell/azure/install-azurerm-ps?) the latest version of PowerShell
-+ [Install and confgure](https://technet.microsoft.com/en-us/library/dn975125.aspx#Anchor_1) Windows Azure Active Directory Module for Windows PowerShell Step-1 only
-++ Please Note: The code does **not** use [Azure Active Directory V2 PowerShell module](https://technet.microsoft.com/en-us/library/dn975125.aspx#Anchor_5)
-+ Azure Resource Manager PowerShell Module
-+ Azure Storage PowerShell Module
-+ Optional - PowerShell ISE
++ [Install and configure](https://github.com/PowerShell/PowerShell) the latest version of PowerShell
++ [Install and confgure](https://technet.microsoft.com/en-us/library/dn975125.aspx#Anchor_1) Windows Azure Active Directory Module for Windows PowerShell - Implement Step-1 only
+	+_Please Note: The code does **not** use [Azure Active Directory V2 PowerShell module](https://technet.microsoft.com/en-us/library/dn975125.aspx#Anchor_5)_
++ [Install](https://docs.microsoft.com/en-us/powershell/azure/install-azurerm-ps?)Azure Resource Manager PowerShell Module
 
 ### Deployment Sequence
 
 ![alt text](images/sequence.png "Template Deployment Sequence")
-
-1. User Defined Inputs in PowerShell
-2. Update the Parameters File (azuredeploy.parameters.json) - 99% of values and decisions are made here
-	Define if VNET with Azure DNS or Custom DNS and other values
-
-then
-
-Login to Azure and Azure AD
-Then we set context to the correct subscrition specified
-then we create resource group if it does not exist
-then password is generated for SQL
-
-Then the script calls azuredeploy.json --> will call all other child templates in the following order (check azuredeploy for the order)
-we are also giving the SQL password value as a parameter for 
-
-Once everything is spun up then -
-
-the script determines the default domain (i.e. tenant name)
-then it gets outputs from the deployment
-uses a function to get the internal and OB IP's for the ASE's
-Then it defines NSG rules for each subnet and then apploes it for each subnet
-then set the SQL firewall rules
-and then add the ILB's internal IP's to the back end pool of the apps (overwrites the existing default backendaddresspool)
 
 ## Configuration Values
 
@@ -216,12 +186,19 @@ $SubscriptionID = "Your Subscription ID here"
 ```
 ## Modifying the Templates
 
-## Usage
+You can modify the ARM templates directly by following the ARM json syntax. By and large, there should be no need to modify the ARM templates themselves except when you wish to modify some hardcoded values specicied in templates as variables. For example, if you wish to change the Redis Cache configuration to enable non-SSL ports or change the default cache values, you can navigate to the azuredelploy.json template and modify the following parameters
 
+``` Json
+    "enableNonSSLPort": false,
+
+    "redisCachemaxclients": 7500,
+    "redisCachemaxmemoryreserved": 200,
+    "redisCachemaxfragmentationmemory-reserved": 300,
+    "redisCachemaxmemory-delta": 200,
+```
 #### Connect
-[How to connect to the solution]
-#### Management
-[How to manage the solution]
+
+
 
 ## Cost
 

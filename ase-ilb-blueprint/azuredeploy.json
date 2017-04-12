@@ -327,6 +327,8 @@
     "VnetID": "[concat(resourceId('Microsoft.Network/VirtualNetworks', variables('vnetName')))]",
     "SubNetID": "[concat(variables('VnetID'), '/subnets/')]",
 
+    "enableNonSSLPort": false,
+
     "redisCachemaxclients": 7500,
     "redisCachemaxmemoryreserved": 200,
     "redisCachemaxfragmentationmemory-reserved": 300,
@@ -337,8 +339,6 @@
     "RedisCacheAdd": "[add(variables('RedisCacheConvert'),4)]",
     "RedisCacheLastOctet": "[string(variables('RedisCacheAdd'))]",
     "RedisCacheStaticIP": "[concat(variables('RedisCacheSplit')[0],'.',variables('RedisCacheSplit')[1],'.',variables('RedisCacheSplit')[2],'.',variables('RedisCacheLastOctet'))]",
-
-    "enableNonSSLPort": false,
 
     "WAFBackEndPoolSplit": "[split(parameters('WebAppSubnetPrefix'),'.')]",
     "WAFBackEndPoolConvert": "[int(variables('WAFBackEndPoolSplit')[3])]",
@@ -354,7 +354,7 @@
 
     "databaseServiceObjectiveName": "Basic",
     "databaseEdition": "Basic",
-    "Secretname":  "SqlSecret"
+    "Secretname": "SqlSecret"
   },
   "resources": [
     {
