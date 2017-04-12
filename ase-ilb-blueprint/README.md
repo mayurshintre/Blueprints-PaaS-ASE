@@ -43,7 +43,17 @@ This Blueprint deploys a fully automated secure baseline Azure ARM Template + Po
 The environment is locked down using Network Security Groups on each subnet with restricted access between all provisioned Azure services and also between subnets, as described in the [security](#s23-security) section below.
 
 ### 1.1 NIST 800-66 Based Assurance Framework for Azure PaaS Blueprint
-Lorem epsum.
+
+This Azure refernce Blueprint deployment guide discusses architectural considerations and steps for deploying security-focused baseline environments on Azure. Specifically, this Blueprint deploys a standardized environment that helps organizations with workloads that fall in scope for any of the following:
+
++ National Institute of Standards and Technology (NIST) SP 800-66 (Revision 4)
++ NIST SP 800-171
++ The OMB Trusted Internet Connection (TIC) Initiative – FedRAMP Overlay (pilot)
++ The DoD Cloud Computing Security Requirements Guide (SRG)
+
+You can also view the security controls matrix (Microsoft Excel spreadsheet), which maps the architecture decisions, components, and configuration in this Quick Start to security requirements within NIST, TIC, and DoD Cloud SRG publications; indicates which Azure ARM templates and PowerShell scripts affect the controls implementation; and specifies the associated Azureresources within the templates. The excerpt in Figure 1 provides a sample of the available information.
+
+![alt text](images/scmexcerpt.png "SCM Excerpt")
 
 ## 2. Solution Design and Deployed Resources
 
