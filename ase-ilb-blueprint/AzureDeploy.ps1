@@ -18,7 +18,7 @@
     ##Location of the local parameters file
     $ParameterFile = "Local Repository Location\azuredeploy.parameters.json"
     ##Subscription ID that will be used to host the resource group
-    $SubscriptionID = "Your Subscription Name Here"
+    $SubscriptionID = "Your SubscriptionID Here"
 #endregion
 
 #Function to generate random password
