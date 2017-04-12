@@ -19,7 +19,7 @@
 - [4. Deployment Guide](#4-deployment-guide) 
 	- [4.1 Installation Prerequisites](#41-installation-prerequisites)
 	- [4.2 Template Deployment Sequence](#42-template-deployment-sequence)
-	- [4.3 Deployment Steps](#43-deployment-steps)
+	- [4.3 Deployment Steps Overview](#43-deployment-steps-overview)
 	- [4.4 Clone the Solution](#44-clone-the-solution)
 	- [4.5 Configure azuredeploy.parameters.json](#45-onfigure-azuredeployparametersjson)
 	- [4.6 Configure azuredeploy.ps1](#46-configure-azuredeployps1)
@@ -134,11 +134,11 @@ This solution utilizes a combination of ARM templates and PowerShell. In order t
 _Please Note: The blueprint code does **not** use [Azure Active Directory V2 PowerShell module](https://technet.microsoft.com/en-us/library/dn975125.aspx#Anchor_5)_
 + [Install](https://docs.microsoft.com/en-us/powershell/azure/install-azurerm-ps?) Azure Resource Manager PowerShell Module
 
-### 4.2 Deployment Steps
+### 4.2 Deployment Steps Overview
 > **Please Note**: At this time, this blueprint cannot be deployed using just the ARM template (azuredeploy.json). The solution must be deployed by executing the AzureDeploy.ps1 locally. 
 
 1. Clone the solution on your local machine
-2. Navigate to azuredeploy.parameters.json on your local machine and fill in all parameter values for your deployment as defined in the [Configuration Values](#) section
+2. Navigate to _azuredeploy.parameters.json_ on your local machine and fill in all parameter values for your deployment as defined in the [Configure _azuredeploy.parameters.json_](#45-configure-azuredeploy.parameters.json) section
 3. Update the User Defined values in the AzureDeploy.ps1
 4. Execute AzureDeploy.ps1
 5. Grab a coffee and wait for deployment to finish. Deployment time can take anywhere between 1-2 hours.
@@ -159,7 +159,7 @@ git clone https://github.com/mayurshintre/Blueprints-PaaS-ASE.git somefolder
 ### 4.5 Configure _azuredeploy.parameters.json_
 
 Please update the following values in the _azuredeploy.parameters.json_ file on your local machine. This file holds all configuration and sizing parameters for all services deployed in this Blueprint. Please follow the instructions carefully as any typo's can result in a failed deployment.
-
+>This is the **main** configuration file
   Resource | Parameter | Default Value| Allowed Values | Configuration
   ---|---|---|---|---|
   All | All | - | **No spaces or special characters. Lower case alphabets and numbers only.** | Adding special characters will break deployment for Azure SQL.
