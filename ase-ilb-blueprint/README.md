@@ -47,7 +47,7 @@ The solution deploys a fully automated secure baseline Azure ARM Blueprint to pr
 + Azure SQL 
 + Azure KeyVault
 
-The environment is locked down using Network Security Groups on each subnet with restricted access between all provisioned Azure services and also between subnets, as described in the [security](#security) section below.
+The environment is locked down using Network Security Groups on each subnet with restricted access between all provisioned Azure services and also between subnets, as described in the [security](#s23-security) section below.
 
 ### 1.1 NIST 800-66 Based Assurance Framework for Azure PaaS Blueprint
 Lorem epsum.
@@ -130,18 +130,18 @@ This diagram displays an overview of the solution
 Control 1 | Mapping | Azure
 Control 2 | Mapping | Customer 
 
-## Deployment Guide
+## 4. Deployment Guide
 
-### Installation Prerequisites
+### 4.1 Installation Prerequisites
 
 This solution is built using ARM templates and PowerShell. In order to deploy the solution, you must have the following packages currectly installed and in working order on our machine
 
 + [Install and configure](https://github.com/PowerShell/PowerShell) the latest version of PowerShell
 + [Install and confgure](https://technet.microsoft.com/en-us/library/dn975125.aspx#Anchor_1) Windows Azure Active Directory Module for Windows PowerShell - Implement Step-1 only
-	+_Please Note: The code does **not** use [Azure Active Directory V2 PowerShell module](https://technet.microsoft.com/en-us/library/dn975125.aspx#Anchor_5)_
+	+_Please Note: The blueprint code does **not** use [Azure Active Directory V2 PowerShell module](https://technet.microsoft.com/en-us/library/dn975125.aspx#Anchor_5)_
 + [Install](https://docs.microsoft.com/en-us/powershell/azure/install-azurerm-ps?)Azure Resource Manager PowerShell Module
 
-### Deployment Steps
+### 4.2 Deployment Steps
 **Please Note**: At this time you cannot deploy this solution using just the ARM template (azuredeploy.json). The solution is deployed by executing the AzureDeploy.ps1 locally. 
 
 1. Clone the solution on your local machine
@@ -150,11 +150,11 @@ This solution is built using ARM templates and PowerShell. In order to deploy th
 4. Execute AzureDeploy.ps1
 5. Grab a coffee and wait for deployment to finish. Deployment time can take anywhere between 1-2 hours.
 
-### Template Deployment Sequence
+### 4.3 Template Deployment Sequence
 
 ![alt text](images/sequence.png "Template Deployment Sequence")
 
-### Clone the Solution
+### 4.4 Clone the Solution
 
 + Clone the blueprint to your local machine
 
@@ -163,7 +163,7 @@ git clone https://github.com/mayurshintre/Blueprints-PaaS-ASE.git somefolder
 ``` 
 + or download as a ZIP from https://github.com/mayurshintre/Blueprints-PaaS-ASE
 
-### Configure _azuredeploy.parameters.json_
+### 4.5 Configure _azuredeploy.parameters.json_
 
 Please update the following values in the _azuredeploy.parameters.json_ file on your local machine. This file holds all configuration and sizing parameters for all services deployed in this Blueprint. Please follow the instructions carefully as any typo's can result in a failed deployment.
 
@@ -176,7 +176,7 @@ Please update the following values in the _azuredeploy.parameters.json_ file on 
   Subnet | WAFSubnetPrefix | _10.0.0.0_ | Within the defined Vnet space | As defined within [RFC 1918 Range](https://tools.ietf.org/html/rfc1918)
   Subnet | WAFSubnetPrefixCIDR | _/24_ | As defined within [RFC 1918 Range](https://tools.ietf.org/html/rfc1918)
 
-### Configure _azuredeploy.ps1_ PowerShell File
+### 4.6 Configure _azuredeploy.ps1_ PowerShell File
 
 Only update the following user defined inputs section in the _azuredeploy.ps1_ file
 
@@ -199,17 +199,41 @@ $ParameterFile = "Repository Location\azureDeploy.parameters.json"
 ##Subscription ID that will be used to host the resource group
 $SubscriptionID = "Your Subscription ID here"
 ```
-### Run _azuredeploy.ps1_
+### 4.7 Run _azuredeploy.ps1_
+
+``` PowerShell
+Windows PowerShell
+Copyright (C)Microsoft Corporation. All rights reserved.
+
+PS C:\User>azuredeploy.ps1
+
+```
+
+### 4.8 Expected Output
 
 
+### 4.9 Optional - Post Deployment UDR
 
-### Expected Output
+If you plan to terminate a VPN connection or On-premises ExpressRoute to this ASE Vnet **and turn on forced tunnelling**, you will require all the subnets to have User Defined Routes to traverse all internet facing traffic direcly out of the Vnet. This is required for proper functioning of the ASE environments as specified in the [ASE ExpressRoute network requirements article](https://docs.microsoft.com/en-us/azure/app-service-web/app-service-app-service-environment-network-configuration-expressroute#enabling-outbound-network-connectivity-for-an-app-service-environment)
 
+The UDR.ps1 script can be run after a successful deployment to apply these default UDR's to all subnets to bypass forced tunneling to on-premises network.
 
+You will require to fill in the following values inside the UDR.ps1 powershell.
 
+``` PowerShell
+## Resource Group Name of the deployed Blueprint environment
+$ResourceGroup = "RG Name Here"
+## Location of the Resource Group of the deployed Blueprint environment
+$location = "Location Here"
+## Name of the User Defined Route. Can be left at default.
+$UDRName = "ASEInternetOutbound"
+## Name of the VNET in which the Bluepring ASE is deployed
+$ExistingVnetName = "VNet name here"
+## Do not rename this variable.
+$routeName = "RouteToInternet"
+```
 
-
-## Modifying the Templates
+## 5. Modifying the Templates
 
 You can modify the ARM templates directly by following the ARM json syntax. By and large, there should be no need to modify the ARM templates other than the _azuredeploy.parameters.json_ file, except when you wish to 
 
@@ -228,7 +252,7 @@ You can modify the ARM templates directly by following the ARM json syntax. By a
 ```
 _Excerpt from azuredeploy.json for hard-coded redis cache variables not exposed in azuredeploy.parameters.json file_
 
-## Cost
+## 6. Cost
 
 You are entirely responsible for the cost of the Azure services used while running this NIST 800-66 reference PaaS deployment template for ASE. There is no additional cost for using this template. The Azure Resource Manager template for this NIST 800-66 reference PaaS deployment for ASE includes configuration parameters that you can customize. Some of these settings will affect the cost of deployment. For cost estimates, see the pricing pages for each AWS service you will be using or the [Azure Calculator](https://azure.microsoft.com/en-us/pricing/calculator/) or the [Azure Channel Pricing Calculator](https://azure.microsoft.com/en-us/pricing/calculator/) if you are an enterprise customer with an ELA. Prices are subject to change.
 
