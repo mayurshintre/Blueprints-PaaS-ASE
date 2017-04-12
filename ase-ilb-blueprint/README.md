@@ -165,9 +165,9 @@ git clone https://github.com/mayurshintre/Blueprints-PaaS-ASE.git somefolder
 
 ### 4.5 Configure _azuredeploy.parameters.json_
 
-Please update the following values in the _azuredeploy.parameters.json_ file on your local machine. This file holds all configuration and sizing parameters for all services deployed in this Blueprint. Please follow the instructions carefully as any typo's can result in a failed deployment.
+Navigate to the _ase-ilb-blueprint/_ folder file on your local machine and update the default parameters the _azuredeploy.parameters.json_. This file holds all configuration and sizing parameters for all services deployed in this Blueprint. Please follow the instructions carefully as any typo's can result in a failed deployment.
 
->This is the **main** configuration file. Also, we cant fix stupid. If you configure this file incorrectly, the deployment will belch.
+>This is the **main** configuration file.
 
   Resource | Parameter | Default Value| Allowed Values | Configuration
   ---|---|---|---|---|
