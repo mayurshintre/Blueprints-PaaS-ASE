@@ -8,11 +8,13 @@
 - [Solution Design and Deployed Resources](#soution-design-and-deployed-resources)
 	- [Architecture](#architecture)
 	- [Deployed Azure Resources](#deployed-azure-resources)
-		- [Virtual Network & Application Gateway(WAF)](#virtual-network-&-application-gateway(WAF))
-		- Microsoft.Cache
-		- Microsoft.Web
-		- Microsoft.Sql
-		- Microsoft.KeyVault
+		- [Virtual Network](#virtual-network)
+		- [Application Gateway - WAF](#application-gateway---waf)
+		- [redis Cache](#redis-cache)
+		- [ILB ASE WebApp](#ilb-ase---web-app)
+		- [ILB ASE APIApp](#ilb-ase---api-app)
+		- [Azure SQL](#azure-sql)
+		- [KeyVault](#keyvault)
 	- [Security](###security)
 		- [Virtual Network](#virtualnetwork)
 		- [WAF - Application Gateway](#waf---application-gateway)
@@ -20,7 +22,7 @@
 		- [ILB ASE w/ Api Apps](#ilb-ase-w/-api-apps)
 		- [Redis Cache](#rediscache)
 		- [Azure SQL](#azuresql)
-		- [KeyVault](#keyvault)
+		- [Azure KeyVault](#azure-keyvault)
 - [NIST 800-660 Security Compliance Matrix](#nist-800-66-security-matrix-compliance)
 - [Deployment Guide](#deployment-and-configuration-activities) 
 	- [Configuration Activities](#)
@@ -55,12 +57,12 @@ This diagram displays an overview of the solution
 
 ### Deployed Azure Resources
 
-#### 1. Virtual Network & Application Gateway(WAF)
+#### 1. Virtual Network
 ##### Microsoft.Networks
 + **/virtualNetworks**: 1 Virtual Network and 4 Subnets
 + **/publicIPAddresses**: 1 Public IP Address for Application Gateway WAF
 
-#### 2. Application Gateway(WAF)
+#### 2. Application Gateway - WAF
 ##### Microsoft.Networks
 + **/applicationGateway**: 1 Application Gateway
 
@@ -88,7 +90,7 @@ This diagram displays an overview of the solution
 
 #### 7. Azure KeyVault
 ##### Microsoft.KeyVault
-+ **/vaults**: Deploys a Keyvalut with a secret for Azure SQL
++ **/vaults**: Deploys a new Keyvault with a secret for Azure SQL
 
 ### Security
 
@@ -165,7 +167,7 @@ and then add the ILB's internal IP's to the back end pool of the apps (overwrite
 
 ## Configuration Values
 
-Please update the following values in the _azuredeploy.parameters.json_ file on your local machine. This file holds all configuration and zizing parameters for all services deployed in this Blueprint. Please follow the instructions carefully as any typo's can result in a failed deployment.
+Please update the following values in the _azuredeploy.parameters.json_ file on your local machine. This file holds all configuration and sizing parameters for all services deployed in this Blueprint. Please follow the instructions carefully as any typo's can result in a failed deployment.
 
   Resource | Parameter | Default Value| Allowed Values | Configuration
   ---|---|---|---|---|
