@@ -167,8 +167,8 @@ and then add the ILB's internal IP's to the back end pool of the apps (overwrite
 
   Resource | Parameter | Default Value| Allowed Values | Configuration
   ---|---|---|---|---|
-  All | All | - | - | **No spaces or special characters. Lower case alphabets and numbers only. Adding special characters will break deployment for Azure SQL.**
-  All | SystemPrefixName | blueprint | lowercase string and numbers | Prefix name for the entire solution. Prepended to all resource names. Keep it short (4-6 characters). Lower case alphabets and numbers only. No spaces or special characters.
+  All | All | - | **No spaces or special characters. Lower case alphabets and numbers only.** | Adding special characters will break deployment for Azure SQL.
+  All | SystemPrefixName | _blueprint_ | lowercase string and numbers, upto 8 characters | Prefix name for the entire solution. Prepended to all resource names. Keep it short (4-6 characters). Lower case alphabets and numbers only. No spaces or special characters.
 
 ## Deployment steps
 At this time you cannot deploy this solution using just the ARM template (azuredeploy.json). The solution is deployed by executing the AzureDeploy.ps1 locally. 
