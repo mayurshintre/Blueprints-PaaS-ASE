@@ -186,7 +186,9 @@ $SubscriptionID = "Your Subscription ID here"
 ```
 ## Modifying the Templates
 
-You can modify the ARM templates directly by following the ARM json syntax. By and large, there should be no need to modify the ARM templates themselves except when you wish to modify some hardcoded values specicied in templates as variables. For example, if you wish to change the Redis Cache configuration to enable non-SSL ports or change the default cache values, you can navigate to the azuredelploy.json template and modify the following parameters
+You can modify the ARM templates directly by following the ARM json syntax. By and large, there should be no need to modify the ARM templates other than the _azuredeploy.parameters.json_ file, except when you wish to modify values hardcoded as variables in azuedeploy.json or individual resource templates. For example, if you wish to change the Redis Cache configuration to enable non-SSL ports or change the default cache values, you can navigate to the azuredelploy.json template and modify the following parameters. 
+
+Some values are hardcoded as variables in order to prevent the end user from modifying those values to meet NIST 800-66 security controls and in other cases, such as the redis cache values, because they are widely accepted defaults.
 
 ``` Json
     "enableNonSSLPort": false,
