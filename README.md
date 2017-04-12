@@ -1,101 +1,105 @@
-# NIST 800-66 Reference PaaS Blueprint Template using ASE
+# **(Private Preview)** NIST 800-66 Reference PaaS Blueprint with ASE
 
 ## Contents
 
-- [Solution Overview](#solution-overview)
-	- [NIST 800-66 Based Assurance Framework Azure PaaS](#nist-800-66-based-assurance-framework-for-azure-blueprint-deployment))
-
-- [Solution Design and Deployed Resources](#soution-design-and-deployed-resources)
-	- [Architecture](#architecture)
-	- [Deployed Azure Resources](#deployed-azure-resources)
-		- [Virtual Network](#virtual-network)
-		- [Application Gateway w/ WAF](#application-gateway---waf)
-		- [Redis Cache](#redis-cache)
-		- [ILB ASE w/ WebApp](#ilb-ase---web-app)
-		- [ILB ASE w/ APIApp](#ilb-ase---api-app)
-		- [Azure SQL](#azure-sql)
-		- [Azure KeyVault](#keyvault)
-	- [Security](###security)
+- [1. Solution Overview](#1-solution-overview)
+	- [1.1 NIST 800-66 Based Assurance Framework Azure PaaS](#11-nist-800-66-based-assurance-framework-for-azure-blueprint-deployment)
+- [2. Solution Design and Deployed Resources](#2-soution-design-and-deployed-resources)
+	- [2.1 Architecture](#21-architecture)
+	- [2.2 Deployed Azure Resources](#22-deployed-azure-resources)
+	- [2.3 Security](#23-security)
 		- [Virtual Network](#virtualnetwork)
 		- [Application Gateway w/ WAF](#waf---application-gateway)
+		- [Redis Cache](#rediscache)
 		- [ILB ASE w/ Web Apps](#ilb-ase-w/-web-apps)
 		- [ILB ASE w/ Api Apps](#ilb-ase-w/-api-apps)
-		- [Redis Cache](#rediscache)
 		- [Azure SQL](#azuresql)
 		- [Azure KeyVault](#azure-keyvault)
-- [NIST 800-660 Security Compliance Matrix](#nist-800-66-security-matrix-compliance)
-- [Deployment Guide](#deployment-and-configuration-activities) 
-	- [Configuration Activities](#)
-		- [Prefix Value and Tags](#)
-		- [Prefix Value and Tags](#)
-	- [Deployment Process](#deployment-process)
-	- [PowerShell Deployment](#optional-powershell-deployment)
+- [3. NIST 800-66 Assurance - Security Compliance Matrix](#3-nist-800-66-security-matrix-compliance)
+- [4. Deployment Guide](#4-deployment-guide) 
+	- [4.1 Installation Prerequisites](#41-installation-prerequisites)
+	- [4.2 Template Deployment Sequence](#42-template-deployment-sequence)
+	- [4.3 Deployment Steps Overview](#43-deployment-steps-overview)
+	- [4.4 Clone the Solution](#44-clone-the-solution)
+	- [4.5 Configure azuredeploy.parameters.json](#45-onfigure-azuredeployparametersjson)
+	- [4.6 Configure azuredeploy.ps1](#46-configure-azuredeployps1)
+	- [4.7 Run azuredeploy.ps1](#47-run-azuredeployps1)
+	- [4.8 Expected Output](#48-expected-output)
+- [5. Cost](#5-cost)
 
-- [Cost](#cost)
+## 1. Solution Overview
 
-## Solution Overview
+![alt text](ilb-ase-blueprint/images/sequence.png "Template Deployment Sequence")
 
-![alt text](ase-ilb-blueprint/images/sequence.png "Template Deployment Sequence")
+This Blueprint deploys a fully automated secure baseline Azure ARM Template + PowerShell solution to provision a highly secure, orchestrated and configured Platform as a Service environment mapped to a NIST 800-66 assurance security controls matrix, that includes :
 
-The solution deploys a fully automated secure baseline Azure ARM Blueprint to provision a highly secure, orchestrated and configured Platform as a Service environment mapped to a NIST 800-66 assurance security controls matrix, that includes :
-
-+ Azure App Service Environment with an ILB, App Service Environment & Web App, 
-+ Azure App Service Environment with an ILB, App Service Environment & API App,
++ Azure App Service Environment with an ILB, App Service Environment & Web App
++ Azure App Service Environment with an ILB, App Service Environment & API App
 + Redis Cache Cluster
 + Web Application Gateway with WAF in Prevention Mode
 + Azure SQL 
 + Azure KeyVault
 
-The environment is locked down with restricted access and communication between all provisioned Azure services and also between subnets, as described in the security section below.
+The environment is locked down using Network Security Groups on each subnet with restricted access between all provisioned Azure services and also between subnets, as described in the [security](#s23-security) section below.
 
-### NIST 800-66 Based Assurance Framework for Azure PaaS Blueprint Deployment
-Lorem epsum.
+### 1.1 NIST 800-66 Based Assurance Framework for Azure PaaS Blueprint
 
-## Solution Design and Deployed Resources
+This Azure refernce Blueprint deployment guide discusses architectural considerations and steps for deploying security-focused baseline environments on Azure. Specifically, this Blueprint deploys a standardized environment that helps organizations with workloads that fall in scope for any of the following:
 
-### Architecture
++ National Institute of Standards and Technology (NIST) SP 800-66 (Revision 4)
++ NIST SP 800-171
++ The OMB Trusted Internet Connection (TIC) Initiative – FedRAMP Overlay (pilot)
++ The DoD Cloud Computing Security Requirements Guide (SRG)
+
+You can also view the security controls matrix (Microsoft Excel spreadsheet), which maps the architecture decisions, components, and configuration in this Quick Start to security requirements within NIST, TIC, and DoD Cloud SRG publications; indicates which Azure ARM templates and PowerShell scripts affect the controls implementation; and specifies the associated Azure resources within the templates. The excerpt in Figure 1 provides a sample of the available information.
+
+![alt text](ilb-ase-blueprint/scmexcerpt.png "SCM Excerpt")
+
+## 2. Solution Design and Deployed Resources
+
+### 2.1 Architecture
 This diagram displays an overview of the solution
 
-![alt text](ase-ilb-blueprint/images/solution.png "Solution Diagram")
+![alt text](ilb-ase-blueprint/images/solution.png "Solution Diagram")
 
-### Deployed Azure Resources
+### 2.2 Deployed Azure Resources
 
-#### 1. Virtual Network
+#### 2.2.1 Virtual Network
 ##### Microsoft.Networks
 + **/virtualNetworks**: 1 Virtual Network and 4 Subnets
 + **/publicIPAddresses**: 1 Public IP Address for Application Gateway WAF
 
-#### 2. Application Gateway - WAF
+#### 2.2.2 Application Gateway - WAF
 ##### Microsoft.Networks
 + **/applicationGateway**: 1 Application Gateway
 
-#### 3. Redis Cache
+#### 2.2.3 Redis Cache
 ##### Microsoft.Cache
 + **Redis**: Redis Cache Cluster
 
-#### 4. ILB ASE - Web App
+#### 2.2.4 ILB ASE - Web App
 ##### Microsoft.Web
 + **/hostingEnvironments**: Deploys App Service Environment v1
 + **/serverFarms**: Deploys a default App Service Plan
 + **kind: "webapp"**: Deploys a default Azure WebApp
 
-#### 5. ILB ASE - API App
+#### 2.2.5 ILB ASE - API App
 ##### Microsoft.Web
 + **/hostingEnvironments**: Deploys App Service Environment v1
 + **/serverFarms**: Deploys a default App Service Plan
 + **kind: "apiapp"**: Deploys a default Azure WebApp
 
-#### 6. Azure SQL
+#### 2.2.6 Azure SQL
 ##### Microsoft.Sql
 + **/servers**: Deploys an Azure SQL Server
 + **/servers/databases**: Deploys an Azure SQL Database
 + **/servers/firewallRules**: Applied Firewall rule for Outbound IP's from both ASE's
 
-#### 7. Azure KeyVault
+#### 2.2.7 Azure KeyVault
 ##### Microsoft.KeyVault
 + **/vaults**: Deploys a new Keyvault with a secret for Azure SQL
 
-### Security
+### 2.3 Security
 
 + The solution locks down all subnets with a top-level DenyAll with a weight of 100 by default
 + Generates a secure pasword for Azure SQL and stores it as a secret in Azure KeyVault
@@ -106,72 +110,69 @@ This diagram displays an overview of the solution
 + Turns off non-SSL endpoints for Azure Redis Cache
 + Deploys Application Gateway with WAF turned on in prevention mode with OWASP rulest 3.0
 
-#### Virtual Network
+#### 2.3.1 Virtual Network
 
-#### WAF - Application Gateway
+#### 2.3.2 WAF - Application Gateway
 
-#### ILB ASE w/ Web Apps
+#### 2.3.3 ILB ASE w/ Web Apps
 
-#### ILB ASE w/ Api Apps
+#### 2.3.4 ILB ASE w/ Api Apps
 
-#### Redis Cache
+#### 2.3.5 Redis Cache
 
-#### Azure SQL
+#### 2.3.6 Azure SQL
 
-#### KeyVault
+#### 2.3.7 KeyVault
 
-#### Passwords & Secrets
+#### 2.3.8 Passwords & Secrets
 
-## NIST 800-66 Security Compliance Matrix
+## NIST 800-66 Assurance Security Compliance Matrix
+
+The NIST 800-66 Security Controls Matrix for this blueprint can be downloaded [here](#)
 
  Security Control| Azure Configuration | Responsibility
   ---|---|---
 Control 1 | Mapping | Azure
 Control 2 | Mapping | Customer 
 
+## 4. Deployment Guide
 
+### 4.1 Installation Prerequisites
 
-## Deployment Guide
+This solution utilizes a combination of ARM templates and PowerShell. In order to deploy the solution, you must have the following packages installed correctly and in working order on your local machine
 
-### Prerequisites
++ [Install and configure](https://github.com/PowerShell/PowerShell) the latest version of PowerShell
++ [Install and configure](https://technet.microsoft.com/en-us/library/dn975125.aspx#Anchor_1) Windows Azure Active Directory Module for Windows PowerShell - **Implement Step-1 only**
+>Please Note: The blueprint code does **not** use [Azure Active Directory V2 PowerShell module](https://technet.microsoft.com/en-us/library/dn975125.aspx#Anchor_5)
++ [Install](https://docs.microsoft.com/en-us/powershell/azure/install-azurerm-ps?) Azure Resource Manager PowerShell Module
 
-This solution is built using ARM templates and PowerShell. In order to deploy the solution, you must have the following packages currectly installed and in working order
+### 4.2 Deployment Steps Overview
+> **Please Note**: At this time, the entire blueprint cannot be deployed using just the ARM template (azuredeploy.json). The solution must be deployed by executing the AzureDeploy.ps1 locally. 
 
-+ Latest version of PowerShell 
-+ Azure Resource Manager PowerShell Module
-+ Azure Storage PowerShell Module
-+ Optional - PowerShell ISE
+1. Clone the solution on your local machine
+2. Navigate to _azuredeploy.parameters.json_ on your local machine and fill in all parameter values for your deployment as defined in the [Configure _azuredeploy.parameters.json_](#45-configure-azuredeploy.parameters.json) section
+3. Update the User Defined values in the AzureDeploy.ps1
+4. Execute AzureDeploy.ps1
+5. Grab a coffee and wait for deployment to finish. Deployment time can take anywhere between 1-2 hours.
 
-### Deployment Sequence
+### 4.3 Template Deployment Sequence
 
-![alt text](ase-ilb-blueprint/images/sequence.png "Template Deployment Sequence")
+![alt text](ilb-ase-blueprint/images/sequence.png "Template Deployment Sequence")
 
-1. User Defined Inputs in PowerShell
-2. Update the Parameters File (azuredeploy.parameters.json) - 99% of values and decisions are made here
-	Define if VNET with Azure DNS or Custom DNS and other values
+### 4.4 Clone the Solution
 
-then
++ Clone the Blueprint to your local machine
 
-Login to Azure and Azure AD
-Then we set context to the correct subscrition specified
-then we create resource group if it does not exist
-then password is generated for SQL
+``` Batchfile
+git clone https://github.com/mayurshintre/Blueprints-PaaS-ASE.git somefolder
+``` 
++ or download as a ZIP from https://github.com/mayurshintre/Blueprints-PaaS-ASE
 
-Then the script calls azuredeploy.json --> will call all other child templates in the following order (check azuredeploy for the order)
-we are also giving the SQL password value as a parameter for 
-
-Once everything is spun up then -
-
-the script determines the default domain (i.e. tenant name)
-then it gets outputs from the deployment
-uses a function to get the internal and OB IP's for the ASE's
-Then it defines NSG rules for each subnet and then apploes it for each subnet
-then set the SQL firewall rules
-and then add the ILB's internal IP's to the back end pool of the apps (overwrites the existing default backendaddresspool)
-
-## Configuration Values
+### 4.5 Configure _azuredeploy.parameters.json_
 
 Please update the following values in the _azuredeploy.parameters.json_ file on your local machine. This file holds all configuration and sizing parameters for all services deployed in this Blueprint. Please follow the instructions carefully as any typo's can result in a failed deployment.
+
+>This is the **main** configuration file. Also, we cant fix stupid. If you configure this file incorrectly, the deployment will belch.
 
   Resource | Parameter | Default Value| Allowed Values | Configuration
   ---|---|---|---|---|
@@ -182,14 +183,9 @@ Please update the following values in the _azuredeploy.parameters.json_ file on 
   Subnet | WAFSubnetPrefix | _10.0.0.0_ | Within the defined Vnet space | As defined within [RFC 1918 Range](https://tools.ietf.org/html/rfc1918)
   Subnet | WAFSubnetPrefixCIDR | _/24_ | As defined within [RFC 1918 Range](https://tools.ietf.org/html/rfc1918)
 
-## Deployment steps
-At this time you cannot deploy this solution using just the ARM template (azuredeploy.json). The solution is deployed by executing the AzureDeploy.ps1 locally. 
+### 4.6 Configure _azuredeploy.ps1_ PowerShell File
 
-+ Clone the solution on your local machine
-+ Navigate to azuredeploy.parameters.json and fill in all parameter values for your deployment as defined in the Configuration Values section
-+ Update the User Defined values in the AzureDeploy.ps1
-+ Execute AzureDeploy.ps1
-+ Grab a beer and wait for deployment to finish. I can take anywhere between 1-2 hours due to ASE.
+Only update the following user defined inputs section in the _azuredeploy.ps1_ file
 
 ``` PowerShell
 ##Azure Region to Deploy all resources including the Resource Group
@@ -210,18 +206,64 @@ $ParameterFile = "Repository Location\azureDeploy.parameters.json"
 ##Subscription ID that will be used to host the resource group
 $SubscriptionID = "Your Subscription ID here"
 ```
-## Modifying the Templates
+### 4.7 Run _azuredeploy.ps1_
 
-## Usage
+``` PowerShell
+Windows PowerShell
+Copyright (C)Microsoft Corporation. All rights reserved.
 
-#### Connect
-[How to connect to the solution]
-#### Management
-[How to manage the solution]
+PS C:\User>azuredeploy.ps1
 
-## Cost
+```
 
-You are responsible for the cost of the Azure services used while running this NIST 800-66 reference PaaS deployment template for ASE. There is no additional cost for using this template. The Azure Resource Manager template for this NIST 800-66 reference PaaS deployment for ASE includes configuration parameters that you can customize. Some of these settings will affect the cost of deployment. For cost estimates, see the pricing pages for each AWS service you will be using or the [Azure Calculator](https://azure.microsoft.com/en-us/pricing/calculator/) or the [Azure Channel Pricing Calculator](https://azure.microsoft.com/en-us/pricing/calculator/) if you are an enterprise customer with an ELA. Prices are subject to change.
+### 4.8 Expected Output
+
+
+### 4.9 Optional - Post Deployment UDR
+
+If you plan to terminate a VPN connection or On-premises ExpressRoute to this ASE Vnet **and turn on forced tunnelling**, you will require all the subnets to have User Defined Routes to traverse all internet facing traffic direcly out of the Vnet. This is required for proper functioning of the ASE environments as specified in the [ASE ExpressRoute network requirements article](https://docs.microsoft.com/en-us/azure/app-service-web/app-service-app-service-environment-network-configuration-expressroute#enabling-outbound-network-connectivity-for-an-app-service-environment)
+
+The UDR.ps1 script can be run after a successful deployment to apply these default UDR's to all subnets to bypass forced tunneling to on-premises network.
+
+You will require to fill in the following values inside the UDR.ps1 powershell.
+
+``` PowerShell
+## Resource Group Name of the deployed Blueprint environment
+$ResourceGroup = "RG Name Here"
+## Location of the Resource Group of the deployed Blueprint environment
+$location = "Location Here"
+## Name of the User Defined Route. Can be left at default.
+$UDRName = "ASEInternetOutbound"
+## Name of the VNET in which the Bluepring ASE is deployed
+$ExistingVnetName = "VNet name here"
+## Do not rename this variable.
+$routeName = "RouteToInternet"
+```
+
+## 5. Modifying the Templates
+
+You can modify the ARM templates directly by following the ARM json syntax. By and large, there should be no need to modify the ARM templates except for the _azuredeploy.parameters.json_ which holds all configuration parameters for all Azure services deployed in the Blueprint
+
+You may need to modify the _azuredeploy.json_ template or any other individual resource templates under the /tempaltes folder if you wish to modify values hardcoded as variables in _azuredeploy.json_ or individual resource templates not available by desigh as parameters in the _azuredeploy.parameters.json_ template. 
+
++ For example, if may need to change the Redis Cache configuration to enable non-SSL ports, you can navigate to the azuredelploy.json template and modify the following parameters in the json code block below 
++ Some values are intentionally hardcoded as variables in _azuredeploy.json_ in order to prevent the end user from modifying those values, to meet the NIST 800-66 security controls, and in other cases, such as the redis cache _max_ values, because they are widely accepted as defaults and do not need end user configuration.
+
+>**Please Note: By changing any security related hard-coded variables in _azuredeploy.json_ or any other individual resource teplates, you will break the NIST 800-66 secure baseline compliance assurance provided in the [NIST 800-66 Security Compliance Matrix](#nist-800-66-security-compliance-matrix) section and the obligation to meet and map any unmet security controls will be transferred on to you, the end user.**
+
+``` json
+    "enableNonSSLPort": false,
+
+    "redisCachemaxclients": 7500,
+    "redisCachemaxmemoryreserved": 200,
+    "redisCachemaxfragmentationmemory-reserved": 300,
+    "redisCachemaxmemory-delta": 200,
+```
+_Excerpt from azuredeploy.json for hard-coded redis cache variables not exposed in azuredeploy.parameters.json file_
+
+## 6. Cost
+
+You are entirely responsible for the cost of the Azure services used while running this NIST 800-66 reference PaaS deployment template for ASE. There is no additional cost for using this template. The Azure Resource Manager template for this NIST 800-66 reference PaaS deployment for ASE includes configuration parameters that you can customize. Some of these settings will affect the cost of deployment. For cost estimates, see the pricing pages for each AWS service you will be using or the [Azure Calculator](https://azure.microsoft.com/en-us/pricing/calculator/) or the [Azure Channel Pricing Calculator](https://azure.microsoft.com/en-us/pricing/calculator/) if you are an enterprise customer with an ELA. Prices are subject to change.
 
 ## Authors
 
