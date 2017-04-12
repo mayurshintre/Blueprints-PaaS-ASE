@@ -38,14 +38,14 @@
 
 The solution deploys a fully automated secure baseline Azure ARM Blueprint to provision a highly secure, orchestrated and configured Platform as a Service environment mapped to a NIST 800-66 assurance security controls matrix, that includes :
 
-+ Azure App Service Environment with an ILB, App Service Environment & Web App, 
-+ Azure App Service Environment with an ILB, App Service Environment & API App,
++ Azure App Service Environment with an ILB, App Service Environment & Web App
++ Azure App Service Environment with an ILB, App Service Environment & API App
 + Redis Cache Cluster
 + Web Application Gateway with WAF in Prevention Mode
 + Azure SQL 
 + Azure KeyVault
 
-The environment is locked down with restricted access and communication between all provisioned Azure services and also between subnets, as described in the security section below.
+The environment is locked down using Network Security Groups on each subnet with restricted access between all provisioned Azure services and also between subnets, as described in the [security](#security) section below.
 
 ### NIST 800-66 Based Assurance Framework for Azure PaaS Blueprint
 Lorem epsum.
@@ -186,9 +186,12 @@ $SubscriptionID = "Your Subscription ID here"
 ```
 ## Modifying the Templates
 
-You can modify the ARM templates directly by following the ARM json syntax. By and large, there should be no need to modify the ARM templates other than the _azuredeploy.parameters.json_ file, except when you wish to modify values hardcoded as variables in azuedeploy.json or individual resource templates. For example, if you wish to change the Redis Cache configuration to enable non-SSL ports or change the default cache values, you can navigate to the azuredelploy.json template and modify the following parameters. 
+You can modify the ARM templates directly by following the ARM json syntax. By and large, there should be no need to modify the ARM templates other than the _azuredeploy.parameters.json_ file, except when you wish to 
 
-Some values are hardcoded as variables in order to prevent the end user from modifying those values to meet NIST 800-66 security controls and in other cases, such as the redis cache values, because they are widely accepted defaults.
++ Modify values hardcoded as variables in _azuredeploy.json_ or individual resource templates. For example, if you wish to change the Redis Cache configuration to enable non-SSL ports or change the default cache values, you can navigate to the azuredelploy.json template and modify the following parameters. 
++ Some values are hardcoded as variables in order to prevent the end user from modifying those values to meet NIST 800-66 security controls and in other cases, such as the redis cache _max_ values, because they are widely accepted defaults.
+
+**Please note that, chaning any security related hard-coded variables will break the NIST 800-66 secure baseline compliance assurance provided in the [NIST 800-66 Security Compliance Matrix](#nist-800-66-securityicompliance-matrix) section**
 
 ``` Json
     "enableNonSSLPort": false,
@@ -198,13 +201,11 @@ Some values are hardcoded as variables in order to prevent the end user from mod
     "redisCachemaxfragmentationmemory-reserved": 300,
     "redisCachemaxmemory-delta": 200,
 ```
-#### Connect
-
-
+_Excerpt from azuredeploy.json for hard-coded redis cache variables not exposed in azuredeploy.parameters.json file_
 
 ## Cost
 
-You are responsible for the cost of the Azure services used while running this NIST 800-66 reference PaaS deployment template for ASE. There is no additional cost for using this template. The Azure Resource Manager template for this NIST 800-66 reference PaaS deployment for ASE includes configuration parameters that you can customize. Some of these settings will affect the cost of deployment. For cost estimates, see the pricing pages for each AWS service you will be using or the [Azure Calculator](https://azure.microsoft.com/en-us/pricing/calculator/) or the [Azure Channel Pricing Calculator](https://azure.microsoft.com/en-us/pricing/calculator/) if you are an enterprise customer with an ELA. Prices are subject to change.
+You are entirely responsible for the cost of the Azure services used while running this NIST 800-66 reference PaaS deployment template for ASE. There is no additional cost for using this template. The Azure Resource Manager template for this NIST 800-66 reference PaaS deployment for ASE includes configuration parameters that you can customize. Some of these settings will affect the cost of deployment. For cost estimates, see the pricing pages for each AWS service you will be using or the [Azure Calculator](https://azure.microsoft.com/en-us/pricing/calculator/) or the [Azure Channel Pricing Calculator](https://azure.microsoft.com/en-us/pricing/calculator/) if you are an enterprise customer with an ELA. Prices are subject to change.
 
 ## Authors
 
