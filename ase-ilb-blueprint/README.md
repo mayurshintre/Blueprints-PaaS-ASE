@@ -9,15 +9,15 @@
 	- [Architecture](#architecture)
 	- [Deployed Azure Resources](#deployed-azure-resources)
 		- [Virtual Network](#virtual-network)
-		- [Application Gateway - WAF](#application-gateway---waf)
-		- [redis Cache](#redis-cache)
-		- [ILB ASE WebApp](#ilb-ase---web-app)
-		- [ILB ASE APIApp](#ilb-ase---api-app)
+		- [Application Gateway w/ WAF](#application-gateway---waf)
+		- [Redis Cache](#redis-cache)
+		- [ILB ASE w/ WebApp](#ilb-ase---web-app)
+		- [ILB ASE w/ APIApp](#ilb-ase---api-app)
 		- [Azure SQL](#azure-sql)
-		- [KeyVault](#keyvault)
+		- [Azure KeyVault](#keyvault)
 	- [Security](###security)
 		- [Virtual Network](#virtualnetwork)
-		- [WAF - Application Gateway](#waf---application-gateway)
+		- [Application Gateway w/ WAF](#waf---application-gateway)
 		- [ILB ASE w/ Web Apps](#ilb-ase-w/-web-apps)
 		- [ILB ASE w/ Api Apps](#ilb-ase-w/-api-apps)
 		- [Redis Cache](#rediscache)
@@ -34,6 +34,9 @@
 - [Cost](#cost)
 
 ## Solution Overview
+
+![alt text](images/sequence.png "Template Deployment Sequence")
+
 The solution deploys a fully automated secure baseline Azure ARM Blueprint to provision a highly secure, orchestrated and configured Platform as a Service environment mapped to a NIST 800-66 assurance security controls matrix, that includes :
 
 + Azure App Service Environment with an ILB, App Service Environment & Web App, 
