@@ -23,46 +23,6 @@
 
 #Function to generate random password
 function New-SWRandomPassword {
-    <#
-    .Synopsis
-       Generates one or more complex passwords designed to fulfill the requirements for Active Directory
-    .DESCRIPTION
-       Generates one or more complex passwords designed to fulfill the requirements for Active Directory
-    .EXAMPLE
-       New-SWRandomPassword
-       C&3SX6Kn
-
-       Will generate one password with a length between 8  and 12 chars.
-    .EXAMPLE
-       New-SWRandomPassword -MinPasswordLength 8 -MaxPasswordLength 12 -Count 4
-       7d&5cnaB
-       !Bh776T"Fw
-       9"C"RxKcY
-       %mtM7#9LQ9h
-
-       Will generate four passwords, each with a length of between 8 and 12 chars.
-    .EXAMPLE
-       New-SWRandomPassword -InputStrings abc, ABC, 123 -PasswordLength 4
-       3ABa
-
-       Generates a password with a length of 4 containing atleast one char from each InputString
-    .EXAMPLE
-       New-SWRandomPassword -InputStrings abc, ABC, 123 -PasswordLength 4 -FirstChar abcdefghijkmnpqrstuvwxyzABCEFGHJKLMNPQRSTUVWXYZ
-       3ABa
-
-       Generates a password with a length of 4 containing atleast one char from each InputString that will start with a letter from 
-       the string specified with the parameter FirstChar
-    .OUTPUTS
-       [String]
-    .NOTES
-       Written by Simon Wåhlin, blog.simonw.se
-       I take no responsibility for any issues caused by this script.
-    .FUNCTIONALITY
-       Generates random passwords
-    .LINK
-       http://blog.simonw.se/powershell-generating-random-password-for-active-directory/
-   
-    #>
     [CmdletBinding(DefaultParameterSetName='FixedLength',ConfirmImpact='None')]
     [OutputType([String])]
     Param
@@ -160,73 +120,91 @@ function New-SWRandomPassword {
     }
 }
 
-
-Write-Host "=> Hey there..."
-Write-Host "=> I am ARMDLE the Azure Resource Manager Deployment Logistics Expert..."
-Write-Host "=> Let us get this party started..."
-Write-Host "=> ..."
-Write-Host "=> ...."
-Write-Host "=> ....."
-Write-Host "=> ......"
-Write-Host "=> First up! Login to ARM if you are not already..."
+Write-Host "=> Alright" -ForegroundColor Yellow
+Write-Host "=> Booting up . . ." -ForegroundColor Yellow
+Write-Host "=> Begin Azure Deployment seaquences..." -ForegroundColor Yellow
+Write-Host "=>" -ForegroundColor Yellow
+Write-Host "=>" -ForegroundColor Yellow
+Write-Host "=> Systems now online." -ForegroundColor Yellow
+Write-Host "=>" -ForegroundColor Yellow
+Write-Host "=>" -ForegroundColor Yellow
+Write-Host "=> Time to Login to ARM if you are not already." -ForegroundColor Yellow
 
 ##Catch to verify AzureRM session is active.  Forces sign-in if no session is found
 #region
-    Write-Output "=> Signing into Azure."
+    Write-Output "=> Signing into Azure RM." -ForegroundColor Yellow
+    Write-Host "=>" -ForegroundColor Yellow
     do {
         $azureAccess = $true
 	    Try {
 		    Get-AzureRmSubscription -ErrorAction Stop | Out-Null
     	}
 	    Catch {
-            Write-Output "=> Guess you should have logged in already huh?"
+            Write-Output "=> Guess you should have logged in already huh?" -ForegroundColor Yellow
+            Write-Host "=>" -ForegroundColor Yellow
 		    $azureAccess = $false
 		    Login-AzureRmAccount -ErrorAction SilentlyContinue | Out-Null
 	    }
     } while (! $azureAccess)
-    Write-Host "=> You are now Logged into Azure Resource Manager."
+    Write-Host "=> You are now Logged into Azure Resource Manager." -ForegroundColor Yellow
+    Write-Host "=>" -ForegroundColor Yellow
 #endregion
 
 ##Catch to verify AzureAD session is active.  Forces sign-in if no session is found
 #region
-    Write-Output "=> Signing into Azure AD."
+    Write-Output "=> Signing into Azure AD." -ForegroundColor Yellow
+    Write-Host "=>" -ForegroundColor Yellow
     do {
         $azureAccess = $true
 	    Try {
 		    Get-MsolAccountSku -ErrorAction Stop | Out-Null
     	}
 	    Catch {
-            Write-Output "=> Guess you should have logged in already huh?"
-		    $azureAccess = $false
+            Write-Output "=> Guess you should have logged in already huh?" -ForegroundColor Yellow
+		    Write-Host "=>" -ForegroundColor Yellow
+            $azureAccess = $false
 		    Connect-MsolService -ErrorAction SilentlyContinue | Out-Null
 	    }
     } while (! $azureAccess)
-    Write-Host "=> You are now Logged into Azure Resource Manager."
+    Write-Host "=> You are now Logged into Azure Resource Manager." -ForegroundColor Yellow
+    Write-Host "=>" -ForegroundColor Yellow
 #endregion
 
 
 ##Set Azure Context
-Write-Host "=> I suggest you ask Mayur to fetch the coffee while I set your context..."
+Write-Host "=>" -ForegroundColor Yellow
+Write-Host "=> I suggest you ask Mayur to fetch the coffee while I set your context..." -ForegroundColor Yellow
 Set-AzureRmContext -SubscriptionId $SubscriptionID
+Write-Host "=>" -ForegroundColor Yellow
 Write-Host "=> Context is now set to Subscription $SubscriptionID"
 
 # Checking for network resource group, creating if does not exist
-Write-Host "=> Time to make sure the grmelins have not eaten your Resource Group already..."
+Write-Host "=>" -ForegroundColor Yellow
+Write-Host "=> Time to make sure the gremlins have not eaten your Resource Group already..." -ForegroundColor Yellow
 if (!(Get-AzureRMResourceGroup -Name $RgName -ErrorAction SilentlyContinue))
 {
-    Write-Host "=> Oh No!  They ate it...."
-    Write-Host "=> I got this though... Making a new one for you!"
+    Write-Host "=>" -ForegroundColor Yellow
+    Write-Host "=> Oh No!  They ate it...." -ForegroundColor Yellow
+    Write-Host "=> I got this though... Making a new one for you!" -ForegroundColor Yellow
     New-AzureRmResourceGroup -Name $RgName -Location $Region
-
+    Write-Host "=>" -ForegroundColor Yellow
+    Write-Host "=> Resource Group $RgName now exists!" -ForegroundColor Yellow
 }
-Write-Host "=> Resource Group $RgName now exists!"
+else
+{
+    Write-Host "=>" -ForegroundColor Yellow
+    Write-Host "=> Resource Group $RgName already exists." -ForegroundColor Yellow
+}
 
 ##GeneratePassword
+Write-Host "=>" -ForegroundColor Yellow
+Write-Host "=> Generating password for PaaS SQL." -ForegroundColor Yellow
 $NewPass = New-SWRandomPassword -MinPasswordLength 30 -MaxPasswordLength 30 | ConvertTo-SecureString -AsPlainText -Force
 
 ## Deploying the Template
-Write-Host "=> Booting up the Matrix so I can deploy some Nist Compliant Architecture now..."
-Write-Host "=> Here we go...."
+Write-Host "=>" -ForegroundColor Yellow
+Write-Host "=> Logging into the Matrix so I can deploy some Nist Compliant Architecture now..." -ForegroundColor Yellow
+Write-Host "=> Here we go...." -ForegroundColor Yellow
 New-AzureRMResourceGroupDeployment -Name $DeploymentName `
     -ResourceGroupName $RgName `
     -TemplateUri $TemplateUri `
@@ -235,9 +213,12 @@ New-AzureRMResourceGroupDeployment -Name $DeploymentName `
     -Region $Region `
     -Mode Incremental `
     -Verbose
-Write-Host "=> Man that was tense... Good thing we know some Kung-Fu or those fraggles might have been the end of the road..."
+Write-Host "=>" -ForegroundColor Yellow
+Write-Host "=> Man that was tense... Good thing we know some Kung-Fu or those fraggles might have been the end of the road..." -ForegroundColor Yellow
 
 ##Get Azure AD Tenant Name
+Write-Host "=>" -ForegroundColor Yellow
+Write-Host "=> Finding the tenant name." -ForegroundColor Yellow
 $Domains = Get-MsolDomain
 foreach($Domain in $Domains)
 {
@@ -248,13 +229,17 @@ foreach($Domain in $Domains)
 }
 
 ##Get Outputs from Deployment
+Write-Host "=>" -ForegroundColor Yellow
+Write-Host "=> Retrieving outputs from deployment $DeploymentName." -ForegroundColor Yellow
 $AseName = (Get-AzureRmResourceGroupDeployment -ResourceGroupName $RgName -Name $DeploymentName).Outputs.aseName.Value
 $VnetName = (Get-AzureRmResourceGroupDeployment -ResourceGroupName $RgName -Name $DeploymentName).Outputs.vnetName.Value
 $SqlName = (Get-AzureRmResourceGroupDeployment -ResourceGroupName $RgName -Name $DeploymentName).Outputs.sqlName.Value
 $AppGWName = (Get-AzureRmResourceGroupDeployment -ResourceGroupName $RgName -Name $DeploymentName).Outputs.appGWName.Value
 
+##Retrieve Resource ID for ASE
 $resourceID = (Get-AzureRmResource | where -Property resourcename -EQ $AseName).resourceID
 
+##Function to get AuthToken to retrieve IP Addresses from ASE
 function GetAuthToken
  {
     param
@@ -285,21 +270,28 @@ function GetAuthToken
     return $authResult
  } 
 
+##Set API Endpoint
 $ApiEndpointUri = "https://management.core.windows.net/"
 
+##Get Auth Token
 $token = GetAuthToken -ApiEndPointUri $ApiEndpointUri -AADTenant $aadtenant
 
+##Set Header
 $header = @{
     'Content-Type'='application\json'
     'Authorization'=$token.CreateAuthorizationHeader()
 }
 
+##Set URI
 $uri = "https://management.azure.com$resourceID/capacities/virtualip?api-version=2015-08-01"
 
+Write-Host "=>" -ForegroundColor Yellow
+Write-Host "=> Getting IPs from the App Service Environment" -ForegroundColor Yellow
+##Set Hostinginfo variable by invoking rest method
 $hostingInfo = Invoke-RestMethod -Uri $uri -Headers $header -Method get
-$hostingInfo.internalIpAddress
-$hostingInfo.outboundIpAddresses
 
+Write-Host "=>" -ForegroundColor Yellow
+Write-Host "=> Creating Network Security Group Rules." -ForegroundColor Yellow
 ##WAF Rules
 #region
   $WAFRule1 = New-AzureRmNetworkSecurityRuleConfig -Name DenyAllInbound -Description "Deny All Inbound" `
@@ -539,53 +531,68 @@ $hostingInfo.outboundIpAddresses
  -DestinationAddressPrefix VirtualNetwork -DestinationPortRange 20226
  #endregion
 
+Write-Host "=>" -ForegroundColor Yellow
+Write-Host "=> Building Network Security Groups" -ForegroundColor Yellow
 ##Build NSGs
 #region
-$WafNsg = New-AzureRmNetworkSecurityGroup -Name "WafNsg" -ResourceGroupName $RgName -Location $Region`
-                                          -SecurityRules $WAFRule1,$WAFRule2,$WAFRule3,$WAFRule4,$WAFRule5,$WAFRule6,$WAFRule7,$WAFRule8,$WAFRule9,$WAFRule10,$WAFRule11,$WAFRule12 -Force
-$AseWebNsg = New-AzureRmNetworkSecurityGroup -Name "AseWebNsg" -ResourceGroupName $RgName -Location $Region`
-                                             -SecurityRules $ASERule1,$ASERule2,$ASERule3,$ASERule4,$ASERule5,$ASERule6,$ASERule7,$ASERule8,$ASERule9,$ASERule10,$ASERule11,$ASERule12,$ASERule13 -Force
-$AseApiNsg = New-AzureRmNetworkSecurityGroup -Name "AseApiNsg" -ResourceGroupName $RgName -Location $Region`
-                                             -SecurityRules $ASERule1,$ASERule2,$ASERule3,$ASERule4,$ASERule5,$ASERule6,$ASERule7,$ASERule8,$ASERule9,$ASERule10,$ASERule11,$ASERule12,$ASERule13 -Force
-$RedisNsg = New-AzureRmNetworkSecurityGroup -Name "RedisNsg" -ResourceGroupName $RgName -Location $Region`
-                                            -SecurityRules $RedisRule1,$RedisRule2,$RedisRule3,$RedisRule4,$RedisRule5,$RedisRule6,$RedisRule7,$RedisRule8,$RedisRule9,$RedisRule10,$RedisRule11,$RedisRule12,$RedisRule13,$RedisRule14,$RedisRule15,$RedisRule16,$RedisRule17,$RedisRule18,$RedisRule19,$RedisRule20,$RedisRule21 -Force
+$WafNsg = New-AzureRmNetworkSecurityGroup -Name "WafNsg" -ResourceGroupName $RgName -Location $Region `
+                                          -SecurityRules $WAFRule1,$WAFRule2,$WAFRule3,$WAFRule4,$WAFRule5,$WAFRule6,$WAFRule7,$WAFRule8,$WAFRule9,$WAFRule10,$WAFRule11,$WAFRule12 `
+                                          -Force | Out-Null
+$AseWebNsg = New-AzureRmNetworkSecurityGroup -Name "AseWebNsg" -ResourceGroupName $RgName -Location $Region `
+                                             -SecurityRules $ASERule1,$ASERule2,$ASERule3,$ASERule4,$ASERule5,$ASERule6,$ASERule7,$ASERule8,$ASERule9,$ASERule10,$ASERule11,$ASERule12,$ASERule13 `
+                                             -Force | Out-Null
+$AseApiNsg = New-AzureRmNetworkSecurityGroup -Name "AseApiNsg" -ResourceGroupName $RgName -Location $Region `
+                                             -SecurityRules $ASERule1,$ASERule2,$ASERule3,$ASERule4,$ASERule5,$ASERule6,$ASERule7,$ASERule8,$ASERule9,$ASERule10,$ASERule11,$ASERule12,$ASERule13 `
+                                             -Force | Out-Null
+$RedisNsg = New-AzureRmNetworkSecurityGroup -Name "RedisNsg" -ResourceGroupName $RgName -Location $Region `
+                                            -SecurityRules $RedisRule1,$RedisRule2,$RedisRule3,$RedisRule4,$RedisRule5,$RedisRule6,$RedisRule7,$RedisRule8,$RedisRule9,$RedisRule10,$RedisRule11,$RedisRule12,$RedisRule13,$RedisRule14,$RedisRule15,$RedisRule16,$RedisRule17,$RedisRule18,$RedisRule19,$RedisRule20,$RedisRule21 `
+                                            -Force | Out-Null
 #endregion
 
+Write-Host "=>" -ForegroundColor Yellow
+Write-Host "=> Applying Network Security Groups to vNet" -ForegroundColor Yellow
 ##Apply NSGs to vNet
 #region
 $vnet = Get-AzureRmVirtualNetwork -ResourceGroupName $RgName -Name $VnetName
 Set-AzureRmVirtualNetworkSubnetConfig -VirtualNetwork $vnet -Name $vnet.Subnets.name[0] `
                                       -AddressPrefix $vnet.Subnets.AddressPrefix[0]`
-                                      -NetworkSecurityGroup $WafNSG
-Set-AzureRmVirtualNetwork -VirtualNetwork $vnet
+                                      -NetworkSecurityGroup $WafNSG  | Out-Null
+Set-AzureRmVirtualNetwork -VirtualNetwork $vnet  | Out-Null
  
 $vnet = Get-AzureRmVirtualNetwork -ResourceGroupName $RgName -Name $VnetName
 Set-AzureRmVirtualNetworkSubnetConfig -VirtualNetwork $vnet -Name $vnet.Subnets.name[1] `
                                       -AddressPrefix $vnet.Subnets.AddressPrefix[1]`
-                                      -NetworkSecurityGroup $AseWebNSG
-Set-AzureRmVirtualNetwork -VirtualNetwork $vnet
+                                      -NetworkSecurityGroup $AseWebNSG  | Out-Null
+Set-AzureRmVirtualNetwork -VirtualNetwork $vnet  | Out-Null
 
 $vnet = Get-AzureRmVirtualNetwork -ResourceGroupName $RgName -Name $VnetName
 Set-AzureRmVirtualNetworkSubnetConfig -VirtualNetwork $vnet -Name $vnet.Subnets.name[2] `
                                       -AddressPrefix $vnet.Subnets.AddressPrefix[2]`
-                                      -NetworkSecurityGroup $AseApiNSG
-Set-AzureRmVirtualNetwork -VirtualNetwork $vnet
+                                      -NetworkSecurityGroup $AseApiNSG  | Out-Null
+Set-AzureRmVirtualNetwork -VirtualNetwork $vnet  | Out-Null
 
 $vnet = Get-AzureRmVirtualNetwork -ResourceGroupName $RgName -Name $VnetName
 Set-AzureRmVirtualNetworkSubnetConfig -VirtualNetwork $vnet -Name $vnet.Subnets.name[3] `
                                       -AddressPrefix $vnet.Subnets.AddressPrefix[3]`
-                                      -NetworkSecurityGroup $RedisNsg
-Set-AzureRmVirtualNetwork -VirtualNetwork $vnet
+                                      -NetworkSecurityGroup $RedisNsg  | Out-Null
+Set-AzureRmVirtualNetwork -VirtualNetwork $vnet  | Out-Null
 #endregion
 
+Write-Host "=>" -ForegroundColor Yellow
+Write-Host "=> Setting SQL Firewall Rules" -ForegroundColor Yellow
 ##Set SQl Firewall Rules
 New-AzureRmSqlServerFirewallRule -ResourceGroupName $RgName -ServerName $SQLName `
                                  -FirewallRuleName "ILBOutboundAddress" `
                                  -StartIpAddress $hostingInfo.outboundIpAddresses[0] `
-                                 -EndIpAddress $hostingInfo.outboundIpAddresses[0] 
+                                 -EndIpAddress $hostingInfo.outboundIpAddresses[0]  | Out-Null
  
- #Add ILB Internal IP to the Backend Address Pool of the WAF
-
+Write-Host "=>" -ForegroundColor Yellow
+Write-Host "=> Adding Backend IPs to the Web Application Firewall" -ForegroundColor Yellow
+#Add ILB Internal IP to the Backend Address Pool of the WAF
 $AppGW = Get-AzureRmApplicationGateway -Name $AppGWName -ResourceGroupName $RgName
-Set-AzureRmApplicationGatewayBackendAddressPool -Name appGatewayBackendPool -BackendIPAddresses $hostingInfo.internalIpAddress
-Set-AzureRmApplicationGateway -ApplicationGateway $AppGW
+Set-AzureRmApplicationGatewayBackendAddressPool -Name appGatewayBackendPool -BackendIPAddresses $hostingInfo.internalIpAddress  | Out-Null
+Set-AzureRmApplicationGateway -ApplicationGateway $AppGW  | Out-Null
+
+Write-Host "=>" -ForegroundColor Yellow
+Write-Host "=>" -ForegroundColor Yellow
+Write-Host "=> Deployment Complete!" -ForegroundColor Yellow
