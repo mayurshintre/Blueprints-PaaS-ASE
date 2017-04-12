@@ -29,7 +29,7 @@
 
 ## 1. Solution Overview
 
-![alt text](images/sequence.png "Template Deployment Sequence")
+![alt text](images/asesequencevsdx.png "Template Deployment Sequence")
 
 This Blueprint deploys a fully automated secure baseline Azure ARM Template + PowerShell solution to provision a highly secure, orchestrated and configured Platform as a Service environment mapped to a NIST 800-66 assurance security controls matrix, that includes :
 
@@ -152,7 +152,7 @@ This solution utilizes a combination of ARM templates and PowerShell. In order t
 
 ### 4.3 Template Deployment Sequence
 
-![alt text](images/sequence.png "Template Deployment Sequence")
+![alt text](images/asesequencevsdx.png "Template Deployment Sequence")
 
 ### 4.4 Clone the Solution
 
