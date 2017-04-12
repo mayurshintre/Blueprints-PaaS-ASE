@@ -2,19 +2,19 @@
 
 ## Contents
 
-- [Solution Overview](#solution-overview)
-	- [NIST 800-66 Based Assurance Framework Azure PaaS](#nist-800-66-based-assurance-framework-for-azure-blueprint-deployment)
-- [Solution Design and Deployed Resources](#soution-design-and-deployed-resources)
-	- [Architecture](#architecture)
-	- [Deployed Azure Resources](#deployed-azure-resources)
-		- [Virtual Network](#virtual-network)
-		- [Application Gateway w/ WAF](#application-gateway---waf)
-		- [Redis Cache](#redis-cache)
-		- [ILB ASE w/ WebApp](#ilb-ase---web-app)
-		- [ILB ASE w/ APIApp](#ilb-ase---api-app)
-		- [Azure SQL](#azure-sql)
-		- [Azure KeyVault](#keyvault)
-	- [Security](###security)
+- [1. Solution Overview](#1.-solution-overview)
+	- [1.1 NIST 800-66 Based Assurance Framework Azure PaaS](#1.1-nist-800-66-based-assurance-framework-for-azure-blueprint-deployment)
+- [2. Solution Design and Deployed Resources](#2.-soution-design-and-deployed-resources)
+	- [2.1 Architecture](#2.1-architecture)
+	- [2.2 Deployed Azure Resources](#2.2-deployed-azure-resources)
+		- [2.2.1 Virtual Network](#2.2.1-virtual-network)
+		- [2.2.2 Application Gateway w/ WAF](#application-gateway---waf)
+		- [2.2.3 Redis Cache](#redis-cache)
+		- [2.2.4 ILB ASE w/ WebApp](#ilb-ase---web-app)
+		- [2.2.5 ILB ASE w/ APIApp](#ilb-ase---api-app)
+		- [2.2.6 Azure SQL](#azure-sql)
+		- [2.2.7 Azure KeyVault](#keyvault)
+	- [2.3 Security](###security)
 		- [Virtual Network](#virtualnetwork)
 		- [Application Gateway w/ WAF](#waf---application-gateway)
 		- [Redis Cache](#rediscache)
@@ -22,20 +22,16 @@
 		- [ILB ASE w/ Api Apps](#ilb-ase-w/-api-apps)
 		- [Azure SQL](#azuresql)
 		- [Azure KeyVault](#azure-keyvault)
-- [NIST 800-66 Assurance - Security Compliance Matrix](#nist-800-66-security-matrix-compliance)
-- [Deployment Guide](#deployment-and-configuration-activities) 
+- [3. NIST 800-66 Assurance - Security Compliance Matrix](#nist-800-66-security-matrix-compliance)
+- [4. Deployment Guide](#deployment-and-configuration-activities) 
 	- [Prerequisites](#prerequisites)
 	- [Configuration Activities](#)
 		- [Prefix Value and Tags](#)
 		- [Prefix Value and Tags](#)
 	- [Deployment Steps](#deployment-process)
-- [Cost](#cost)
+- [5. Cost](#cost)
 
-## Solution Overview
-
-___
-**Click [here](#deployment-guide) to jump directly to the deployment guide; However, we highly recommend reading this README in it's entirety**|
-___
+## 1. Solution Overview
 
 ![alt text](images/sequence.png "Template Deployment Sequence")
 
@@ -50,54 +46,54 @@ The solution deploys a fully automated secure baseline Azure ARM Blueprint to pr
 
 The environment is locked down using Network Security Groups on each subnet with restricted access between all provisioned Azure services and also between subnets, as described in the [security](#security) section below.
 
-### NIST 800-66 Based Assurance Framework for Azure PaaS Blueprint
+### 1.1 NIST 800-66 Based Assurance Framework for Azure PaaS Blueprint
 Lorem epsum.
 
-## Solution Design and Deployed Resources
+## 2. Solution Design and Deployed Resources
 
-### Architecture
+### 2.1 Architecture
 This diagram displays an overview of the solution
 
 ![alt text](images/solution.png "Solution Diagram")
 
-### Deployed Azure Resources
+### 2.2 Deployed Azure Resources
 
-#### 1. Virtual Network
+#### 2.2.1 Virtual Network
 ##### Microsoft.Networks
 + **/virtualNetworks**: 1 Virtual Network and 4 Subnets
 + **/publicIPAddresses**: 1 Public IP Address for Application Gateway WAF
 
-#### 2. Application Gateway - WAF
+#### 2.2.2 Application Gateway - WAF
 ##### Microsoft.Networks
 + **/applicationGateway**: 1 Application Gateway
 
-#### 3. Redis Cache
+#### 2.2.3 Redis Cache
 ##### Microsoft.Cache
 + **Redis**: Redis Cache Cluster
 
-#### 4. ILB ASE - Web App
+#### 2.2.4 ILB ASE - Web App
 ##### Microsoft.Web
 + **/hostingEnvironments**: Deploys App Service Environment v1
 + **/serverFarms**: Deploys a default App Service Plan
 + **kind: "webapp"**: Deploys a default Azure WebApp
 
-#### 5. ILB ASE - API App
+#### 2.2.5 ILB ASE - API App
 ##### Microsoft.Web
 + **/hostingEnvironments**: Deploys App Service Environment v1
 + **/serverFarms**: Deploys a default App Service Plan
 + **kind: "apiapp"**: Deploys a default Azure WebApp
 
-#### 6. Azure SQL
+#### 2.2.6 Azure SQL
 ##### Microsoft.Sql
 + **/servers**: Deploys an Azure SQL Server
 + **/servers/databases**: Deploys an Azure SQL Database
 + **/servers/firewallRules**: Applied Firewall rule for Outbound IP's from both ASE's
 
-#### 7. Azure KeyVault
+#### 2.2.7 Azure KeyVault
 ##### Microsoft.KeyVault
 + **/vaults**: Deploys a new Keyvault with a secret for Azure SQL
 
-### Security
+### 2.3 Security
 
 + The solution locks down all subnets with a top-level DenyAll with a weight of 100 by default
 + Generates a secure pasword for Azure SQL and stores it as a secret in Azure KeyVault
@@ -124,7 +120,7 @@ This diagram displays an overview of the solution
 
 #### Passwords & Secrets
 
-## NIST 800-66 Security Compliance Matrix
+## NIST 800-66 Assurance Security Compliance Matrix
 
  Security Control| Azure Configuration | Responsibility
   ---|---|---
