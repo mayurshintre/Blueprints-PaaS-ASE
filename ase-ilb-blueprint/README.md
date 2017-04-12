@@ -2,19 +2,19 @@
 
 ## Contents
 
-- [1. Solution Overview](#1.-solution-overview)
-	- [1.1 NIST 800-66 Based Assurance Framework Azure PaaS](#1.1-nist-800-66-based-assurance-framework-for-azure-blueprint-deployment)
-- [2. Solution Design and Deployed Resources](#2.-soution-design-and-deployed-resources)
-	- [2.1 Architecture](#2.1-architecture)
-	- [2.2 Deployed Azure Resources](#2.2-deployed-azure-resources)
-		- [2.2.1 Virtual Network](#2.2.1-virtual-network)
-		- [2.2.2 Application Gateway w/ WAF](#application-gateway---waf)
-		- [2.2.3 Redis Cache](#redis-cache)
-		- [2.2.4 ILB ASE w/ WebApp](#ilb-ase---web-app)
-		- [2.2.5 ILB ASE w/ APIApp](#ilb-ase---api-app)
-		- [2.2.6 Azure SQL](#azure-sql)
-		- [2.2.7 Azure KeyVault](#keyvault)
-	- [2.3 Security](###security)
+- [1. Solution Overview](#1-solution-overview)
+	- [1.1 NIST 800-66 Based Assurance Framework Azure PaaS](#11-nist-800-66-based-assurance-framework-for-azure-blueprint-deployment)
+- [2. Solution Design and Deployed Resources](#2-soution-design-and-deployed-resources)
+	- [2.1 Architecture](#21-architecture)
+	- [2.2 Deployed Azure Resources](#22-deployed-azure-resources)
+		- [2.2.1 Virtual Network](#221-virtual-network)
+		- [2.2.2 Application Gateway w/ WAF](#222-application-gateway---waf)
+		- [2.2.3 Redis Cache](#223-redis-cache)
+		- [2.2.4 ILB ASE w/ WebApp](#224-ilb-ase---web-app)
+		- [2.2.5 ILB ASE w/ APIApp](#225-ilb-ase---api-app)
+		- [2.2.6 Azure SQL](#226-azure-sql)
+		- [2.2.7 Azure KeyVault](#227-keyvault)
+	- [2.3 Security](#23-security)
 		- [Virtual Network](#virtualnetwork)
 		- [Application Gateway w/ WAF](#waf---application-gateway)
 		- [Redis Cache](#rediscache)
@@ -22,14 +22,17 @@
 		- [ILB ASE w/ Api Apps](#ilb-ase-w/-api-apps)
 		- [Azure SQL](#azuresql)
 		- [Azure KeyVault](#azure-keyvault)
-- [3. NIST 800-66 Assurance - Security Compliance Matrix](#nist-800-66-security-matrix-compliance)
-- [4. Deployment Guide](#deployment-and-configuration-activities) 
-	- [Prerequisites](#prerequisites)
-	- [Configuration Activities](#)
-		- [Prefix Value and Tags](#)
-		- [Prefix Value and Tags](#)
-	- [Deployment Steps](#deployment-process)
-- [5. Cost](#cost)
+- [3. NIST 800-66 Assurance - Security Compliance Matrix](#3-nist-800-66-security-matrix-compliance)
+- [4. Deployment Guide](#4-deployment-and-configuration-activities) 
+	- [4.1 Installation Prerequisites](#41-installation-prerequisites)
+	- [4.2 Template Deployment Sequence](#42-template-deployment-sequence)
+	- [4.3 Deployment Steps](#43-deployment-steps)
+	- [4.4 Clone the Solution](#44-clone-the-solution)
+	- [4.5 Configure azuredeploy.parameters.json](#45-onfigure-azuredeployparametersjson)
+	- [4.6 Configure azuredeploy.ps1](#46-configure-azuredeployps1)
+	- [4.7 Run azuredeploy.ps1](#47-run-azuredeployps1)
+	- [4.8 Expected Output](#48-expected-output)
+- [5. Cost](#5-cost)
 
 ## 1. Solution Overview
 
@@ -129,7 +132,7 @@ Control 2 | Mapping | Customer
 
 ## Deployment Guide
 
-### Prerequisites
+### Installation Prerequisites
 
 This solution is built using ARM templates and PowerShell. In order to deploy the solution, you must have the following packages currectly installed and in working order on our machine
 
@@ -137,6 +140,19 @@ This solution is built using ARM templates and PowerShell. In order to deploy th
 + [Install and confgure](https://technet.microsoft.com/en-us/library/dn975125.aspx#Anchor_1) Windows Azure Active Directory Module for Windows PowerShell - Implement Step-1 only
 	+_Please Note: The code does **not** use [Azure Active Directory V2 PowerShell module](https://technet.microsoft.com/en-us/library/dn975125.aspx#Anchor_5)_
 + [Install](https://docs.microsoft.com/en-us/powershell/azure/install-azurerm-ps?)Azure Resource Manager PowerShell Module
+
+### Deployment Steps
+**Please Note**: At this time you cannot deploy this solution using just the ARM template (azuredeploy.json). The solution is deployed by executing the AzureDeploy.ps1 locally. 
+
+1. Clone the solution on your local machine
+2. Navigate to azuredeploy.parameters.json on your local machine and fill in all parameter values for your deployment as defined in the [Configuration Values](#) section
+3. Update the User Defined values in the AzureDeploy.ps1
+4. Execute AzureDeploy.ps1
+5. Grab a coffee and wait for deployment to finish. Deployment time can take anywhere between 1-2 hours.
+
+### Template Deployment Sequence
+
+![alt text](images/sequence.png "Template Deployment Sequence")
 
 ### Clone the Solution
 
@@ -147,11 +163,7 @@ git clone https://github.com/mayurshintre/Blueprints-PaaS-ASE.git somefolder
 ``` 
 + or download as a ZIP from https://github.com/mayurshintre/Blueprints-PaaS-ASE
 
-### Deployment Sequence
-
-![alt text](images/sequence.png "Template Deployment Sequence")
-
-## Configuration Values
+### Configure _azuredeploy.parameters.json_
 
 Please update the following values in the _azuredeploy.parameters.json_ file on your local machine. This file holds all configuration and sizing parameters for all services deployed in this Blueprint. Please follow the instructions carefully as any typo's can result in a failed deployment.
 
@@ -164,14 +176,9 @@ Please update the following values in the _azuredeploy.parameters.json_ file on 
   Subnet | WAFSubnetPrefix | _10.0.0.0_ | Within the defined Vnet space | As defined within [RFC 1918 Range](https://tools.ietf.org/html/rfc1918)
   Subnet | WAFSubnetPrefixCIDR | _/24_ | As defined within [RFC 1918 Range](https://tools.ietf.org/html/rfc1918)
 
-## Deployment Steps
-At this time you cannot deploy this solution using just the ARM template (azuredeploy.json). The solution is deployed by executing the AzureDeploy.ps1 locally. 
+### Configure _azuredeploy.ps1_ PowerShell File
 
-+ Clone the solution on your local machine
-+ Navigate to azuredeploy.parameters.json and fill in all parameter values for your deployment as defined in the Configuration Values section
-+ Update the User Defined values in the AzureDeploy.ps1
-+ Execute AzureDeploy.ps1
-+ Grab a beer and wait for deployment to finish. I can take anywhere between 1-2 hours due to ASE.
+Only update the following user defined inputs section in the _azuredeploy.ps1_ file
 
 ``` PowerShell
 ##Azure Region to Deploy all resources including the Resource Group
@@ -192,6 +199,16 @@ $ParameterFile = "Repository Location\azureDeploy.parameters.json"
 ##Subscription ID that will be used to host the resource group
 $SubscriptionID = "Your Subscription ID here"
 ```
+### Run _azuredeploy.ps1_
+
+
+
+### Expected Output
+
+
+
+
+
 ## Modifying the Templates
 
 You can modify the ARM templates directly by following the ARM json syntax. By and large, there should be no need to modify the ARM templates other than the _azuredeploy.parameters.json_ file, except when you wish to 
