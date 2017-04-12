@@ -33,6 +33,7 @@
 
 ## Solution Overview
 
+|
 ---|
 **Click [here](#deployment-guide) to jump directly to the deployment guide; However, we highly recommend reading this README in it's entirety**|
 
