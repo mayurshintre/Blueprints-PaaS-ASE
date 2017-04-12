@@ -28,13 +28,14 @@
 	- [Configuration Activities](#)
 		- [Prefix Value and Tags](#)
 		- [Prefix Value and Tags](#)
-	- [Deployment Process](#deployment-process)
-	- [PowerShell Deployment](#optional-powershell-deployment)
+	- [Deployment Steps](#deployment-process)
 - [Cost](#cost)
 
 ## Solution Overview
 
 ![alt text](images/sequence.png "Template Deployment Sequence")
+
+** Click [here](#deployment-guide) to jump over to the deployment guide. However, we do highly recommend you readng this README in it's entirety.**
 
 The solution deploys a fully automated secure baseline Azure ARM Blueprint to provision a highly secure, orchestrated and configured Platform as a Service environment mapped to a NIST 800-66 assurance security controls matrix, that includes :
 
@@ -139,6 +140,15 @@ This solution is built using ARM templates and PowerShell. In order to deploy th
 	+_Please Note: The code does **not** use [Azure Active Directory V2 PowerShell module](https://technet.microsoft.com/en-us/library/dn975125.aspx#Anchor_5)_
 + [Install](https://docs.microsoft.com/en-us/powershell/azure/install-azurerm-ps?)Azure Resource Manager PowerShell Module
 
+### Clone the Solution
+
+Clone the blueprint to your local machine
+
+``` Batchfile
+git clone https://github.com/mayurshintre/Blueprints-PaaS-ASE.git somefolder
+``` 
+or download as a ZIP from https://github.com/mayurshintre/Blueprints-PaaS-ASE
+
 ### Deployment Sequence
 
 ![alt text](images/sequence.png "Template Deployment Sequence")
@@ -156,7 +166,7 @@ Please update the following values in the _azuredeploy.parameters.json_ file on 
   Subnet | WAFSubnetPrefix | _10.0.0.0_ | Within the defined Vnet space | As defined within [RFC 1918 Range](https://tools.ietf.org/html/rfc1918)
   Subnet | WAFSubnetPrefixCIDR | _/24_ | As defined within [RFC 1918 Range](https://tools.ietf.org/html/rfc1918)
 
-## Deployment steps
+## Deployment Steps
 At this time you cannot deploy this solution using just the ARM template (azuredeploy.json). The solution is deployed by executing the AzureDeploy.ps1 locally. 
 
 + Clone the solution on your local machine
@@ -191,9 +201,9 @@ You can modify the ARM templates directly by following the ARM json syntax. By a
 + Modify values hardcoded as variables in _azuredeploy.json_ or individual resource templates. For example, if you wish to change the Redis Cache configuration to enable non-SSL ports or change the default cache values, you can navigate to the azuredelploy.json template and modify the following parameters. 
 + Some values are hardcoded as variables in order to prevent the end user from modifying those values to meet NIST 800-66 security controls and in other cases, such as the redis cache _max_ values, because they are widely accepted defaults.
 
-**Please note that, chaning any security related hard-coded variables will break the NIST 800-66 secure baseline compliance assurance provided in the [NIST 800-66 Security Compliance Matrix](#nist-800-66-securityicompliance-matrix) section**
+**Please note that, chaning any security related hard-coded variables will break the NIST 800-66 secure baseline compliance assurance provided in the [NIST 800-66 Security Compliance Matrix](#nist-800-66-security-compliance-matrix) section**
 
-``` Json
+``` json
     "enableNonSSLPort": false,
 
     "redisCachemaxclients": 7500,
