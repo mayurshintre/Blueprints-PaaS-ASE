@@ -7,8 +7,8 @@
 
 - [Solution Design and Deployed Resources](#soution-design-and-deployed-resources)
 	- [Architecture](#architecture)
-	- [Deployed Azure Resources](#)
-		- Microsoft.Networks
+	- [Deployed Azure Resources](#deployed-azure-resources)
+		- [Virtual Network & Application Gateway(WAF)](#virtual-network-&-application-gateway(WAF))
 		- Microsoft.Cache
 		- Microsoft.Web
 		- Microsoft.Sql
@@ -53,6 +53,43 @@ This diagram displays an overview of the solution
 
 ![alt text](images/solution.png "Solution Diagram")
 
+### Deployed Azure Resources
+
+#### Virtual Network & Application Gateway(WAF)
+##### Microsoft.Networks
++ **/virtualNetworks**: 1 Virtual Network and 4 Subnets
++ **/publicIPAddresses**: 1 Public IP Address for Application Gateway WAF
+
+#### Application Gateway(WAF)
+##### Microsoft.Networks
++ **/applicationGateway**: 1 Application Gateway
+
+#### Redis Cache
+#####Microsoft.Cache
++ **Redis**: Redis Cache Cluster
+
+#### ILB ASE - Web App
+#####Microsoft.Web
++ **/hostingEnvironments**: Deploys App Service Environment v1
++ **/serverFarms**: Deploys a default App Service Plan
++ **kind: "webapp"**: Deploys a default Azure WebApp
+
+#### ILB ASE - API App
+#####Microsoft.Web
++ **/hostingEnvironments**: Deploys App Service Environment v1
++ **/serverFarms**: Deploys a default App Service Plan
++ **kind: "apiapp"**: Deploys a default Azure WebApp
+
+#### Azure SQL
+#####Microsoft.Sql
++ **/servers**: Deploys an Azure SQL Server
++ **/servers/databases**: Deploys an Azure SQL Database
++ **/servers/firewallRules**: Applied Firewall rule for Outbound IP's from both ASE's
+
+#### Azure KeyVault
+#####Microsoft.KeyVault
++ **/vaults**: Deploys a Keyvalut with a secret for Azure SQL
+
 ### Security
 
 + The solution locks down all subnets with a top-level DenyAll with a weight of 100 by default
@@ -86,42 +123,7 @@ This diagram displays an overview of the solution
 Control 1 | Mapping | Azure
 Control 2 | Mapping | Customer 
 
-## Deployed Azure Resources
 
-### Virtual Network & Application Gateway(WAF)
-####Microsoft.Networks
-+ **/virtualNetworks**: 1 Virtual Network and 4 Subnets
-+ **/publicIPAddresses**: 1 Public IP Address for Application Gateway WAF
-
-### Application Gateway(WAF)
-####Microsoft.Networks
-+ **/applicationGateway**: 1 Application Gateway
-
-### Redis Cache
-####Microsoft.Cache
-+ **Redis**: Redis Cache Cluster
-
-### ILB ASE - Web App
-####Microsoft.Web
-+ **/hostingEnvironments**: Deploys App Service Environment v1
-+ **/serverFarms**: Deploys a default App Service Plan
-+ **kind: "webapp"**: Deploys a default Azure WebApp
-
-### ILB ASE - API App
-####Microsoft.Web
-+ **/hostingEnvironments**: Deploys App Service Environment v1
-+ **/serverFarms**: Deploys a default App Service Plan
-+ **kind: "apiapp"**: Deploys a default Azure WebApp
-
-### Azure SQL
-####Microsoft.Sql
-+ **/servers**: Deploys an Azure SQL Server
-+ **/servers/databases**: Deploys an Azure SQL Database
-+ **/servers/firewallRules**: Applied Firewall rule for Outbound IP's from both ASE's
-
-### Azure KeyVault
-####Microsoft.KeyVault
-+ **/vaults**: Deploys a Keyvalut with a secret for Azure SQL
 
 ## Deployment Guide
 
