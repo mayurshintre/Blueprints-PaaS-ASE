@@ -3,7 +3,7 @@
 ## Contents
 
 - [Solution Overview](#solution-overview)
-	- [NIST 800-66 Based Assurance Framework Azure PaaS](#nist-800-66-based-assurance-framework-for-azure-blueprint-deployment))
+	- [NIST 800-66 Based Assurance Framework Azure PaaS](#nist-800-66-based-assurance-framework-for-azure-blueprint-deployment)
 - [Solution Design and Deployed Resources](#soution-design-and-deployed-resources)
 	- [Architecture](#architecture)
 	- [Deployed Azure Resources](#deployed-azure-resources)
@@ -33,9 +33,10 @@
 
 ## Solution Overview
 
-![alt text](images/sequence.png "Template Deployment Sequence")
+---|
+**Click [here](#deployment-guide) to jump directly to the deployment guide; However, we highly recommend reading this README in it's entirety**|
 
-** Click [here](#deployment-guide) to jump over to the deployment guide. However, we do highly recommend you readng this README in it's entirety.**
+![alt text](images/sequence.png "Template Deployment Sequence")
 
 The solution deploys a fully automated secure baseline Azure ARM Blueprint to provision a highly secure, orchestrated and configured Platform as a Service environment mapped to a NIST 800-66 assurance security controls matrix, that includes :
 
@@ -131,7 +132,7 @@ Control 2 | Mapping | Customer
 
 ## Deployment Guide
 
-###Prerequisites
+### Prerequisites
 
 This solution is built using ARM templates and PowerShell. In order to deploy the solution, you must have the following packages currectly installed and in working order on our machine
 
@@ -142,12 +143,12 @@ This solution is built using ARM templates and PowerShell. In order to deploy th
 
 ### Clone the Solution
 
-Clone the blueprint to your local machine
++ Clone the blueprint to your local machine
 
 ``` Batchfile
 git clone https://github.com/mayurshintre/Blueprints-PaaS-ASE.git somefolder
 ``` 
-or download as a ZIP from https://github.com/mayurshintre/Blueprints-PaaS-ASE
++ or download as a ZIP from https://github.com/mayurshintre/Blueprints-PaaS-ASE
 
 ### Deployment Sequence
 
