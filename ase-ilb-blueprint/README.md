@@ -100,23 +100,25 @@ This diagram displays an overview of the solution
 + Turns off non-SSL endpoints for Azure Redis Cache
 + Deploys Application Gateway with WAF turned on in prevention mode with OWASP rulest 3.0
 
-#### Virtual Network
+#### 2.3.1 Virtual Network
 
-#### WAF - Application Gateway
+#### 2.3.2 WAF - Application Gateway
 
-#### ILB ASE w/ Web Apps
+#### 2.3.3 ILB ASE w/ Web Apps
 
-#### ILB ASE w/ Api Apps
+#### 2.3.4 ILB ASE w/ Api Apps
 
-#### Redis Cache
+#### 2.3.5 Redis Cache
 
-#### Azure SQL
+#### 2.3.6 Azure SQL
 
-#### KeyVault
+#### 2.3.7 KeyVault
 
-#### Passwords & Secrets
+#### 2.3.8 Passwords & Secrets
 
 ## NIST 800-66 Assurance Security Compliance Matrix
+
+The NIST 800-66 Security Controls Matrix for this blueprint can be downloaded [here](#)
 
  Security Control| Azure Configuration | Responsibility
   ---|---|---
@@ -130,12 +132,12 @@ Control 2 | Mapping | Customer
 This solution utilizes a combination of ARM templates and PowerShell. In order to deploy the solution, you must have the following packages installed correctly and in working order on your local machine
 
 + [Install and configure](https://github.com/PowerShell/PowerShell) the latest version of PowerShell
-+ [Install and configure](https://technet.microsoft.com/en-us/library/dn975125.aspx#Anchor_1) Windows Azure Active Directory Module for Windows PowerShell - Implement Step-1 only
++ [Install and configure](https://technet.microsoft.com/en-us/library/dn975125.aspx#Anchor_1) Windows Azure Active Directory Module for Windows PowerShell - **Implement Step-1 only**
 >Please Note: The blueprint code does **not** use [Azure Active Directory V2 PowerShell module](https://technet.microsoft.com/en-us/library/dn975125.aspx#Anchor_5)
 + [Install](https://docs.microsoft.com/en-us/powershell/azure/install-azurerm-ps?) Azure Resource Manager PowerShell Module
 
 ### 4.2 Deployment Steps Overview
-> **Please Note**: At this time, this blueprint cannot be deployed using just the ARM template (azuredeploy.json). The solution must be deployed by executing the AzureDeploy.ps1 locally. 
+> **Please Note**: At this time, the entire blueprint cannot be deployed using just the ARM template (azuredeploy.json). The solution must be deployed by executing the AzureDeploy.ps1 locally. 
 
 1. Clone the solution on your local machine
 2. Navigate to _azuredeploy.parameters.json_ on your local machine and fill in all parameter values for your deployment as defined in the [Configure _azuredeploy.parameters.json_](#45-configure-azuredeploy.parameters.json) section
@@ -149,7 +151,7 @@ This solution utilizes a combination of ARM templates and PowerShell. In order t
 
 ### 4.4 Clone the Solution
 
-+ Clone the blueprint to your local machine
++ Clone the Blueprint to your local machine
 
 ``` Batchfile
 git clone https://github.com/mayurshintre/Blueprints-PaaS-ASE.git somefolder
@@ -160,7 +162,7 @@ git clone https://github.com/mayurshintre/Blueprints-PaaS-ASE.git somefolder
 
 Please update the following values in the _azuredeploy.parameters.json_ file on your local machine. This file holds all configuration and sizing parameters for all services deployed in this Blueprint. Please follow the instructions carefully as any typo's can result in a failed deployment.
 
->This is the **main** configuration file
+>This is the **main** configuration file. Also, we cant fix stupid. If you configure this file incorrectly, the deployment will belch.
 
   Resource | Parameter | Default Value| Allowed Values | Configuration
   ---|---|---|---|---|
