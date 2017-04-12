@@ -15,12 +15,12 @@
 		- Microsoft.KeyVault
 	- [Security](###security)
 		- [Virtual Network](#virtualnetwork)
-		- [WAF - Application Gateway](#)
-		- [ILB ASE w/ Web Apps](#)
-		- [ILB ASE w/ Api Apps](#)
-		- [Redis Cache](#)
-		- [Azure SQL](#)
-		- [Key Vault](#)
+		- [WAF - Application Gateway](#waf---application-gateway)
+		- [ILB ASE w/ Web Apps](#ilb-ase-w/-web-apps)
+		- [ILB ASE w/ Api Apps](#ilb-ase-w/-api-apps)
+		- [Redis Cache](#rediscache)
+		- [Azure SQL](#azuresql)
+		- [KeyVault](#keyvault)
 - [NIST 800-660 Security Compliance Matrix](#nist-800-66-security-matrix-compliance)
 - [Deployment Guide](#deployment-and-configuration-activities) 
 	- [Configuration Activities](#)
@@ -32,13 +32,21 @@
 - [Cost](#cost)
 
 ## Solution Overview
-This template deploys a NIST 800-66 compliant secure baseline to provision a highly secure platform as a service environment that includes Azure App Service Environment with an ILB, Web App, API Apps, Redis Cache Cluster, Web Application Gateway with WAF in Prevention Mode, Azure SQL and a locked down environment with restricted access and communication between services and subnets as described in the security section below.
+The solution deploys a fully automated secure baseline Azure ARM Blueprint to provision a highly secure, orchestrated and configured Platform as a Service environment mapped to a NIST 800-66 assurance security controls matrix, that includes :
+
++ Azure App Service Environment with an ILB, App Service Environment & Web App, 
++ Azure App Service Environment with an ILB, App Service Environment & API App,
++ Redis Cache Cluster
++ Web Application Gateway with WAF in Prevention Mode
++ Azure SQL 
++ Azure KeyVault
+
+The environment is locked down with restricted access and communication between all provisioned Azure services and also between subnets, as described in the security section below.
 
 ### NIST 800-66 Based Assurance Framework for Azure PaaS Blueprint Deployment
 Lorem epsum.
 
 ## Solution Design and Deployed Resources
-
 
 ### Architecture
 This diagram displays an overview of the solution
@@ -47,9 +55,9 @@ This diagram displays an overview of the solution
 
 ### Security
 
-+ The solution locks down all subnets with a DenyAll with a weight of 100 by default
++ The solution locks down all subnets with a top-level DenyAll with a weight of 100 by default
 + Generates a secure pasword for Azure SQL and stores it as a secret in Azure KeyVault
-+ Applies Firewall Roles to lock down incoming traffic to Azure SQL only from ASE Outbound IP addresses
++ Applies Firewall Roles to lock down incoming traffic to Azure SQL only from provisioned ASE Outbound IP addresses
 + Configures Backend Pools for the Application Gateway to communicate only on Ports 80 and 443 for the ASE ILB IP addresses
 + Blocks all FTP/FTPS 'deployment' access to ASE environments
 + Restricts Azure Redis Cache communication only with the ASE Subnets
@@ -57,9 +65,17 @@ This diagram displays an overview of the solution
 
 #### Virtual Network
 
-Network Security Gropus
+#### WAF - Application Gateway
 
+#### ILB ASE w/ Web Apps
 
+#### ILB ASE w/ Api Apps
+
+#### Redis Cache
+
+#### Azure SQL
+
+#### KeyVault
 
 #### Passwords & Secrets
 
