@@ -25,6 +25,7 @@
 		- [Azure KeyVault](#azure-keyvault)
 - [NIST 800-660 Security Compliance Matrix](#nist-800-66-security-matrix-compliance)
 - [Deployment Guide](#deployment-and-configuration-activities) 
+	- [Prerequisites](#prerequisites)
 	- [Configuration Activities](#)
 		- [Prefix Value and Tags](#)
 		- [Prefix Value and Tags](#)
@@ -104,6 +105,7 @@ This diagram displays an overview of the solution
 + Blocks all FTP/FTPS 'deployment' access to ASE environments
 + Restricts Azure Redis Cache communication only with the ASE Subnets
 + Turns off non-SSL endpoints for Azure Redis Cache
++ Deploys Application Gateway with WAF turned on in prevention mode with OWASP rulest 3.0
 
 #### Virtual Network
 
@@ -135,8 +137,11 @@ Control 2 | Mapping | Customer
 ### Prerequisites
 
 This solution is built using ARM templates and PowerShell. In order to deploy the solution, you must have the following packages currectly installed and in working order
+The code 
 
-+ Latest version of PowerShell 
++ [Install and configure](https://docs.microsoft.com/en-us/powershell/azure/install-azurerm-ps?) the latest version of PowerShell
++ [Install and confgure](https://technet.microsoft.com/en-us/library/dn975125.aspx#Anchor_1) Windows Azure Active Directory Module for Windows PowerShell Step-1 only
+++ Please Note: The code does **not** use [Azure Active Directory V2 PowerShell module](https://technet.microsoft.com/en-us/library/dn975125.aspx#Anchor_5)
 + Azure Resource Manager PowerShell Module
 + Azure Storage PowerShell Module
 + Optional - PowerShell ISE
