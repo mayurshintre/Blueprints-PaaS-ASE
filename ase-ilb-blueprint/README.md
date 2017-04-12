@@ -165,10 +165,16 @@ and then add the ILB's internal IP's to the back end pool of the apps (overwrite
 
 ## Configuration Values
 
+Please update the following values in the _azuredeploy.parameters.json_ file on your local machine. This file holds all configuration and zizing parameters for all services deployed in this Blueprint. Please follow the instructions carefully as any typo's can result in a failed deployment.
+
   Resource | Parameter | Default Value| Allowed Values | Configuration
   ---|---|---|---|---|
   All | All | - | **No spaces or special characters. Lower case alphabets and numbers only.** | Adding special characters will break deployment for Azure SQL.
   All | SystemPrefixName | _blueprint_ | lowercase string and numbers, upto 8 characters | Prefix name for the entire solution. Prepended to all resource names. Keep it short (4-6 characters). Lower case alphabets and numbers only. No spaces or special characters.
+  Vnet | vnetAddressPrefix | _10.0.0.0_ | Network Space Only | As defined within [RFC 1918 Range](https://tools.ietf.org/html/rfc1918)
+  Vnet | vnetAddressPrefixCIDR | _/16_ | CIDR Block | As defined within [RFC 1918 Range](https://tools.ietf.org/html/rfc1918)
+  Subnet | WAFSubnetPrefix | _10.0.0.0_ | Within the defined Vnet space | As defined within [RFC 1918 Range](https://tools.ietf.org/html/rfc1918)
+  Subnet | WAFSubnetPrefixCIDR | _/24_ | As defined within [RFC 1918 Range](https://tools.ietf.org/html/rfc1918)
 
 ## Deployment steps
 At this time you cannot deploy this solution using just the ARM template (azuredeploy.json). The solution is deployed by executing the AzureDeploy.ps1 locally. 
