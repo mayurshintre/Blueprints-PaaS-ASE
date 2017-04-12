@@ -31,12 +31,10 @@
     <None Include="Deployment.targets">
       <Visible>False</Visible>
     </None>
-    <Content Include="Deploy-AzureResourceGroup.ps1" />
     <None Include="images\sequence.jpg" />
     <None Include="images\solution.jpg" />
     <None Include="images\vsdx\asesequencevsdx.vsdx" />
     <None Include="images\vsdx\solution.vsdx" />
-    <None Include="NSG.ps1" />
     <None Include="README.md" />
     <None Include="templates\ilbaseasp.json" />
     <None Include="templates\ilbasewebapp.json" />
