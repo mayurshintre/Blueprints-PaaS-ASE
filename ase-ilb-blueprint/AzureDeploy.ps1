@@ -132,7 +132,7 @@ Write-Host "=> Time to Login to ARM if you are not already." -ForegroundColor Ye
 
 ##Catch to verify AzureRM session is active.  Forces sign-in if no session is found
 #region
-    Write-Output "=> Signing into Azure RM." -ForegroundColor Yellow
+    Write-Host "=> Signing into Azure RM." -ForegroundColor Yellow
     Write-Host "=>" -ForegroundColor Yellow
     do {
         $azureAccess = $true
@@ -140,7 +140,7 @@ Write-Host "=> Time to Login to ARM if you are not already." -ForegroundColor Ye
 		    Get-AzureRmSubscription -ErrorAction Stop | Out-Null
     	}
 	    Catch {
-            Write-Output "=> Guess you should have logged in already huh?" -ForegroundColor Yellow
+            Write-Host "=> Guess you should have logged in already huh?" -ForegroundColor Yellow
             Write-Host "=>" -ForegroundColor Yellow
 		    $azureAccess = $false
 		    Login-AzureRmAccount -ErrorAction SilentlyContinue | Out-Null
@@ -152,7 +152,7 @@ Write-Host "=> Time to Login to ARM if you are not already." -ForegroundColor Ye
 
 ##Catch to verify AzureAD session is active.  Forces sign-in if no session is found
 #region
-    Write-Output "=> Signing into Azure AD." -ForegroundColor Yellow
+    Write-Host "=> Signing into Azure AD." -ForegroundColor Yellow
     Write-Host "=>" -ForegroundColor Yellow
     do {
         $azureAccess = $true
@@ -160,7 +160,7 @@ Write-Host "=> Time to Login to ARM if you are not already." -ForegroundColor Ye
 		    Get-MsolAccountSku -ErrorAction Stop | Out-Null
     	}
 	    Catch {
-            Write-Output "=> Guess you should have logged in already huh?" -ForegroundColor Yellow
+            Write-Host "=> Guess you should have logged in already huh?" -ForegroundColor Yellow
 		    Write-Host "=>" -ForegroundColor Yellow
             $azureAccess = $false
 		    Connect-MsolService -ErrorAction SilentlyContinue | Out-Null
@@ -176,7 +176,7 @@ Write-Host "=>" -ForegroundColor Yellow
 Write-Host "=> I suggest you ask Mayur to fetch the coffee while I set your context..." -ForegroundColor Yellow
 Set-AzureRmContext -SubscriptionId $SubscriptionID
 Write-Host "=>" -ForegroundColor Yellow
-Write-Host "=> Context is now set to Subscription $SubscriptionID"
+Write-Host "=> Context is now set to Subscription $SubscriptionID"  -ForegroundColor Yellow
 
 # Checking for network resource group, creating if does not exist
 Write-Host "=>" -ForegroundColor Yellow
@@ -537,16 +537,16 @@ Write-Host "=> Building Network Security Groups" -ForegroundColor Yellow
 #region
 $WafNsg = New-AzureRmNetworkSecurityGroup -Name "WafNsg" -ResourceGroupName $RgName -Location $Region `
                                           -SecurityRules $WAFRule1,$WAFRule2,$WAFRule3,$WAFRule4,$WAFRule5,$WAFRule6,$WAFRule7,$WAFRule8,$WAFRule9,$WAFRule10,$WAFRule11,$WAFRule12 `
-                                          -Force | Out-Null
+                                          -Force -WarningAction SilentlyContinue | Out-Null
 $AseWebNsg = New-AzureRmNetworkSecurityGroup -Name "AseWebNsg" -ResourceGroupName $RgName -Location $Region `
                                              -SecurityRules $ASERule1,$ASERule2,$ASERule3,$ASERule4,$ASERule5,$ASERule6,$ASERule7,$ASERule8,$ASERule9,$ASERule10,$ASERule11,$ASERule12,$ASERule13 `
-                                             -Force | Out-Null
+                                             -Force -WarningAction SilentlyContinue | Out-Null
 $AseApiNsg = New-AzureRmNetworkSecurityGroup -Name "AseApiNsg" -ResourceGroupName $RgName -Location $Region `
                                              -SecurityRules $ASERule1,$ASERule2,$ASERule3,$ASERule4,$ASERule5,$ASERule6,$ASERule7,$ASERule8,$ASERule9,$ASERule10,$ASERule11,$ASERule12,$ASERule13 `
-                                             -Force | Out-Null
+                                             -Force -WarningAction SilentlyContinue | Out-Null
 $RedisNsg = New-AzureRmNetworkSecurityGroup -Name "RedisNsg" -ResourceGroupName $RgName -Location $Region `
                                             -SecurityRules $RedisRule1,$RedisRule2,$RedisRule3,$RedisRule4,$RedisRule5,$RedisRule6,$RedisRule7,$RedisRule8,$RedisRule9,$RedisRule10,$RedisRule11,$RedisRule12,$RedisRule13,$RedisRule14,$RedisRule15,$RedisRule16,$RedisRule17,$RedisRule18,$RedisRule19,$RedisRule20,$RedisRule21 `
-                                            -Force | Out-Null
+                                            -Force -WarningAction SilentlyContinue | Out-Null
 #endregion
 
 Write-Host "=>" -ForegroundColor Yellow
@@ -590,7 +590,7 @@ Write-Host "=>" -ForegroundColor Yellow
 Write-Host "=> Adding Backend IPs to the Web Application Firewall" -ForegroundColor Yellow
 #Add ILB Internal IP to the Backend Address Pool of the WAF
 $AppGW = Get-AzureRmApplicationGateway -Name $AppGWName -ResourceGroupName $RgName
-Set-AzureRmApplicationGatewayBackendAddressPool -Name appGatewayBackendPool -BackendIPAddresses $hostingInfo.internalIpAddress  | Out-Null
+Set-AzureRmApplicationGatewayBackendAddressPool -Name appGatewayBackendPool -BackendIPAddresses $hostingInfo.internalIpAddress -ApplicationGateway $AppGW  | Out-Null
 Set-AzureRmApplicationGateway -ApplicationGateway $AppGW  | Out-Null
 
 Write-Host "=>" -ForegroundColor Yellow
