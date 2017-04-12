@@ -51,7 +51,7 @@ This Azure refernce Blueprint deployment guide discusses architectural considera
 + The OMB Trusted Internet Connection (TIC) Initiative – FedRAMP Overlay (pilot)
 + The DoD Cloud Computing Security Requirements Guide (SRG)
 
-You can also view the security controls matrix (Microsoft Excel spreadsheet), which maps the architecture decisions, components, and configuration in this Quick Start to security requirements within NIST, TIC, and DoD Cloud SRG publications; indicates which Azure ARM templates and PowerShell scripts affect the controls implementation; and specifies the associated Azureresources within the templates. The excerpt in Figure 1 provides a sample of the available information.
+You can also view the security controls matrix (Microsoft Excel spreadsheet), which maps the architecture decisions, components, and configuration in this Quick Start to security requirements within NIST, TIC, and DoD Cloud SRG publications; indicates which Azure ARM templates and PowerShell scripts affect the controls implementation; and specifies the associated Azure resources within the templates. The excerpt in Figure 1 provides a sample of the available information.
 
 ![alt text](images/scmexcerpt.png "SCM Excerpt")
 
@@ -258,6 +258,7 @@ You may need to modify the _azuredeploy.json_ template or any other individual r
     "redisCachemaxmemoryreserved": 200,
     "redisCachemaxfragmentationmemory-reserved": 300,
     "redisCachemaxmemory-delta": 200,
+```
 _Excerpt from azuredeploy.json for hard-coded redis cache variables not exposed in azuredeploy.parameters.json file_
 
 ## 6. Cost
