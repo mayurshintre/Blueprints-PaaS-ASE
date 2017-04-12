@@ -2,11 +2,11 @@
 
 ## Contents
 
-- [Solution Overview](##solution-overview)
+- [Solution Overview](#solution-overview)
 	- [NIST 800-66 Based Assurance Framework Azure PaaS](#nist-800-66-based-assurance-framework-for-azure-blueprint-deployment))
 
 - [Solution Design and Deployed Resources](#soution-design-and-deployed-resources)
-	- [Architecture](###architecture)
+	- [Architecture](#architecture)
 	- [Deployed Azure Resources](#)
 		- Microsoft.Networks
 		- Microsoft.Cache
