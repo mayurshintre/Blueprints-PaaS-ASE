@@ -1,4 +1,4 @@
-﻿# NIST 800-66 Reference PaaS Blueprint Template using ASE
+﻿# **(Private Preview)** NIST 800-66 Reference PaaS Blueprint with ASE
 
 ## Contents
 
@@ -7,13 +7,6 @@
 - [2. Solution Design and Deployed Resources](#2-soution-design-and-deployed-resources)
 	- [2.1 Architecture](#21-architecture)
 	- [2.2 Deployed Azure Resources](#22-deployed-azure-resources)
-		- [2.2.1 Virtual Network](#221-virtual-network)
-		- [2.2.2 Application Gateway w/ WAF](#222-application-gateway---waf)
-		- [2.2.3 Redis Cache](#223-redis-cache)
-		- [2.2.4 ILB ASE w/ WebApp](#224-ilb-ase---web-app)
-		- [2.2.5 ILB ASE w/ APIApp](#225-ilb-ase---api-app)
-		- [2.2.6 Azure SQL](#226-azure-sql)
-		- [2.2.7 Azure KeyVault](#227-keyvault)
 	- [2.3 Security](#23-security)
 		- [Virtual Network](#virtualnetwork)
 		- [Application Gateway w/ WAF](#waf---application-gateway)
@@ -38,7 +31,7 @@
 
 ![alt text](images/sequence.png "Template Deployment Sequence")
 
-The solution deploys a fully automated secure baseline Azure ARM Blueprint to provision a highly secure, orchestrated and configured Platform as a Service environment mapped to a NIST 800-66 assurance security controls matrix, that includes :
+This Blueprint deploys a fully automated secure baseline Azure ARM Template + PowerShell solution to provision a highly secure, orchestrated and configured Platform as a Service environment mapped to a NIST 800-66 assurance security controls matrix, that includes :
 
 + Azure App Service Environment with an ILB, App Service Environment & Web App
 + Azure App Service Environment with an ILB, App Service Environment & API App
@@ -242,7 +235,7 @@ You may need to modify the _azuredeploy.json_ template or any other individual r
 + For example, if may need to change the Redis Cache configuration to enable non-SSL ports, you can navigate to the azuredelploy.json template and modify the following parameters in the json code block below 
 + Some values are intentionally hardcoded as variables in _azuredeploy.json_ in order to prevent the end user from modifying those values, to meet the NIST 800-66 security controls, and in other cases, such as the redis cache _max_ values, because they are widely accepted as defaults and do not need end user configuration.
 
->**Please note that, by changing any security related hard-coded variables in _azuredeploy.json_ or any other individual resource teplates, you will break the NIST 800-66 secure baseline compliance assurance provided in the [NIST 800-66 Security Compliance Matrix](#nist-800-66-security-compliance-matrix) section** and the obligation to meet the security control will be transferred on to you, the end user.
+>**Please Note: By changing any security related hard-coded variables in _azuredeploy.json_ or any other individual resource teplates, you will break the NIST 800-66 secure baseline compliance assurance provided in the [NIST 800-66 Security Compliance Matrix](#nist-800-66-security-compliance-matrix) section** and the obligation to meet the security control will be transferred on to you, the end user.
 
 ``` json
     "enableNonSSLPort": false,
