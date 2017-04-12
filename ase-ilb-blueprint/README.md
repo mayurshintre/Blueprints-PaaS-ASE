@@ -242,9 +242,9 @@ $routeName = "RouteToInternet"
 
 ## 5. Modifying the Templates
 
-You can modify the ARM templates directly by following the ARM json syntax. By and large, there should be no need to modify the ARM templates except for the _azuredeploy.parameters.json_ which holds all configuration parameters for all Azure services deployed in the Blueprint
+You can modify the ARM templates directly by following the ARM json syntax. By and large, there should be no need to modify the ARM templates except for the _azuredeploy.parameters.json_ which holds all environment and sizing configuration parameters for all Azure services deployed in the Blueprint
 
-You may need to modify the _azuredeploy.json_ template or any other individual resource templates under the /tempaltes folder if you wish to modify values hardcoded as variables in _azuredeploy.json_ or individual resource templates not available by desigh as parameters in the _azuredeploy.parameters.json_ template. 
+In some cases you may wish to modify values hardcoded as variables in _azuredeploy.json_ or individual resource templates under the _/tempates_ folder, not exposed as parameters in the _azuredeploy.parameters.json_ template by design. 
 
 + For example, if may need to change the Redis Cache configuration to enable non-SSL ports, you can navigate to the azuredelploy.json template and modify the following parameters in the json code block below 
 + Some values are intentionally hardcoded as variables in _azuredeploy.json_ in order to prevent the end user from modifying those values, to meet the NIST 800-66 security controls, and in other cases, such as the redis cache _max_ values, because they are widely accepted as defaults and do not need end user configuration.
