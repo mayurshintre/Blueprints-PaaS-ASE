@@ -1,4 +1,4 @@
-﻿# **(Private Preview)** NIST 800-66 Reference Azure ASE Blueprint
+﻿# **(Private Preview)** NIST 800-66 Reference Azure PaaS Blueprint
 
 ## Contents
 
