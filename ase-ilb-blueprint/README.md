@@ -54,7 +54,7 @@ This Azure refernce Blueprint deployment guide discusses architectural considera
 ## 2. Solution Design and Deployed Resources
 
 ### 2.1 Architecture
-This diagram displays an overview of the solution
+The diagram below illustrates the deployment topology and architecture of the solution:
 
 ![alt text](images/solution.png "Solution Diagram")
 
@@ -142,7 +142,7 @@ This solution utilizes a combination of ARM templates and PowerShell. In order t
 + [Install](https://docs.microsoft.com/en-us/powershell/azure/install-azurerm-ps?) Azure Resource Manager PowerShell Module
 
 ### 4.2 Deployment Steps Overview
-> **Please Note**: At this time, the entire blueprint cannot be deployed using just the ARM template (azuredeploy.json). The solution must be deployed by executing the AzureDeploy.ps1 locally. 
+> **Please Note**: At this time, the entire blueprint cannot be deployed only using the ARM template (azuredeploy.json). The solution must be deployed by executing the AzureDeploy.ps1 locally. 
 
 1. Clone the solution on your local machine
 2. Navigate to _azuredeploy.parameters.json_ on your local machine and fill in all parameter values for your deployment as defined in the [Configure _azuredeploy.parameters.json_](#45-configure-azuredeploy.parameters.json) section
@@ -174,9 +174,15 @@ Navigate to the _ase-ilb-blueprint/_ folder file on your local machine and updat
   All | All | - | **No spaces or special characters. Lower case alphabets and numbers only.** | Adding special characters will break deployment for Azure SQL.
   All | SystemPrefixName | _blueprint_ | lowercase string and numbers, upto 8 characters | Prefix name for the entire solution. Prepended to all resource names. Keep it short (4-6 characters). Lower case alphabets and numbers only. No spaces or special characters.
   Vnet | vnetAddressPrefix | _10.0.0.0_ | Network Space Only | As defined within [RFC 1918 Range](https://tools.ietf.org/html/rfc1918)
-  Vnet | vnetAddressPrefixCIDR | _/16_ | CIDR Block | As defined within [RFC 1918 Range](https://tools.ietf.org/html/rfc1918)
+  Vnet | vnetAddressPrefixCIDR | _/16_ | RFC 1918 CIDR Block | As defined within [RFC 1918 Range](https://tools.ietf.org/html/rfc1918)
   Subnet | WAFSubnetPrefix | _10.0.0.0_ | Within the defined Vnet space | As defined within [RFC 1918 Range](https://tools.ietf.org/html/rfc1918)
-  Subnet | WAFSubnetPrefixCIDR | _/24_ | As defined within [RFC 1918 Range](https://tools.ietf.org/html/rfc1918)
+  Subnet | WAFSubnetPrefixCIDR | _/24_ | RFC 1918 CIDR Block |As defined within [RFC 1918 Range](https://tools.ietf.org/html/rfc1918)
+  Subnet | WebAppSubnetPrefix | _10.0.1.0_ | Within the defined Vnet space | As defined within [RFC 1918 Range](https://tools.ietf.org/html/rfc1918)
+  Subnet | WebAppSubnetPrefixCIDR | _/24_ | RFC 1918 CIDR Block |As defined within [RFC 1918 Range](https://tools.ietf.org/html/rfc1918)
+  Subnet | APIAppSubnetPrefix | _10.0.2.0_ | Within the defined Vnet space | As defined within [RFC 1918 Range](https://tools.ietf.org/html/rfc1918)
+  Subnet | APIAppSubnetPrefixCIDR | _/24_ | RFC 1918 CIDR Block |As defined within [RFC 1918 Range](https://tools.ietf.org/html/rfc1918)
+  Subnet | RedisCacheSubnetPrefix | _10.0.3.0_ | Within the defined Vnet space | As defined within [RFC 1918 Range](https://tools.ietf.org/html/rfc1918)
+  Subnet | RedisCacheSubnetPrefixCIDR | _/24_ | RFC 1918 CIDR Block |As defined within [RFC 1918 Range](https://tools.ietf.org/html/rfc1918)
 
 ### 4.6 Configure _azuredeploy.ps1_ PowerShell File
 
