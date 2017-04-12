@@ -137,12 +137,12 @@ Control 2 | Mapping | Customer
 This solution utilizes a combination of ARM templates and PowerShell. In order to deploy the solution, you must have the following packages installed correctly and in working order on your local machine
 
 + [Install and configure](https://github.com/PowerShell/PowerShell) the latest version of PowerShell
-+ [Install and confgure](https://technet.microsoft.com/en-us/library/dn975125.aspx#Anchor_1) Windows Azure Active Directory Module for Windows PowerShell - Implement Step-1 only
-	+_Please Note: The blueprint code does **not** use [Azure Active Directory V2 PowerShell module](https://technet.microsoft.com/en-us/library/dn975125.aspx#Anchor_5)_
-+ [Install](https://docs.microsoft.com/en-us/powershell/azure/install-azurerm-ps?)Azure Resource Manager PowerShell Module
++ [Install and configure](https://technet.microsoft.com/en-us/library/dn975125.aspx#Anchor_1) Windows Azure Active Directory Module for Windows PowerShell - Implement Step-1 only
+_Please Note: The blueprint code does **not** use [Azure Active Directory V2 PowerShell module](https://technet.microsoft.com/en-us/library/dn975125.aspx#Anchor_5)_
++ [Install](https://docs.microsoft.com/en-us/powershell/azure/install-azurerm-ps?) Azure Resource Manager PowerShell Module
 
 ### 4.2 Deployment Steps
-**Please Note**: At this time, this blueprint cannot be deployed using just the ARM template (azuredeploy.json). The solution must be deployed by executing the AzureDeploy.ps1 locally. 
+> **Please Note**: At this time, this blueprint cannot be deployed using just the ARM template (azuredeploy.json). The solution must be deployed by executing the AzureDeploy.ps1 locally. 
 
 1. Clone the solution on your local machine
 2. Navigate to azuredeploy.parameters.json on your local machine and fill in all parameter values for your deployment as defined in the [Configuration Values](#) section
@@ -235,12 +235,14 @@ $routeName = "RouteToInternet"
 
 ## 5. Modifying the Templates
 
-You can modify the ARM templates directly by following the ARM json syntax. By and large, there should be no need to modify the ARM templates other than the _azuredeploy.parameters.json_ file, except when you wish to 
+You can modify the ARM templates directly by following the ARM json syntax. By and large, there should be no need to modify the ARM templates except for the _azuredeploy.parameters.json_ which holds all configuration parameters for all Azure services deployed in the Blueprint
 
-+ Modify values hardcoded as variables in _azuredeploy.json_ or individual resource templates. For example, if you wish to change the Redis Cache configuration to enable non-SSL ports or change the default cache values, you can navigate to the azuredelploy.json template and modify the following parameters. 
-+ Some values are hardcoded as variables in order to prevent the end user from modifying those values to meet NIST 800-66 security controls and in other cases, such as the redis cache _max_ values, because they are widely accepted defaults.
+You may need to modify the _azuredeploy.json_ template or any other individual resource templates under the /tempaltes folder if you wish to modify values hardcoded as variables in _azuredeploy.json_ or individual resource templates not available by desigh as parameters in the _azuredeploy.parameters.json_ template. 
 
-**Please note that, chaning any security related hard-coded variables will break the NIST 800-66 secure baseline compliance assurance provided in the [NIST 800-66 Security Compliance Matrix](#nist-800-66-security-compliance-matrix) section**
++ For example, if may need to change the Redis Cache configuration to enable non-SSL ports, you can navigate to the azuredelploy.json template and modify the following parameters in the json code block below 
++ Some values are intentionally hardcoded as variables in _azuredeploy.json_ in order to prevent the end user from modifying those values, to meet the NIST 800-66 security controls, and in other cases, such as the redis cache _max_ values, because they are widely accepted as defaults and do not need end user configuration.
+
+>**Please note that, by changing any security related hard-coded variables in _azuredeploy.json_ or any other individual resource teplates, you will break the NIST 800-66 secure baseline compliance assurance provided in the [NIST 800-66 Security Compliance Matrix](#nist-800-66-security-compliance-matrix) section** and the obligation to meet the security control will be transferred on to you, the end user.
 
 ``` json
     "enableNonSSLPort": false,
