@@ -23,7 +23,7 @@
 		- [Azure SQL](#azuresql)
 		- [Azure KeyVault](#azure-keyvault)
 - [3. NIST 800-66 Assurance - Security Compliance Matrix](#3-nist-800-66-security-matrix-compliance)
-- [4. Deployment Guide](#4-deployment-and-configuration-activities) 
+- [4. Deployment Guide](#4-deployment-guide) 
 	- [4.1 Installation Prerequisites](#41-installation-prerequisites)
 	- [4.2 Template Deployment Sequence](#42-template-deployment-sequence)
 	- [4.3 Deployment Steps](#43-deployment-steps)
@@ -134,7 +134,7 @@ Control 2 | Mapping | Customer
 
 ### 4.1 Installation Prerequisites
 
-This solution is built using ARM templates and PowerShell. In order to deploy the solution, you must have the following packages currectly installed and in working order on our machine
+This solution utilizes a combination of ARM templates and PowerShell. In order to deploy the solution, you must have the following packages installed correctly and in working order on your local machine
 
 + [Install and configure](https://github.com/PowerShell/PowerShell) the latest version of PowerShell
 + [Install and confgure](https://technet.microsoft.com/en-us/library/dn975125.aspx#Anchor_1) Windows Azure Active Directory Module for Windows PowerShell - Implement Step-1 only
@@ -142,7 +142,7 @@ This solution is built using ARM templates and PowerShell. In order to deploy th
 + [Install](https://docs.microsoft.com/en-us/powershell/azure/install-azurerm-ps?)Azure Resource Manager PowerShell Module
 
 ### 4.2 Deployment Steps
-**Please Note**: At this time you cannot deploy this solution using just the ARM template (azuredeploy.json). The solution is deployed by executing the AzureDeploy.ps1 locally. 
+**Please Note**: At this time, this blueprint cannot be deployed using just the ARM template (azuredeploy.json). The solution must be deployed by executing the AzureDeploy.ps1 locally. 
 
 1. Clone the solution on your local machine
 2. Navigate to azuredeploy.parameters.json on your local machine and fill in all parameter values for your deployment as defined in the [Configuration Values](#) section
