@@ -213,6 +213,9 @@ PS C:\User>azuredeploy.ps1
 
 ### 4.8 Expected Output
 
+``` PowerShell
+placeholder
+```
 
 ### 4.9 Optional - Post Deployment UDR
 
@@ -237,15 +240,11 @@ $routeName = "RouteToInternet"
 
 ## 5. Modifying the Templates
 
-You can modify the ARM templates directly by following the ARM json syntax. By and large, there should be no need to modify the ARM templates except for the _azuredeploy.parameters.json_ which holds all environment and sizing configuration parameters for all Azure services deployed in the Blueprint
+You can modify the ARM templates directly by following the ARM json syntax. By and large, there should be no need to modify the ARM templates except for the _azuredeploy.parameters.json_
 
-In some cases you may wish to modify values hardcoded as variables in _azuredeploy.json_ or individual resource templates under the _/tempates_ folder, not exposed as parameters in the _azuredeploy.parameters.json_ template by design. 
+In some cases you may wish to modify values hardcoded as variables in _azuredeploy.json_ or individual resource templates under the _/templates_ folder, not exposed as parameters in the _azuredeploy.parameters.json_ template by design. 
 
-+ For example, if may need to change the Redis Cache configuration to enable non-SSL ports, you can navigate to the azuredelploy.json template and modify the following parameters in the json code block below 
-+ Some values are intentionally hardcoded as variables in _azuredeploy.json_ in order to prevent the end user from modifying those values, to meet the NIST 800-66 security controls, and in other cases, such as the redis cache _max_ values, because they are widely accepted as defaults and do not need end user configuration.
-
->**Please Note: By changing any security related hard-coded variables in _azuredeploy.json_ or any other individual resource teplates, you will break the NIST 800-66 secure baseline compliance assurance provided in the [NIST 800-66 Security Compliance Matrix](#nist-800-66-security-compliance-matrix) section and the obligation to meet and map any unmet security controls will be transferred on to you, the end user.**
-
++ For example, if you need to change the Redis Cache configuration to enable non-SSL ports, you can navigate to the azuredelploy.json template and modify the following parameters in the json code block below 
 ``` json
     "enableNonSSLPort": false,
 
@@ -255,6 +254,10 @@ In some cases you may wish to modify values hardcoded as variables in _azuredepl
     "redisCachemaxmemory-delta": 200,
 ```
 _Excerpt from azuredeploy.json for hard-coded redis cache variables not exposed in azuredeploy.parameters.json file_
+
++ Some values are intentionally hardcoded as variables in _azuredeploy.json_ in order to prevent the end user from modifying those values, to meet the NIST 800-66 security controls, and in other cases, such as the redis cache _max_ values, because they are widely accepted as defaults and do not need end user configuration.
+
+>**Please Note: By changing any security related hard-coded variables in _azuredeploy.json_ or any other individual resource teplates, you will break the NIST 800-66 secure baseline compliance assurance provided in the [NIST 800-66 Security Compliance Matrix](#nist-800-66-security-compliance-matrix) section and the obligation to meet and map any unmet security controls will be transferred on to you, the end user.**
 
 ## 6. Cost
 
