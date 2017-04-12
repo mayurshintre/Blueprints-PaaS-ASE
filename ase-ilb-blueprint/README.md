@@ -51,10 +51,6 @@ This Azure refernce Blueprint deployment guide discusses architectural considera
 + The OMB Trusted Internet Connection (TIC) Initiative – FedRAMP Overlay (pilot)
 + The DoD Cloud Computing Security Requirements Guide (SRG)
 
-You can also view the security controls matrix (Microsoft Excel spreadsheet), which maps the architecture decisions, components, and configuration in this Quick Start to security requirements within NIST, TIC, and DoD Cloud SRG publications; indicates which Azure ARM templates and PowerShell scripts affect the controls implementation; and specifies the associated Azure resources within the templates. The excerpt in Figure 1 provides a sample of the available information.
-
-![alt text](images/scmexcerpt.png "SCM Excerpt")
-
 ## 2. Solution Design and Deployed Resources
 
 ### 2.1 Architecture
@@ -128,12 +124,11 @@ This diagram displays an overview of the solution
 
 ## NIST 800-66 Assurance Security Compliance Matrix
 
-The NIST 800-66 Security Controls Matrix for this blueprint can be downloaded [here](#)
+You can also view the security controls matrix (Microsoft Excel spreadsheet), which maps the architecture decisions, components, and configuration in this Quick Start to security requirements within NIST, TIC, and DoD Cloud SRG publications; indicates which Azure ARM templates and PowerShell scripts affect the controls implementation; and specifies the associated Azure resources within the templates. The excerpt in Figure 1 provides a sample of the available information.
 
- Security Control| Azure Configuration | Responsibility
-  ---|---|---
-Control 1 | Mapping | Azure
-Control 2 | Mapping | Customer 
+![alt text](images/scmexcerpt.png "SCM Excerpt")
+
+The NIST 800-66 Security Controls Matrix for this blueprint can be downloaded [here](#). 
 
 ## 4. Deployment Guide
 
