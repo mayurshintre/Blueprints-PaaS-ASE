@@ -581,11 +581,13 @@ Set-AzureRmVirtualNetwork -VirtualNetwork $vnet  | Out-Null
 Write-Host "=>" -ForegroundColor Yellow
 Write-Host "=> Setting SQL Firewall Rules" -ForegroundColor Yellow
 ##Set SQl Firewall Rules
-New-AzureRmSqlServerFirewallRule -ResourceGroupName $RgName -ServerName $SQLName `
-                                 -FirewallRuleName "ILBOutboundAddress" `
-                                 -StartIpAddress $hostingInfo.outboundIpAddresses[0] `
-                                 -EndIpAddress $hostingInfo.outboundIpAddresses[0]  | Out-Null
- 
+if(!(Get-AzureRmSqlServerFirewallRule -ResourceGroupName -$RgName -ServerName $SqlName -FirewallRuleName "ILBOutboundAddress"))
+{
+    New-AzureRmSqlServerFirewallRule -ResourceGroupName $RgName -ServerName $SQLName `
+                                     -FirewallRuleName "ILBOutboundAddress" `
+                                     -StartIpAddress $hostingInfo.outboundIpAddresses[0] `
+                                     -EndIpAddress $hostingInfo.outboundIpAddresses[0]  | Out-Null
+}
 Write-Host "=>" -ForegroundColor Yellow
 Write-Host "=> Adding Backend IPs to the Web Application Firewall" -ForegroundColor Yellow
 #Add ILB Internal IP to the Backend Address Pool of the WAF
