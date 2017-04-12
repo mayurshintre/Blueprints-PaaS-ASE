@@ -180,7 +180,7 @@ Navigate to the _ase-ilb-blueprint/_ folder file on your local machine and updat
 
 ### 4.6 Configure _azuredeploy.ps1_ PowerShell File
 
-Only update the following user defined inputs section in the _azuredeploy.ps1_ file
+Set the environment variables user defined inputs section in the _azuredeploy.ps1_ file
 
 ``` PowerShell
 ##Azure Region to Deploy all resources including the Resource Group
