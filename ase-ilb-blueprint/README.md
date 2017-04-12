@@ -138,7 +138,7 @@ This solution is built using ARM templates and PowerShell. In order to deploy th
 
 ### Deployment Sequence
 
-![alt text](images/asesequencevsdx.png "Template Deployment Sequence")
+![alt text](images/sequence.png "Template Deployment Sequence")
 
 1. User Defined Inputs in PowerShell
 2. Update the Parameters File (azuredeploy.parameters.json) - 99% of values and decisions are made here
