@@ -579,10 +579,10 @@ Set-AzureRmVirtualNetwork -VirtualNetwork $vnet
 #endregion
 
 ##Set SQl Firewall Rules
-New-AzureRmSqlServerFirewallRule -ResourceGroupName $RgName -ServerName $SQLName `
-                                 -FirewallRuleName "ILBOutboundAddress" `
-                                 -StartIpAddress $hostingInfo.outboundIpAddresses[0] `
-                                 -EndIpAddress $hostingInfo.outboundIpAddresses[0] 
+New-AzureRmSqlServerFirewallRule -ResourceGroupName $RgName -ServerName $SQLName `
+                                 -FirewallRuleName "ILBOutboundAddress" `
+                                 -StartIpAddress $hostingInfo.outboundIpAddresses[0] `
+                                 -EndIpAddress $hostingInfo.outboundIpAddresses[0] 
  
  #Add ILB Internal IP to the Backend Address Pool of the WAF
 
