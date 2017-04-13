@@ -224,13 +224,16 @@ $aadtenant = (Get-AzureADDomain | ?{$_.IsDefault -eq 'True'}).Name
 ##Get Outputs from Deployment
 Write-Host "=>" -ForegroundColor Yellow
 Write-Host "=> Retrieving outputs from deployment $DeploymentName." -ForegroundColor Yellow
-$AseName = (Get-AzureRmResourceGroupDeployment -ResourceGroupName $RgName -Name $DeploymentName).Outputs.aseName.Value
+$AseWebName = (Get-AzureRmResourceGroupDeployment -ResourceGroupName $RgName -Name $DeploymentName).Outputs.aseWebName.Value
+$AseApiName = (Get-AzureRmResourceGroupDeployment -ResourceGroupName $RgName -Name $DeploymentName).Outputs.aseApiName.Value
+
 $VnetName = (Get-AzureRmResourceGroupDeployment -ResourceGroupName $RgName -Name $DeploymentName).Outputs.vnetName.Value
 $SqlName = (Get-AzureRmResourceGroupDeployment -ResourceGroupName $RgName -Name $DeploymentName).Outputs.sqlName.Value
 $AppGWName = (Get-AzureRmResourceGroupDeployment -ResourceGroupName $RgName -Name $DeploymentName).Outputs.appGWName.Value
 
 ##Retrieve Resource ID for ASE
-$resourceID = (Get-AzureRmResource | where -Property resourcename -EQ $AseName).resourceID
+$resourceIDWeb = (Get-AzureRmResource | where -Property resourcename -EQ $AseWebName).resourceID
+$resourceIDApi = (Get-AzureRmResource | where -Property resourcename -EQ $AseApiName).resourceID
 
 ##Function to get AuthToken to retrieve IP Addresses from ASE
 function GetAuthToken
@@ -276,12 +279,14 @@ $header = @{
 }
 
 ##Set URI
-$uri = "https://management.azure.com$resourceID/capacities/virtualip?api-version=2015-08-01"
+$uriweb = "https://management.azure.com$resourceIDWeb/capacities/virtualip?api-version=2015-08-01"
+$uriapi = "https://management.azure.com$resourceIDApi/capacities/virtualip?api-version=2015-08-01"
 
 Write-Host "=>" -ForegroundColor Yellow
 Write-Host "=> Getting IPs from the App Service Environment" -ForegroundColor Yellow
 ##Set Hostinginfo variable by invoking rest method
-$hostingInfo = Invoke-RestMethod -Uri $uri -Headers $header -Method get
+$hostingInfoWeb = Invoke-RestMethod -Uri $uriweb -Headers $header -Method get
+$hostingInfoApi = Invoke-RestMethod -Uri $uriapi -Headers $header -Method get
 
 Write-Host "=>" -ForegroundColor Yellow
 Write-Host "=> Creating Network Security Group Rules." -ForegroundColor Yellow
@@ -574,18 +579,29 @@ Set-AzureRmVirtualNetwork -VirtualNetwork $vnet  | Out-Null
 Write-Host "=>" -ForegroundColor Yellow
 Write-Host "=> Setting SQL Firewall Rules" -ForegroundColor Yellow
 ##Set SQl Firewall Rules
-if(!(Get-AzureRmSqlServerFirewallRule -ResourceGroupName $RgName -ServerName $SqlName -FirewallRuleName "ILBOutboundAddress"))
+if(!(Get-AzureRmSqlServerFirewallRule -ResourceGroupName $RgName -ServerName $SqlName -FirewallRuleName "ILBOutboundAddressWeb"))
 {
     New-AzureRmSqlServerFirewallRule -ResourceGroupName $RgName -ServerName $SQLName `
-                                     -FirewallRuleName "ILBOutboundAddress" `
-                                     -StartIpAddress $hostingInfo.outboundIpAddresses[0] `
-                                     -EndIpAddress $hostingInfo.outboundIpAddresses[0]  | Out-Null
+                                     -FirewallRuleName "ILBOutboundAddressWeb" `
+                                     -StartIpAddress $hostingInfoWeb.outboundIpAddresses[0] `
+                                     -EndIpAddress $hostingInfoWeb.outboundIpAddresses[0]  | Out-Null
 }
+
+if(!(Get-AzureRmSqlServerFirewallRule -ResourceGroupName $RgName -ServerName $SqlName -FirewallRuleName "ILBOutboundAddressApi"))
+{
+    New-AzureRmSqlServerFirewallRule -ResourceGroupName $RgName -ServerName $SQLName `
+                                     -FirewallRuleName "ILBOutboundAddressApi" `
+                                     -StartIpAddress $hostingInfoApi.outboundIpAddresses[0] `
+                                     -EndIpAddress $hostingInfoApi.outboundIpAddresses[0]  | Out-Null
+}
+
 Write-Host "=>" -ForegroundColor Yellow
 Write-Host "=> Adding Backend IPs to the Web Application Firewall" -ForegroundColor Yellow
 #Add ILB Internal IP to the Backend Address Pool of the WAF
 $AppGW = Get-AzureRmApplicationGateway -Name $AppGWName -ResourceGroupName $RgName
-Set-AzureRmApplicationGatewayBackendAddressPool -Name appGatewayBackendPool -BackendIPAddresses $hostingInfo.internalIpAddress -ApplicationGateway $AppGW  | Out-Null
+Set-AzureRmApplicationGatewayBackendAddressPool -Name appGatewayBackendPool `
+                                                -BackendIPAddresses $hostingInfoApi.internalIpAddress, $hostingInfoWeb.internalIpAddress `
+                                                -ApplicationGateway $AppGW  | Out-Null
 Set-AzureRmApplicationGateway -ApplicationGateway $AppGW  | Out-Null
 
 Write-Host "=>" -ForegroundColor Yellow
