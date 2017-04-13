@@ -219,14 +219,7 @@ Write-Host "=> Man that was tense... Good thing we know some Kung-Fu or those fr
 ##Get Azure AD Tenant Name
 Write-Host "=>" -ForegroundColor Yellow
 Write-Host "=> Finding the tenant name." -ForegroundColor Yellow
-$Domains = Get-MsolDomain
-foreach($Domain in $Domains)
-{
-    if($Domain.IsInitial)
-    {
-        $aadtenant = $Domain.Name
-    }
-}
+$aadtenant = (Get-AzureADDomain | ?{$_.IsDefault -eq 'True'}).Name
 
 ##Get Outputs from Deployment
 Write-Host "=>" -ForegroundColor Yellow
@@ -581,7 +574,7 @@ Set-AzureRmVirtualNetwork -VirtualNetwork $vnet  | Out-Null
 Write-Host "=>" -ForegroundColor Yellow
 Write-Host "=> Setting SQL Firewall Rules" -ForegroundColor Yellow
 ##Set SQl Firewall Rules
-if(!(Get-AzureRmSqlServerFirewallRule -ResourceGroupName -$RgName -ServerName $SqlName -FirewallRuleName "ILBOutboundAddress"))
+if(!(Get-AzureRmSqlServerFirewallRule -ResourceGroupName $RgName -ServerName $SqlName -FirewallRuleName "ILBOutboundAddress"))
 {
     New-AzureRmSqlServerFirewallRule -ResourceGroupName $RgName -ServerName $SQLName `
                                      -FirewallRuleName "ILBOutboundAddress" `
