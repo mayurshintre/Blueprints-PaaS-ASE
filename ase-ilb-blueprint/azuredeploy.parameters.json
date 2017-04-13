@@ -199,12 +199,6 @@
       "metadata": {
         "description": "Number of WAF Instances"
       }
-    },
-    "sqlAdministratorLogin": {
-      "value": "SQLMaster",
-      "metadata": {
-        "description": "The administrator username of the SQL Server."
-      }
     }
   }
 }

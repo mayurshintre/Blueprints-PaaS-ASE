@@ -578,7 +578,10 @@
       "type": "Microsoft.Resources/deployments",
       "name": "WAF",
       "apiVersion": "2015-01-01",
-      "dependsOn": [ "ILBASE" ],
+      "dependsOn": [
+        "AseApi", 
+        "AseWeb"
+      ],
       "properties": {
         "mode": "Incremental",
         "templateLink": {
