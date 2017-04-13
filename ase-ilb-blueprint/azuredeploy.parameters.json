@@ -199,6 +199,12 @@
       "metadata": {
         "description": "Number of WAF Instances"
       }
+    },
+    "sqlAdministratorLogin": {
+      "value": 2,
+      "metadata": {
+        "description": "Master"
+      }
     }
   }
 }
