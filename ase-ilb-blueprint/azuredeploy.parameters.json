@@ -201,9 +201,9 @@
       }
     },
     "sqlAdministratorLogin": {
-      "value": 2,
+      "value": "Master",
       "metadata": {
-        "description": "Master"
+        "description": "Login name for SQL"
       }
     }
   }
