@@ -309,7 +309,7 @@
     "sqlServerName": "[toLower(concat(parameters('SystemPrefixName'),'AzureSql',uniqueString(resourceGroup().id)))]",
     "databaseName": "[toLower(concat(parameters('SystemPrefixName'),'Database'))]",
 
-    "TemplateURIs": "https://raw.githubusercontent.com/mayurshintre/Blueprints/master/ase-ilb-blueprint/templates/",
+    "TemplateURIs": "https://raw.githubusercontent.com/mayurshintre/Blueprints-PaaS-ASE/Dual-Ase/ase-ilb-blueprint/templates/",
 
     "wafMode": "Prevention",
     "wafRuleSetType": "OWASP",
