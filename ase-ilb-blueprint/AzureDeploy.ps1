@@ -157,13 +157,13 @@ Write-Host "=> Time to Login to ARM if you are not already." -ForegroundColor Ye
     do {
         $azureAccess = $true
 	    Try {
-		    Get-MsolAccountSku -ErrorAction Stop | Out-Null
+		    Get-AzureADDomain -ErrorAction Stop | Out-Null
     	}
 	    Catch {
             Write-Host "=> Guess you should have logged in already huh?" -ForegroundColor Yellow
 		    Write-Host "=>" -ForegroundColor Yellow
             $azureAccess = $false
-		    Connect-MsolService -ErrorAction SilentlyContinue | Out-Null
+		    Connect-AzureAD -ErrorAction SilentlyContinue | Out-Null
 	    }
     } while (! $azureAccess)
     Write-Host "=> You are now Logged into Azure Resource Manager." -ForegroundColor Yellow
