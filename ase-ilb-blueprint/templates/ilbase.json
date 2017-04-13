@@ -20,7 +20,7 @@
         "description": "ARM Url reference for the virtual network that will contain the ASE.  Use Microsoft.Network for ARM vnets.  Use Microsoft.ClassicNetwork for older ASM vnets.  /subscriptions/subIDGoesHere/resourceGroups/rgNameGoesHere/providers/Microsoft.Network/virtualNetworks/vnetnamegoeshere"
       }
     },
-    "WebAppSubnetName": {
+    "SubnetName": {
       "type": "string",
       "metadata": {
         "description": "Subnet name that will contain the App Service Environment"
@@ -32,7 +32,7 @@
         "description": "0 = public VIP only, 1 = only ports 80/443 are mapped to ILB VIP, 2 = only FTP ports are mapped to ILB VIP, 3 = both ports 80/443 and FTP ports are mapped to an ILB VIP."
       }
     },
-    "WebDNS": {
+    "DNS": {
       "type": "string",
       "metadata": {
         "description": "Set this to the root domain associated with the Web App."
@@ -101,10 +101,10 @@
         "location": "[parameters('Region')]",
         "ipSslAddressCount": "[variables('ipSslAddressCount')]",
         "internalLoadBalancingMode": "[parameters('internalLoadBalancingMode')]",
-        "dnsSuffix": "[parameters('WebDNS')]",
+        "dnsSuffix": "[parameters('DNS')]",
         "virtualNetwork": {
           "Id": "[parameters('vnetID')]",
-          "Subnet": "[parameters('WebAppSubnetName')]"
+          "Subnet": "[parameters('SubnetName')]"
         },
         "multiSize": "[parameters('frontEndSize')]",
         "multiRoleCount": "[parameters('frontEndCount')]",

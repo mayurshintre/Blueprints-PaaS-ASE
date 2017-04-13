@@ -92,20 +92,20 @@
         "description": "The size of the new Azure Redis Cache instance. Valid family and capacity combinations are (C0..C6, P1..P4)."
       }
     },
-    "appServicePlanName": {
+    "appServicePlanNameWeb": {
       "value": "ASPName",
       "metadata": {
         "description": "The name of the App Service plan to use for hosting the web app."
       }
     },
-    "AseDNS": {
-      "value": "ASE.demo",
+    "appServicePlanNameApi": {
+      "value": "ASPName",
       "metadata": {
-        "description": "Set to the root internal domain name to associate with this ASE."
+        "description": "The name of the App Service plan to use for hosting the web app."
       }
     },
-    "AspDNS": {
-      "value": "ASP.demo",
+    "ApiDNS": {
+      "value": "Api.demo",
       "metadata": {
         "description": "Set to the root internal domain name to associate with this ASP."
       }
