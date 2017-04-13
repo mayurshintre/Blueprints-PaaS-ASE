@@ -137,8 +137,7 @@ The NIST 800-66 Security Controls Matrix for this blueprint can be downloaded [h
 This solution utilizes a combination of ARM templates and PowerShell. In order to deploy the solution, you must have the following packages installed correctly and in working order on your local machine
 
 + [Install and configure](https://github.com/PowerShell/PowerShell) the latest version of PowerShell
-+ [Install and configure](https://technet.microsoft.com/en-us/library/dn975125.aspx#Anchor_1) Windows Azure Active Directory Module for Windows PowerShell - **Implement Step-1 only**
->Please Note: The blueprint code does **not** use [Azure Active Directory V2 PowerShell module](https://technet.microsoft.com/en-us/library/dn975125.aspx#Anchor_5)
++ [Install and configure](https://technet.microsoft.com/en-us/library/dn975125.aspx#Anchor_5) Azure Active Directory V2 PowerShell module
 + [Install](https://docs.microsoft.com/en-us/powershell/azure/install-azurerm-ps?) Azure Resource Manager PowerShell Module
 
 ### 4.2 Deployment Steps Overview
