@@ -93,13 +93,13 @@
       }
     },
     "appServicePlanNameWeb": {
-      "value": "ASPName",
+      "value": "ASPNameWeb",
       "metadata": {
         "description": "The name of the App Service plan to use for hosting the web app."
       }
     },
     "appServicePlanNameApi": {
-      "value": "ASPName",
+      "value": "ASPNameApi",
       "metadata": {
         "description": "The name of the App Service plan to use for hosting the web app."
       }
