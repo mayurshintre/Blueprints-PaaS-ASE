@@ -8,13 +8,13 @@
 ##MAKE CHANGES HERE TO MATCH YOUR ENVIRONMENT
 #region
     ##Azure Region to Deploy all resources including the Resource Group
-    $Region = "West US"
+    $Region = "Central US"
     ##Name of the Resource Group to deploy
-    $RgName = "blueprint"
+    $RgName = "mayurstestblueprint"
     ##Name to give the Deployment that will be ran
     $DeploymentName = $RgName +"-nist800ase"
     ##Location of the main azuredeploy.json template
-    $TemplateUri = "https://raw.githubusercontent.com/mayurshintre/Blueprints-PaaS-ASE/Dual-Ase/ase-ilb-blueprint/azuredeploy.json"
+    $TemplateUri = "https://raw.githubusercontent.com/mayurshintre/Blueprints-PaaS-ASE/master/ase-ilb-blueprint/azuredeploy.json"
     ##Location of the local parameters file
     $ParameterFile = "C:\temp\azuredeploy.parameters.json"
     ##Subscription ID that will be used to host the resource group

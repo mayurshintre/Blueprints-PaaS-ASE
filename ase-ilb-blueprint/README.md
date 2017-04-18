@@ -1,20 +1,21 @@
-﻿# **(Private Preview)** NIST 800-66 Reference Azure PaaS Blueprint
+﻿![alt text](images/azblueprints.png "Template Deployment Sequence")
+# PaaS (ASE) Blueprint with NIST 800-66 Assurance Framework
 
 ## Contents
 
 - [1. Solution Overview](#1-solution-overview)
-	- [1.1 NIST 800-66 Based Assurance Framework Azure PaaS](#11-nist-800-66-based-assurance-framework-for-azure-blueprint-deployment)
+	- [1.1 NIST 800-66 Based Assurance Framework Azure PaaS Blueprint](#11-nist-800-66-based-assurance-framework-for-azure-paas-blueprint)
 - [2. Solution Design and Deployed Resources](#2-soution-design-and-deployed-resources)
 	- [2.1 Architecture](#21-architecture)
 	- [2.2 Deployed Azure Resources](#22-deployed-azure-resources)
 	- [2.3 Security](#23-security)
-		- [Virtual Network](#virtualnetwork)
-		- [Application Gateway w/ WAF](#waf---application-gateway)
-		- [Redis Cache](#rediscache)
-		- [ILB ASE w/ Web Apps](#ilb-ase-w/-web-apps)
-		- [ILB ASE w/ Api Apps](#ilb-ase-w/-api-apps)
-		- [Azure SQL](#azuresql)
-		- [Azure KeyVault](#azure-keyvault)
+		- [Virtual Network](#221-virtualnetwork)
+		- [Application Gateway w/ WAF](#222-application-gateway---waf)
+		- [Redis Cache](#223-rediscache)
+		- [ILB ASE w/ Web App](#224-ilb-ase-w/-web-app)
+		- [ILB ASE w/ Api App](#225-ilb-ase-w/-api-app)
+		- [Azure SQL](#226-azuresql)
+		- [Azure KeyVault](#227-azure-keyvault)
 - [3. NIST 800-66 Assurance - Security Compliance Matrix](#3-nist-800-66-security-matrix-compliance)
 - [4. Deployment Guide](#4-deployment-guide) 
 	- [4.1 Installation Prerequisites](#41-installation-prerequisites)
@@ -73,13 +74,13 @@ The diagram below illustrates the deployment topology and architecture of the so
 ##### Microsoft.Cache
 + **Redis**: Redis Cache Cluster
 
-#### 2.2.4 ILB ASE - Web App
+#### 2.2.4 ILB ASE WebApp
 ##### Microsoft.Web
 + **/hostingEnvironments**: Deploys App Service Environment v1
 + **/serverFarms**: Deploys a default App Service Plan
 + **kind: "webapp"**: Deploys a default Azure WebApp
 
-#### 2.2.5 ILB ASE - API App
+#### 2.2.5 ILB ASE APIApp - Only Deployed when 'Dual-Ase' Branch Used
 ##### Microsoft.Web
 + **/hostingEnvironments**: Deploys App Service Environment v1
 + **/serverFarms**: Deploys a default App Service Plan
@@ -97,38 +98,48 @@ The diagram below illustrates the deployment topology and architecture of the so
 
 ### 2.3 Security
 
-+ The solution locks down all subnets with a top-level DenyAll with a weight of 100 by default
-+ Generates a secure pasword for Azure SQL and stores it as a secret in Azure KeyVault
-+ Applies Firewall Roles to lock down incoming traffic to Azure SQL only from provisioned ASE Outbound IP addresses
-+ Configures Backend Pools for the Application Gateway to communicate only on Ports 80 and 443 for the ASE ILB IP addresses
-+ Blocks all FTP/FTPS 'deployment' access to ASE environments
-+ Restricts Azure Redis Cache communication only with the ASE Subnets
-+ Turns off non-SSL endpoints for Azure Redis Cache
-+ Deploys Application Gateway with WAF turned on in prevention mode with OWASP rulest 3.0
+The solution automatically configures the following security features by default. These configurations are uneditable in the _azuredeploy.parameters.json_ file.
 
-#### 2.3.1 Virtual Network
+#### 2.3.1 WAF - Application Gateway
 
-#### 2.3.2 WAF - Application Gateway
++ **WAF**:The solution locks down all subnets with a top-level DenyAll with a weight of 100 by default
++ **WAF**:Deploys Application Gateway with WAF turned on in prevention mode with OWASP rulest 3.0
++ **WAF**:Configures Backend Pools for the Application Gateway to communicate only on Ports 80 and 443 for the ASE ILB IP addresses
 
-#### 2.3.3 ILB ASE w/ Web Apps
+#### 2.3.2 ILB ASE w/ Web Apps
 
-#### 2.3.4 ILB ASE w/ Api Apps
++ **ASE**:Configures Inbound Traffic for the ASE Subnet to match requirements listed [here](https://docs.microsoft.com/en-us/azure/app-service-web/app-service-app-service-environment-control-inbound-traffic)
++ **ASE**:Configures Outbound Traffic for the ASE Subnet to match requirements listed [here](https://docs.microsoft.com/en-us/azure/app-service-web/app-service-app-service-environment-network-configuration-expressroute#required-network-connectivity)
++ **ASE**:Blocks all FTP/FTPS 'deployment' access ports to ASE environments
++ **ASE**:Blocks all FTP/FTPS 'deployment' access ports to ASE environments
 
-#### 2.3.5 Redis Cache
+#### 2.3.3 ILB ASE w/ Api Apps
 
-#### 2.3.6 Azure SQL
+Same as above
+
+#### 2.3.4 Redis Cache
+
++ **Redis Cache**:Restricts Azure Redis Cache communication only with the ASE Subnets
++ **Redis Cache**:Turns off non-SSL endpoints for Azure Redis Cache
+
+#### 2.3.5 Azure SQL
+
++ **Azure SQL**:Configures Azure SQL to use Transperent Disk Encryption
++ **Azure SQL**:Generates a secure pasword for Azure SQL and stores it as a secret in Azure KeyVault
++ **Azure SQL**:Applies Firewall Roles to lock down incoming traffic to Azure SQL only from provisioned ASE Outbound IP addresses
 
 #### 2.3.7 KeyVault
 
-#### 2.3.8 Passwords & Secrets
++ **KV**:Provisions and automatically configures a Vault with a _uniquestring_ password for Azure SQL
 
-## NIST 800-66 Assurance Security Compliance Matrix
+
+## 3.0 NIST 800-66 Assurance Security Compliance Matrix
 
 You can also view the security controls matrix (Microsoft Excel spreadsheet), which maps the architecture decisions, components, and configuration in this Quick Start to security requirements within NIST, TIC, and DoD Cloud SRG publications; indicates which Azure ARM templates and PowerShell scripts affect the controls implementation; and specifies the associated Azure resources within the templates. The excerpt in Figure 1 provides a sample of the available information.
 
-![alt text](images/scmexcerpt.png "SCM Excerpt")
+>The NIST 800-66 Security Controls Matrix for this blueprint can be downloaded [here](#). 
 
-The NIST 800-66 Security Controls Matrix for this blueprint can be downloaded [here](#). 
+![alt text](images/scmexcerpt.png "SCM Excerpt")
 
 ## 4. Deployment Guide
 
@@ -137,8 +148,7 @@ The NIST 800-66 Security Controls Matrix for this blueprint can be downloaded [h
 This solution utilizes a combination of ARM templates and PowerShell. In order to deploy the solution, you must have the following packages installed correctly and in working order on your local machine
 
 + [Install and configure](https://github.com/PowerShell/PowerShell) the latest version of PowerShell
-+ [Install and configure](https://technet.microsoft.com/en-us/library/dn975125.aspx#Anchor_1) Windows Azure Active Directory Module for Windows PowerShell - **Implement Step-1 only**
->Please Note: The blueprint code does **not** use [Azure Active Directory V2 PowerShell module](https://technet.microsoft.com/en-us/library/dn975125.aspx#Anchor_5)
++ [Install and configure](https://technet.microsoft.com/en-us/library/dn975125.aspx#Anchor_5) Azure Active Directory V2 PowerShell Module
 + [Install](https://docs.microsoft.com/en-us/powershell/azure/install-azurerm-ps?) Azure Resource Manager PowerShell Module
 
 ### 4.2 Deployment Steps Overview
@@ -223,7 +233,7 @@ PS C:\User>azuredeploy.ps1
 placeholder
 ```
 
-### 4.9 Optional - Post Deployment UDR
+### 4.9 Optional - Post Deployment ExpressRoute UDR
 
 If you plan to terminate a VPN connection or On-premises ExpressRoute to this ASE Vnet **and turn on forced tunnelling**, you will require all the subnets to have User Defined Routes to traverse all internet facing traffic direcly out of the Vnet. This is required for proper functioning of the ASE environments as specified in the [ASE ExpressRoute network requirements article](https://docs.microsoft.com/en-us/azure/app-service-web/app-service-app-service-environment-network-configuration-expressroute#enabling-outbound-network-connectivity-for-an-app-service-environment)
 
@@ -253,7 +263,6 @@ In some cases you may wish to modify values hardcoded as variables in _azuredepl
 + For example, if you need to change the Redis Cache configuration to enable non-SSL ports, you can navigate to the azuredelploy.json template and modify the following parameters in the json code block below 
 ``` json
     "enableNonSSLPort": false,
-
     "redisCachemaxclients": 7500,
     "redisCachemaxmemoryreserved": 200,
     "redisCachemaxfragmentationmemory-reserved": 300,
