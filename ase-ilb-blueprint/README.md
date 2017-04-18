@@ -1,4 +1,4 @@
-﻿![alt text](images/azblueprint.png "Template Deployment Sequence")
+﻿![alt text](images/azblueprints.png "Template Deployment Sequence")
 # PaaS (ASE) Blueprint with NIST 800-66 Assurance Framework
 
 ## Contents
@@ -133,10 +133,12 @@ Same as above
 + **KV**:Provisions and automatically configures a Vault with a _uniquestring_ password for Azure SQL
 
 
-## NIST 800-66 Assurance Security Compliance Matrix
+## 3.0 NIST 800-66 Assurance Security Compliance Matrix
 
 You can also view the security controls matrix (Microsoft Excel spreadsheet), which maps the architecture decisions, components, and configuration in this Quick Start to security requirements within NIST, TIC, and DoD Cloud SRG publications; indicates which Azure ARM templates and PowerShell scripts affect the controls implementation; and specifies the associated Azure resources within the templates. The excerpt in Figure 1 provides a sample of the available information.
+
 >The NIST 800-66 Security Controls Matrix for this blueprint can be downloaded [here](#). 
+
 ![alt text](images/scmexcerpt.png "SCM Excerpt")
 
 ## 4. Deployment Guide
@@ -231,7 +233,7 @@ PS C:\User>azuredeploy.ps1
 placeholder
 ```
 
-### 4.9 Optional - Post Deployment UDR
+### 4.9 Optional - Post Deployment ExpressRoute UDR
 
 If you plan to terminate a VPN connection or On-premises ExpressRoute to this ASE Vnet **and turn on forced tunnelling**, you will require all the subnets to have User Defined Routes to traverse all internet facing traffic direcly out of the Vnet. This is required for proper functioning of the ASE environments as specified in the [ASE ExpressRoute network requirements article](https://docs.microsoft.com/en-us/azure/app-service-web/app-service-app-service-environment-network-configuration-expressroute#enabling-outbound-network-connectivity-for-an-app-service-environment)
 
