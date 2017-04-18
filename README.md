@@ -1,4 +1,4 @@
-![alt text](ase-ilb-blueprint/images/azblueprint.png "Template Deployment Sequence")
+![alt text](ase-ilb-blueprint/images/azblueprints.png "Template Deployment Sequence")
 # PaaS (ASE) Blueprint with NIST 800-66 Assurance Framework
 
 ## Documentation
