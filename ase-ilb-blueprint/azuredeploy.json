@@ -129,24 +129,23 @@
         "description": "The size of the new Azure Redis Cache instance. Valid family and capacity combinations are (C0..C6, P1..P4)."
       }
     },
-    "appServicePlanName": {
+    "appServicePlanNameWeb": {
       "type": "string",
       "metadata": {
-        "description": "The name of the App Service plan to use for hosting the web and api app."
+        "description": "The name of the App Service plan to use for hosting the web app."
       }
     },
-    "AseDNS": {
+    "appServicePlanNameApi": {
       "type": "string",
-      "defaultValue": "ASE.demo",
       "metadata": {
-        "description": "Set to the root internal domain name to associate with this ASE."
+        "description": "The name of the App Service plan to use for hosting the web app."
       }
     },
-    "AspDNS": {
+    "ApiDNS": {
       "type": "string",
-      "defaultValue": "ASP.demo",
+      "defaultValue": "Api.demo",
       "metadata": {
-        "description": "Set to the root internal domain name to associate with this ASP."
+        "description": "Set this to the root domain associated with the Api App."
       }
     },
     "WebDNS": {
@@ -302,15 +301,15 @@
     "ApiAppSubnetName": "[toLower(concat(parameters('SystemPrefixName'),'ApiAppSubnet'))]",
     "RedisCacheSubnetName": "[toLower(concat(parameters('SystemPrefixName'),'RedisSubnet'))]",
     "redisCacheName": "[toLower(concat(parameters('SystemPrefixName'),'RedisCache',uniqueString(resourceGroup().id)))]",
-    "aseName": "[toLower(concat(parameters('SystemPrefixName'),'ASE',uniqueString(resourceGroup().id)))]",
-    "aspName": "[toLower(concat(parameters('SystemPrefixName'),'ASP',uniqueString(resourceGroup().id)))]",
+    "aseWebName": "[toLower(concat(parameters('SystemPrefixName'),'AseWeb',uniqueString(resourceGroup().id)))]",
+    "aseApiName": "[toLower(concat(parameters('SystemPrefixName'),'AseApi',uniqueString(resourceGroup().id)))]",
     "WebAppName": "[toLower(concat(parameters('SystemPrefixName'),'WebApp',uniqueString(resourceGroup().id)))]",
     "ApiAppName": "[toLower(concat(parameters('SystemPrefixName'),'ApiApp',uniqueString(resourceGroup().id)))]",
     "applicationGatewayName": "[toLower(concat(parameters('SystemPrefixName'),'WAF',uniqueString(resourceGroup().id)))]",
     "sqlServerName": "[toLower(concat(parameters('SystemPrefixName'),'AzureSql',uniqueString(resourceGroup().id)))]",
     "databaseName": "[toLower(concat(parameters('SystemPrefixName'),'Database'))]",
 
-    "TemplateURIs": "https://raw.githubusercontent.com/mayurshintre/Blueprints/master/ase-ilb-blueprint/templates/",
+    "TemplateURIs": "https://raw.githubusercontent.com/mayurshintre/Blueprints-PaaS-ASE/Dual-Ase/ase-ilb-blueprint/templates/",
 
     "wafMode": "Prevention",
     "wafRuleSetType": "OWASP",
@@ -414,7 +413,7 @@
     },
     {
       "type": "Microsoft.Resources/deployments",
-      "name": "ILBASE",
+      "name": "AseWeb",
       "apiVersion": "2016-09-01",
       "dependsOn": [ "Vnet" ],
       "properties": {
@@ -424,12 +423,12 @@
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
-          "aseName": { "value": "[variables('aseName')]" },
+          "aseName": { "value": "[variables('aseWebName')]" },
           "Region": { "value": "[parameters('Region')]" },
           "vnetID": { "value": "[variables('vnetID')]" },
-          "WebAppSubnetName": { "value": "[variables('WebAppSubnetName')]" },
+          "SubnetName": { "value": "[variables('WebAppSubnetName')]" },
           "internalLoadBalancingMode": { "value": "[parameters('internalLoadBalancingMode')]" },
-          "WebDNS": { "value": "[parameters('WebDNS')]" },
+          "DNS": { "value": "[parameters('WebDNS')]" },
           "frontEndSize": { "value": "[parameters('frontEndSize')]" },
           "frontEndCount": { "value": "[parameters('frontEndCount')]" },
           "workerPoolOneInstanceSize": { "value": "[parameters('workerPoolOneInstanceSize')]" },
@@ -443,9 +442,9 @@
     },
     {
       "type": "Microsoft.Resources/deployments",
-      "name": "ILBASP",
+      "name": "AspWeb",
       "apiVersion": "2016-09-01",
-      "dependsOn": [ "ILBASE" ],
+      "dependsOn": [ "AseWeb" ],
       "properties": {
         "mode": "Incremental",
         "templateLink": {
@@ -453,8 +452,57 @@
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
-          "appServicePlanName": { "value": "[parameters('appServicePlanName')]" },
-          "aseName": { "value": "[variables('aseName')]" },
+          "appServicePlanName": { "value": "[parameters('appServicePlanNameWeb')]" },
+          "aseName": { "value": "[variables('aseWebName')]" },
+          "Region": { "value": "[parameters('Region')]" },
+          "workerPool": { "value": "[parameters('workerPool')]" },
+          "numberOfWorkersFromWorkerPool": { "value": "[parameters('numberOfWorkersFromWorkerPool')]" }
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "name": "AseApi",
+      "apiVersion": "2016-09-01",
+      "dependsOn": [ "Vnet" ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(variables('TemplateURIs'),'ilbase.json')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "aseName": { "value": "[variables('aseApiName')]" },
+          "Region": { "value": "[parameters('Region')]" },
+          "vnetID": { "value": "[variables('vnetID')]" },
+          "SubnetName": { "value": "[variables('ApiAppSubnetName')]" },
+          "internalLoadBalancingMode": { "value": "[parameters('internalLoadBalancingMode')]" },
+          "DNS": { "value": "[parameters('ApiDNS')]" },
+          "frontEndSize": { "value": "[parameters('frontEndSize')]" },
+          "frontEndCount": { "value": "[parameters('frontEndCount')]" },
+          "workerPoolOneInstanceSize": { "value": "[parameters('workerPoolOneInstanceSize')]" },
+          "workerPoolOneInstanceCount": { "value": "[parameters('workerPoolOneInstanceCount')]" },
+          "workerPoolTwoInstanceSize": { "value": "[parameters('workerPoolTwoInstanceSize')]" },
+          "workerPoolTwoInstanceCount": { "value": "[parameters('workerPoolTwoInstanceCount')]" },
+          "workerPoolThreeInstanceSize": { "value": "[parameters('workerPoolThreeInstanceSize')]" },
+          "workerPoolThreeInstanceCount": { "value": "[parameters('workerPoolThreeInstanceCount')]" }
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "name": "AspApi",
+      "apiVersion": "2016-09-01",
+      "dependsOn": [ "AseApi" ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(variables('TemplateURIs'),'ilbaseasp.json')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "appServicePlanName": { "value": "[parameters('appServicePlanNameApi')]" },
+          "aseName": { "value": "[variables('aseApiName')]" },
           "Region": { "value": "[parameters('Region')]" },
           "workerPool": { "value": "[parameters('workerPool')]" },
           "numberOfWorkersFromWorkerPool": { "value": "[parameters('numberOfWorkersFromWorkerPool')]" }
@@ -490,9 +538,9 @@
     },
     {
       "type": "Microsoft.Resources/deployments",
-      "name": "ILBASE-Web",
+      "name": "WebApp",
       "apiVersion": "2015-01-01",
-      "dependsOn": [ "ILBASP" ],
+      "dependsOn": [ "AspWeb" ],
       "properties": {
         "mode": "Incremental",
         "templateLink": {
@@ -502,16 +550,16 @@
         "parameters": {
           "WebAppName": { "value": "[variables('WebAppName')]" },
           "Region": { "value": "[parameters('Region')]" },
-          "appServicePlanName": { "value": "[parameters('appServicePlanName')]" },
-          "aseName": { "value": "[variables('aseName')]" }
+          "appServicePlanName": { "value": "[parameters('appServicePlanNameWeb')]" },
+          "aseName": { "value": "[variables('aseWebName')]" }
         }
       }
     },
     {
       "type": "Microsoft.Resources/deployments",
-      "name": "ILBASE-API",
+      "name": "ApiApp",
       "apiVersion": "2015-01-01",
-      "dependsOn": [ "ILBASP" ],
+      "dependsOn": [ "AspApi" ],
       "properties": {
         "mode": "Incremental",
         "templateLink": {
@@ -521,8 +569,8 @@
         "parameters": {
           "Region": { "value": "[parameters('Region')]" },
           "ApiAppName": { "value": "[variables('ApiAppName')]" },
-          "appServicePlanName": { "value": "[parameters('appServicePlanName')]" },
-          "aseName": { "value": "[variables('aseName')]" }
+          "appServicePlanName": { "value": "[parameters('appServicePlanNameApi')]" },
+          "aseName": { "value": "[variables('aseApiName')]" }
         }
       }
     },
@@ -530,7 +578,10 @@
       "type": "Microsoft.Resources/deployments",
       "name": "WAF",
       "apiVersion": "2015-01-01",
-      "dependsOn": [ "ILBASE" ],
+      "dependsOn": [
+        "AseApi", 
+        "AseWeb"
+      ],
       "properties": {
         "mode": "Incremental",
         "templateLink": {
@@ -578,9 +629,13 @@
     }
   ],
   "outputs": {
-    "AseName": {
+    "AseWebName": {
       "type": "string",
-      "value": "[variables('aseName')]"
+      "value": "[variables('aseWebName')]"
+    },
+    "AseApiName": {
+      "type": "string",
+      "value": "[variables('aseApiName')]"
     },
     "VnetName": {
       "type": "string",

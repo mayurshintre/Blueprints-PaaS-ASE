@@ -14,11 +14,11 @@
     ##Name to give the Deployment that will be ran
     $DeploymentName = $RgName +"-nist800ase"
     ##Location of the main azuredeploy.json template
-    $TemplateUri = "https://raw.githubusercontent.com/mayurshintre/Blueprints/Dual-Ase/ase-ilb-blueprint/azuredeploy.json"
+    $TemplateUri = "https://raw.githubusercontent.com/mayurshintre/Blueprints-PaaS-ASE/master/ase-ilb-blueprint/azuredeploy.json"
     ##Location of the local parameters file
-    $ParameterFile = "C:\Users\mashintr\Documents\GitHub\Blueprints-PaaS-ASE\ase-ilb-blueprint\azuredeploy.parameters.json"
+    $ParameterFile = "C:\temp\azuredeploy.parameters.json"
     ##Subscription ID that will be used to host the resource group
-    $SubscriptionID = "960e1588-d82e-47d5-8c2c-342cd071e172"
+    $SubscriptionID = "SUBSCRIPTION ID"
 #endregion
 
 #Function to generate random password
@@ -157,13 +157,13 @@ Write-Host "=> Time to Login to ARM if you are not already." -ForegroundColor Ye
     do {
         $azureAccess = $true
 	    Try {
-		    Get-MsolAccountSku -ErrorAction Stop | Out-Null
+		    Get-AzureADDomain -ErrorAction Stop | Out-Null
     	}
 	    Catch {
             Write-Host "=> Guess you should have logged in already huh?" -ForegroundColor Yellow
 		    Write-Host "=>" -ForegroundColor Yellow
             $azureAccess = $false
-		    Connect-MsolService -ErrorAction SilentlyContinue | Out-Null
+		    Connect-AzureAD -ErrorAction SilentlyContinue | Out-Null
 	    }
     } while (! $azureAccess)
     Write-Host "=> You are now Logged into Azure Resource Manager." -ForegroundColor Yellow
@@ -224,13 +224,16 @@ $aadtenant = (Get-AzureADDomain | ?{$_.IsDefault -eq 'True'}).Name
 ##Get Outputs from Deployment
 Write-Host "=>" -ForegroundColor Yellow
 Write-Host "=> Retrieving outputs from deployment $DeploymentName." -ForegroundColor Yellow
-$AseName = (Get-AzureRmResourceGroupDeployment -ResourceGroupName $RgName -Name $DeploymentName).Outputs.aseName.Value
+$AseWebName = (Get-AzureRmResourceGroupDeployment -ResourceGroupName $RgName -Name $DeploymentName).Outputs.aseWebName.Value
+$AseApiName = (Get-AzureRmResourceGroupDeployment -ResourceGroupName $RgName -Name $DeploymentName).Outputs.aseApiName.Value
+
 $VnetName = (Get-AzureRmResourceGroupDeployment -ResourceGroupName $RgName -Name $DeploymentName).Outputs.vnetName.Value
 $SqlName = (Get-AzureRmResourceGroupDeployment -ResourceGroupName $RgName -Name $DeploymentName).Outputs.sqlName.Value
 $AppGWName = (Get-AzureRmResourceGroupDeployment -ResourceGroupName $RgName -Name $DeploymentName).Outputs.appGWName.Value
 
 ##Retrieve Resource ID for ASE
-$resourceID = (Get-AzureRmResource | where -Property resourcename -EQ $AseName).resourceID
+$resourceIDWeb = (Get-AzureRmResource | where -Property resourcename -EQ $AseWebName).resourceID
+$resourceIDApi = (Get-AzureRmResource | where -Property resourcename -EQ $AseApiName).resourceID
 
 ##Function to get AuthToken to retrieve IP Addresses from ASE
 function GetAuthToken
@@ -276,12 +279,14 @@ $header = @{
 }
 
 ##Set URI
-$uri = "https://management.azure.com$resourceID/capacities/virtualip?api-version=2015-08-01"
+$uriweb = "https://management.azure.com$resourceIDWeb/capacities/virtualip?api-version=2015-08-01"
+$uriapi = "https://management.azure.com$resourceIDApi/capacities/virtualip?api-version=2015-08-01"
 
 Write-Host "=>" -ForegroundColor Yellow
 Write-Host "=> Getting IPs from the App Service Environment" -ForegroundColor Yellow
 ##Set Hostinginfo variable by invoking rest method
-$hostingInfo = Invoke-RestMethod -Uri $uri -Headers $header -Method get
+$hostingInfoWeb = Invoke-RestMethod -Uri $uriweb -Headers $header -Method get
+$hostingInfoApi = Invoke-RestMethod -Uri $uriapi -Headers $header -Method get
 
 Write-Host "=>" -ForegroundColor Yellow
 Write-Host "=> Creating Network Security Group Rules." -ForegroundColor Yellow
@@ -304,12 +309,12 @@ Write-Host "=> Creating Network Security Group Rules." -ForegroundColor Yellow
  
   $WAFRule4 = New-AzureRmNetworkSecurityRuleConfig -Name ILBWebAppHTTP-In -Description "Allow Inbound ILBWebAppHTTP" `
  -Access Allow -Protocol Tcp -Direction Inbound -Priority 130 `
- -SourceAddressPrefix $hostingInfo.internalIpAddress -SourcePortRange * `
+ -SourceAddressPrefix $hostingInfoWeb.internalIpAddress -SourcePortRange * `
  -DestinationAddressPrefix * -DestinationPortRange 80
 
    $WAFRule5 = New-AzureRmNetworkSecurityRuleConfig -Name ILBWebAppHTTPS-In -Description "Allow Inbound ILBWebAppHTTPS" `
  -Access Allow -Protocol Tcp -Direction Inbound -Priority 140 `
- -SourceAddressPrefix $hostingInfo.internalIpAddress -SourcePortRange * `
+ -SourceAddressPrefix $hostingInfoWeb.internalIpAddress -SourcePortRange * `
  -DestinationAddressPrefix * -DestinationPortRange 443
 
    $WAFRule6 = New-AzureRmNetworkSecurityRuleConfig -Name DNS-In -Description "Allow Inbound DNS" `
@@ -318,7 +323,7 @@ Write-Host "=> Creating Network Security Group Rules." -ForegroundColor Yellow
  -DestinationAddressPrefix * -DestinationPortRange 53
 
   $WAFRule7 = New-AzureRmNetworkSecurityRuleConfig -Name DenyAllOutbound -Description "Deny All Outbound" `
- -Access Allow -Protocol * -Direction Outbound -Priority 300 `
+ -Access Allow -Protocol * -Direction Outbound -Priority 400 `
  -SourceAddressPrefix * -SourcePortRange * -DestinationAddressPrefix * `
  -DestinationPortRange *
 
@@ -334,18 +339,39 @@ Write-Host "=> Creating Network Security Group Rules." -ForegroundColor Yellow
  
   $WAFRule10 = New-AzureRmNetworkSecurityRuleConfig -Name ILBWebAppHTTP-Out -Description "Allow Outbound ILBWebAppHTTP" `
  -Access Allow -Protocol Tcp -Direction Outbound -Priority 130 `
- -SourceAddressPrefix $hostingInfo.internalIpAddress -SourcePortRange * `
+ -SourceAddressPrefix $hostingInfoWeb.internalIpAddress -SourcePortRange * `
  -DestinationAddressPrefix * -DestinationPortRange 80
 
    $WAFRule11 = New-AzureRmNetworkSecurityRuleConfig -Name ILBWebAppHTTPS-Out -Description "Allow Outbound ILBWebAppHTTPS" `
  -Access Allow -Protocol Tcp -Direction Outbound -Priority 140 `
- -SourceAddressPrefix $hostingInfo.internalIpAddress -SourcePortRange * `
+ -SourceAddressPrefix $hostingInfoWeb.internalIpAddress -SourcePortRange * `
  -DestinationAddressPrefix * -DestinationPortRange 443
 
    $WAFRule12 = New-AzureRmNetworkSecurityRuleConfig -Name DNS-Out -Description "Allow Outbound DNS" `
  -Access Allow -Protocol Tcp -Direction Outbound -Priority 150 `
  -SourceAddressPrefix * -SourcePortRange * `
  -DestinationAddressPrefix * -DestinationPortRange 53
+
+   $WAFRule13 = New-AzureRmNetworkSecurityRuleConfig -Name ILBApiAppHTTP-In -Description "Allow Inbound ILBApiAppHTTP" `
+ -Access Allow -Protocol Tcp -Direction Inbound -Priority 160 `
+ -SourceAddressPrefix $hostingInfoApi.internalIpAddress -SourcePortRange * `
+ -DestinationAddressPrefix * -DestinationPortRange 80
+
+   $WAFRule14 = New-AzureRmNetworkSecurityRuleConfig -Name ILBApiAppHTTPS-In -Description "Allow Inbound ILBApiAppHTTPS" `
+ -Access Allow -Protocol Tcp -Direction Inbound -Priority 170 `
+ -SourceAddressPrefix $hostingInfoApi.internalIpAddress -SourcePortRange * `
+ -DestinationAddressPrefix * -DestinationPortRange 443
+
+  $WAFRule15 = New-AzureRmNetworkSecurityRuleConfig -Name ILBApiAppHTTP-Out -Description "Allow Outbound ILBApiAppHTTP" `
+ -Access Allow -Protocol Tcp -Direction Outbound -Priority 180 `
+ -SourceAddressPrefix $hostingInfoApi.internalIpAddress -SourcePortRange * `
+ -DestinationAddressPrefix * -DestinationPortRange 80
+
+   $WAFRule16 = New-AzureRmNetworkSecurityRuleConfig -Name ILBApiAppHTTPS-Out -Description "Allow Outbound ILBApiAppHTTPS" `
+ -Access Allow -Protocol Tcp -Direction Outbound -Priority 190 `
+ -SourceAddressPrefix $hostingInfoApi.internalIpAddress -SourcePortRange * `
+ -DestinationAddressPrefix * -DestinationPortRange 443
+
  #endregion
 
 ##ASE Rules
@@ -529,8 +555,8 @@ Write-Host "=> Building Network Security Groups" -ForegroundColor Yellow
 ##Build NSGs
 #region
 $WafNsg = New-AzureRmNetworkSecurityGroup -Name "WafNsg" -ResourceGroupName $RgName -Location $Region `
-                                          -SecurityRules $WAFRule1,$WAFRule2,$WAFRule3,$WAFRule4,$WAFRule5,$WAFRule6,$WAFRule7,$WAFRule8,$WAFRule9,$WAFRule10,$WAFRule11,$WAFRule12 `
-                                          -Force -WarningAction SilentlyContinue | Out-Null
+                                          -SecurityRules $WAFRule1,$WAFRule2,$WAFRule3,$WAFRule4,$WAFRule5,$WAFRule6,$WAFRule7,$WAFRule8,$WAFRule9,$WAFRule10,$WAFRule11,$WAFRule12,$WAFRule13,$WAFRule14,$WAFRule15,$WAFRule16 `
+                                          -Force -WarningAction SilentlyContinue |out-null 
 $AseWebNsg = New-AzureRmNetworkSecurityGroup -Name "AseWebNsg" -ResourceGroupName $RgName -Location $Region `
                                              -SecurityRules $ASERule1,$ASERule2,$ASERule3,$ASERule4,$ASERule5,$ASERule6,$ASERule7,$ASERule8,$ASERule9,$ASERule10,$ASERule11,$ASERule12,$ASERule13 `
                                              -Force -WarningAction SilentlyContinue | Out-Null
@@ -574,18 +600,29 @@ Set-AzureRmVirtualNetwork -VirtualNetwork $vnet  | Out-Null
 Write-Host "=>" -ForegroundColor Yellow
 Write-Host "=> Setting SQL Firewall Rules" -ForegroundColor Yellow
 ##Set SQl Firewall Rules
-if(!(Get-AzureRmSqlServerFirewallRule -ResourceGroupName $RgName -ServerName $SqlName -FirewallRuleName "ILBOutboundAddress"))
+if(!(Get-AzureRmSqlServerFirewallRule -ResourceGroupName $RgName -ServerName $SqlName | ?{$_.FirewallRuleName -eq "ILBOutboundAddressWeb"}))
 {
     New-AzureRmSqlServerFirewallRule -ResourceGroupName $RgName -ServerName $SQLName `
-                                     -FirewallRuleName "ILBOutboundAddress" `
-                                     -StartIpAddress $hostingInfo.outboundIpAddresses[0] `
-                                     -EndIpAddress $hostingInfo.outboundIpAddresses[0]  | Out-Null
+                                     -FirewallRuleName "ILBOutboundAddressWeb" `
+                                     -StartIpAddress $hostingInfoWeb.outboundIpAddresses[0] `
+                                     -EndIpAddress $hostingInfoWeb.outboundIpAddresses[0]  | Out-Null
 }
+
+if(!(Get-AzureRmSqlServerFirewallRule -ResourceGroupName $RgName -ServerName $SqlName|?{$_.FirewallRuleName -eq "ILBOutboundAddressApi"}))
+{
+    New-AzureRmSqlServerFirewallRule -ResourceGroupName $RgName -ServerName $SQLName `
+                                     -FirewallRuleName "ILBOutboundAddressApi" `
+                                     -StartIpAddress $hostingInfoApi.outboundIpAddresses[0] `
+                                     -EndIpAddress $hostingInfoApi.outboundIpAddresses[0]  | Out-Null
+}
+
 Write-Host "=>" -ForegroundColor Yellow
 Write-Host "=> Adding Backend IPs to the Web Application Firewall" -ForegroundColor Yellow
 #Add ILB Internal IP to the Backend Address Pool of the WAF
 $AppGW = Get-AzureRmApplicationGateway -Name $AppGWName -ResourceGroupName $RgName
-Set-AzureRmApplicationGatewayBackendAddressPool -Name appGatewayBackendPool -BackendIPAddresses $hostingInfo.internalIpAddress -ApplicationGateway $AppGW  | Out-Null
+Set-AzureRmApplicationGatewayBackendAddressPool -Name appGatewayBackendPool `
+                                                -BackendIPAddresses $hostingInfoApi.internalIpAddress, $hostingInfoWeb.internalIpAddress `
+                                                -ApplicationGateway $AppGW  | Out-Null
 Set-AzureRmApplicationGateway -ApplicationGateway $AppGW  | Out-Null
 
 Write-Host "=>" -ForegroundColor Yellow
