@@ -74,13 +74,13 @@ The diagram below illustrates the deployment topology and architecture of the so
 ##### Microsoft.Cache
 + **Redis**: Redis Cache Cluster
 
-#### 2.2.4 ILB ASE - Web App
+#### 2.2.4 ILB ASE WebApp
 ##### Microsoft.Web
 + **/hostingEnvironments**: Deploys App Service Environment v1
 + **/serverFarms**: Deploys a default App Service Plan
 + **kind: "webapp"**: Deploys a default Azure WebApp
 
-#### 2.2.5 ILB ASE - API App - **Only deployed from the 'Dual-Ase' Branch**
+#### 2.2.5 ILB ASE APIApp - Only Deployed when 'Dual-Ase' Branch Used
 ##### Microsoft.Web
 + **/hostingEnvironments**: Deploys App Service Environment v1
 + **/serverFarms**: Deploys a default App Service Plan
@@ -136,10 +136,8 @@ Same as above
 ## NIST 800-66 Assurance Security Compliance Matrix
 
 You can also view the security controls matrix (Microsoft Excel spreadsheet), which maps the architecture decisions, components, and configuration in this Quick Start to security requirements within NIST, TIC, and DoD Cloud SRG publications; indicates which Azure ARM templates and PowerShell scripts affect the controls implementation; and specifies the associated Azure resources within the templates. The excerpt in Figure 1 provides a sample of the available information.
-
+>The NIST 800-66 Security Controls Matrix for this blueprint can be downloaded [here](#). 
 ![alt text](images/scmexcerpt.png "SCM Excerpt")
-
-The NIST 800-66 Security Controls Matrix for this blueprint can be downloaded [here](#). 
 
 ## 4. Deployment Guide
 
@@ -148,8 +146,7 @@ The NIST 800-66 Security Controls Matrix for this blueprint can be downloaded [h
 This solution utilizes a combination of ARM templates and PowerShell. In order to deploy the solution, you must have the following packages installed correctly and in working order on your local machine
 
 + [Install and configure](https://github.com/PowerShell/PowerShell) the latest version of PowerShell
-+ [Install and configure](https://technet.microsoft.com/en-us/library/dn975125.aspx#Anchor_1) Windows Azure Active Directory Module for Windows PowerShell - **Implement Step-1 only**
->Please Note: The blueprint code does **not** use [Azure Active Directory V2 PowerShell module](https://technet.microsoft.com/en-us/library/dn975125.aspx#Anchor_5)
++ [Install and configure](https://technet.microsoft.com/en-us/library/dn975125.aspx#Anchor_5) Azure Active Directory V2 PowerShell Module
 + [Install](https://docs.microsoft.com/en-us/powershell/azure/install-azurerm-ps?) Azure Resource Manager PowerShell Module
 
 ### 4.2 Deployment Steps Overview
