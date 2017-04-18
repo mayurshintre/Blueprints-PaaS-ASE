@@ -12,3 +12,5 @@ Please click [here](https://github.com/mayurshintre/Blueprints-PaaS-ASE/blob/mas
 + Mayur Shintre, Principal Architect, Microsoft
 
 `Tags: [Microsoft, Azure, NIST, 800-66, Compliance, ARM, Templates, PaaS, ASE]`
+
+This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
