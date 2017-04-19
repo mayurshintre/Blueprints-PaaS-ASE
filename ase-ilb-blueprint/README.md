@@ -19,14 +19,14 @@
 - [3. NIST 800-66 Assurance - Security Compliance Matrix](#30-nist-800-66-assurance-security-compliance-matrix)
 - [4. Deployment Guide](#4-deployment-guide) 
 	- [4.1 Installation Prerequisites](#41-installation-prerequisites)
-	- [4.2 Template Deployment Sequence](#42-template-deployment-sequence)
-	- [4.3 Deployment Steps Overview](#43-deployment-steps-overview)
+	- [4.2 Deployment Steps Overview](#42-deployment-steps-overview)
+	- [4.3 Template Deployment Sequence](#43-template-deployment-sequence)
 	- [4.4 Clone the Solution](#44-clone-the-solution)
-	- [4.5 Configure azuredeploy.parameters.json](#45-onfigure-azuredeployparametersjson)
-	- [4.6 Configure azuredeploy.ps1](#46-configure-azuredeployps1)
+	- [4.5 Configure azuredeploy.parameters.json](#45-configure-azuredeployparametersjson)
+	- [4.6 Configure azuredeploy.ps1](#46-configure-azuredeployps1-powershell-file)
 	- [4.7 Run azuredeploy.ps1](#47-run-azuredeployps1)
 	- [4.8 Expected Output](#48-expected-output)
-- [5. Cost](#5--cost)
+- [6. Cost](#6-cost)
 
 ## 1. Solution Overview
 
