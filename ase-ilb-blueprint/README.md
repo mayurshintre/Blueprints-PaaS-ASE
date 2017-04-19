@@ -13,7 +13,7 @@
 		- [Application Gateway w/ WAF](#222-application-gateway---waf)
 		- [Redis Cache](#223-redis-cache)
 		- [ILB ASE w/ Web App](#224-ilb-ase-webapp)
-		- [ILB ASE w/ Api App](#225-ilb-ase-apiapp)
+		- [ILB ASE w/ Api App](#225-ilb-ase-apiapp---only-deployed-when-dual-ase-brand-used)
 		- [Azure SQL](#226-azure-sql)
 		- [Azure KeyVault](#227-azure-keyvault)
 - [3. NIST 800-66 Assurance - Security Compliance Matrix](#3-nist-800-66-assurance--security-compliance-matrix)
