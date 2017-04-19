@@ -26,6 +26,8 @@
 	- [4.6 Configure azuredeploy.ps1](#46-configure-azuredeployps1-powershell-file)
 	- [4.7 Run azuredeploy.ps1](#47-run-azuredeployps1)
 	- [4.8 Expected Output](#48-expected-output)
+	- [4.9 Optional - Post Deployment ExpressRoute UDR](#49-optional---post-deployment-expressroute-udr)
+- [5. Modifying the Templates](#5-modifying-the-templates)
 - [6. Cost](#6-cost)
 
 ## 1. Solution Overview
