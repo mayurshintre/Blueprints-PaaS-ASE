@@ -5,7 +5,7 @@
 
 - [1. Solution Overview](#1-solution-overview)
 	- [1.1 NIST 800-66 Based Assurance Framework Azure PaaS Blueprint](#11-nist-800-66-based-assurance-framework-for-azure-paas-blueprint)
-- [2. Solution Design and Deployed Resources](#2-soution-design-and-deployed-resources)
+- [2. Solution Design and Deployed Resources](#2-solution-design-and-deployed-resources)
 	- [2.1 Architecture](#21-architecture)
 	- [2.2 Deployed Azure Resources](#22-deployed-azure-resources)
 	- [2.3 Security](#23-security)
