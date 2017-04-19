@@ -26,7 +26,7 @@
 	- [4.6 Configure azuredeploy.ps1](#46-configure-azuredeployps1)
 	- [4.7 Run azuredeploy.ps1](#47-run-azuredeployps1)
 	- [4.8 Expected Output](#48-expected-output)
-- [5. Cost](#5-cost)
+- [5. Cost](#5--cost)
 
 ## 1. Solution Overview
 
