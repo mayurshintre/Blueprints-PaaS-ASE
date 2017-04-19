@@ -16,7 +16,7 @@
 		- [ILB ASE w/ Api App](#225-ilb-ase-apiapp---only-deployed-when-dual-ase-branch-used)
 		- [Azure SQL](#226-azure-sql)
 		- [Azure KeyVault](#227-azure-keyvault)
-- [3. NIST 800-66 Assurance - Security Compliance Matrix](#3-nist-800-66-assurance--security-compliance-matrix)
+- [3. NIST 800-66 Assurance - Security Compliance Matrix](#3-nist-800-66-assurance-security-compliance-matrix)
 - [4. Deployment Guide](#4-deployment-guide) 
 	- [4.1 Installation Prerequisites](#41-installation-prerequisites)
 	- [4.2 Template Deployment Sequence](#42-template-deployment-sequence)
