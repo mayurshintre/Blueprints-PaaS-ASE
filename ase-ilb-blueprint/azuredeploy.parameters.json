@@ -27,7 +27,7 @@
       }
     },
     "WAFSubnetPrefixCIDR": {
-      "value": 24,
+      "value": 27,
       "metadata": {
         "description": "WAF Subnet CIDR Block"
       }
@@ -39,7 +39,7 @@
       }
     },
     "WebAppSubnetPrefixCIDR": {
-      "value": 24,
+      "value": 26,
       "metadata": {
         "description": "Web App Subnet CIDR Block"
       }
@@ -51,7 +51,7 @@
       }
     },
     "APIAppSubnetPrefixCIDR": {
-      "value": 24,
+      "value": 26,
       "metadata": {
         "description": "API App Subnet CIDR Block"
       }
@@ -63,7 +63,7 @@
       }
     },
     "RedisCacheSubnetPrefixCIDR": {
-      "value": 24,
+      "value": 27,
       "metadata": {
         "description": "Redis Cache Subnet CIDR Block"
       }
