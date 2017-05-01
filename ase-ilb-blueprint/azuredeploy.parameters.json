@@ -189,7 +189,7 @@
       }
     },
     "wafEnabled": {
-      "value": false,
+      "value": true,
       "metadata": {
         "description": "WAF Enabled"
       }
