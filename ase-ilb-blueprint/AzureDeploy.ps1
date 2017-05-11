@@ -334,68 +334,79 @@ Write-Host "=> Creating Network Security Group Rules." -ForegroundColor Yellow
 #region
   $ASERule1 = New-AzureRmNetworkSecurityRuleConfig -Name AllAllowInboundASEManagement -Description "Allows All Inbound ASE Management" `
  -Access Allow -Protocol * -Direction Inbound -Priority 100 `
- -SourceAddressPrefix * -SourcePortRange * -DestinationAddressPrefix * `
- -DestinationPortRange 454-455
+ -SourceAddressPrefix * -SourcePortRange * `
+ -DestinationAddressPrefix Virtualnetwork -DestinationPortRange 454-455
 
   $ASERule2 = New-AzureRmNetworkSecurityRuleConfig -Name VnetAllowInboundHTTPS -Description "Allow Inbound HTTPS" `
- -Access Allow -Protocol Tcp -Direction Inbound -Priority 300 `
+ -Access Allow -Protocol Tcp -Direction Inbound -Priority 110 `
  -SourceAddressPrefix * -SourcePortRange * `
- -DestinationAddressPrefix * -DestinationPortRange 443
+ -DestinationAddressPrefix $hostingInfoWeb.internalIpAddress -DestinationPortRange 443
 
-  $ASERule3 = New-AzureRmNetworkSecurityRuleConfig -Name AllAllowOutboundASEManagement -Description "Allow Outbound ASE Management" `
+  $ASERule3 = New-AzureRmNetworkSecurityRuleConfig -Name AllAllowInboundHTTP -Description "Allow Inbound HTTP" `
+ -Access Allow -Protocol Tcp -Direction Inbound -Priority 120 `
+ -SourceAddressPrefix * -SourcePortRange * `
+ -DestinationAddressPrefix $hostingInfoWeb.internalIpAddress -DestinationPortRange 80
+
+   $ASERule4 = New-AzureRmNetworkSecurityRuleConfig -Name AllAllowInboundVS1 -Description "Allow Inbound Visual Studio 2012 Debugging" `
+ -Access Allow -Protocol * -Direction Inbound -Priority 130 `
+ -SourceAddressPrefix * -SourcePortRange * `
+ -DestinationAddressPrefix $hostingInfoWeb.internalIpAddress -DestinationPortRange 4016
+
+   $ASERule5 = New-AzureRmNetworkSecurityRuleConfig -Name AllAllowInboundVS2 -Description "Allow Inbound Visual Studio 2013 Debugging" `
+ -Access Allow -Protocol * -Direction Inbound -Priority 140 `
+ -SourceAddressPrefix * -SourcePortRange * `
+ -DestinationAddressPrefix $hostingInfoWeb.internalIpAddress -DestinationPortRange 4018
+
+   $ASERule6 = New-AzureRmNetworkSecurityRuleConfig -Name AllAllowInboundVS3 -Description "Allow Inbound Visual Studio 2015 Debugging" `
+ -Access Allow -Protocol * -Direction Inbound -Priority 150 `
+ -SourceAddressPrefix * -SourcePortRange * `
+ -DestinationAddressPrefix $hostingInfoWeb.internalIpAddress -DestinationPortRange 4020
+
+  $ASERule7 = New-AzureRmNetworkSecurityRuleConfig -Name AllAllowOutboundASEManagement -Description "Allow Outbound ASE Management" `
  -Access Allow -Protocol * -Direction Outbound -Priority 100 `
- -SourceAddressPrefix * -SourcePortRange * -DestinationAddressPrefix * `
- -DestinationPortRange 445
+ -SourceAddressPrefix * -SourcePortRange * `
+ -DestinationAddressPrefix * -DestinationPortRange 445
  
-  $ASERule4 = New-AzureRmNetworkSecurityRuleConfig -Name AllAllowOutboundDNS -Description "Allow Outbound DNS" `
- -Access Allow -Protocol Tcp -Direction Outbound -Priority 200 `
+  $ASERule8 = New-AzureRmNetworkSecurityRuleConfig -Name AllAllowOutboundDNS -Description "Allow Outbound DNS" `
+ -Access Allow -Protocol Tcp -Direction Outbound -Priority 120 `
  -SourceAddressPrefix * -SourcePortRange * `
  -DestinationAddressPrefix * -DestinationPortRange 53
 
-   $ASERule5 = New-AzureRmNetworkSecurityRuleConfig -Name AllAllowOutboundHTTP -Description "Allow Outbound HTTP" `
- -Access Allow -Protocol Tcp -Direction Outbound -Priority 300 `
+   $ASERule9 = New-AzureRmNetworkSecurityRuleConfig -Name AllAllowOutboundHTTP -Description "Allow Outbound HTTP" `
+ -Access Allow -Protocol Tcp -Direction Outbound -Priority 130 `
  -SourceAddressPrefix * -SourcePortRange * `
  -DestinationAddressPrefix * -DestinationPortRange 80
 
-   $ASERule6 = New-AzureRmNetworkSecurityRuleConfig -Name AllAllowOutboundHTTPS -Description "Allow Outbound HTTPS" `
- -Access Allow -Protocol Tcp -Direction Outbound -Priority 400 `
+   $ASERule10 = New-AzureRmNetworkSecurityRuleConfig -Name AllAllowOutboundHTTPS -Description "Allow Outbound HTTPS" `
+ -Access Allow -Protocol Tcp -Direction Outbound -Priority 140 `
  -SourceAddressPrefix * -SourcePortRange * `
  -DestinationAddressPrefix * -DestinationPortRange 443
 
-  $ASERule7 = New-AzureRmNetworkSecurityRuleConfig -Name AllAllowSQL1 -Description "Allow SQL Connectivity" `
- -Access Allow -Protocol * -Direction Outbound -Priority 510 `
- -SourceAddressPrefix * -SourcePortRange * -DestinationAddressPrefix * `
- -DestinationPortRange 1433
+  $ASERule11 = New-AzureRmNetworkSecurityRuleConfig -Name AllAllowSQL1 -Description "Allow SQL Connectivity" `
+ -Access Allow -Protocol * -Direction Outbound -Priority 150 `
+ -SourceAddressPrefix * -SourcePortRange * `
+ -DestinationAddressPrefix * -DestinationPortRange 1433
 
-  $ASERule8 = New-AzureRmNetworkSecurityRuleConfig -Name AllAllowSQL2 -Description "Allow ports for ADO.NET 4.5 client interactions" `
- -Access Allow -Protocol * -Direction Outbound -Priority 500 `
+  $ASERule12 = New-AzureRmNetworkSecurityRuleConfig -Name AllAllowSQL2 -Description "Allow ports for ADO.NET 4.5 client interactions" `
+ -Access Allow -Protocol * -Direction Outbound -Priority 160 `
  -SourceAddressPrefix * -SourcePortRange * `
  -DestinationAddressPrefix * -DestinationPortRange 11000-11999
 
-  $ASERule9 = New-AzureRmNetworkSecurityRuleConfig -Name AllAllowSQL3 -Description "Allow ports for ADO.NET 4.5 client interactions" `
- -Access Allow -Protocol * -Direction Outbound -Priority 520 `
- -SourceAddressPrefix * -SourcePortRange * -DestinationAddressPrefix * `
- -DestinationPortRange 14000-14999
+  $ASERule13 = New-AzureRmNetworkSecurityRuleConfig -Name AllAllowSQL3 -Description "Allow ports for ADO.NET 4.5 client interactions" `
+ -Access Allow -Protocol * -Direction Outbound -Priority 170 `
+ -SourceAddressPrefix * -SourcePortRange * `
+ -DestinationAddressPrefix * -DestinationPortRange 14000-14999
+
+  $ASERule14 = New-AzureRmNetworkSecurityRuleConfig -Name DenyAllOutbound `
+ -Access Deny -Protocol * -Direction Outbound -Priority 500 `
+ -SourceAddressPrefix * -SourcePortRange * `
+ -DestinationAddressPrefix * -DestinationPortRange *
+
+  $ASERule15 = New-AzureRmNetworkSecurityRuleConfig -Name DenyAllInbound `
+ -Access Deny -Protocol * -Direction Inbound -Priority 500 `
+ -SourceAddressPrefix * -SourcePortRange * `
+ -DestinationAddressPrefix * -DestinationPortRange *
  
-  $ASERule10 = New-AzureRmNetworkSecurityRuleConfig -Name AllAllowInboundHTTP -Description "Allow Inbound HTTP" `
- -Access Allow -Protocol Tcp -Direction Inbound -Priority 200 `
- -SourceAddressPrefix * -SourcePortRange * `
- -DestinationAddressPrefix * -DestinationPortRange 80
-
-   $ASERule11 = New-AzureRmNetworkSecurityRuleConfig -Name AllAllowInboundVS1 -Description "Allow Inbound Visual Studio 2012 Debugging" `
- -Access Allow -Protocol * -Direction Inbound -Priority 400 `
- -SourceAddressPrefix * -SourcePortRange * `
- -DestinationAddressPrefix * -DestinationPortRange 4016
-
-   $ASERule12 = New-AzureRmNetworkSecurityRuleConfig -Name AllAllowInboundVS2 -Description "Allow Inbound Visual Studio 2013 Debugging" `
- -Access Allow -Protocol * -Direction Inbound -Priority 500 `
- -SourceAddressPrefix * -SourcePortRange * `
- -DestinationAddressPrefix * -DestinationPortRange 4018
-
-   $ASERule13 = New-AzureRmNetworkSecurityRuleConfig -Name AllAllowInboundVS3 -Description "Allow Inbound Visual Studio 2015 Debugging" `
- -Access Allow -Protocol * -Direction Inbound -Priority 600 `
- -SourceAddressPrefix * -SourcePortRange * `
- -DestinationAddressPrefix * -DestinationPortRange 4020
  #endregion
 
 ##Redis Rules
@@ -430,13 +441,83 @@ Write-Host "=> Creating Network Security Group Rules." -ForegroundColor Yellow
  -SourceAddressPrefix * -SourcePortRange * `
  -DestinationAddressPrefix VirtualNetwork -DestinationPortRange 20226
 
-   $RedisRule4 = New-AzureRmNetworkSecurityRuleConfig -Name DenyAllOutbound `
- -Access Deny -Protocol Tcp -Direction Outbound -Priority 500 `
+   $RedisRule7 = New-AzureRmNetworkSecurityRuleConfig -Name VnetAllowInboundRedis1 `
+ -Access Allow -Protocol Tcp -Direction Inbound -Priority 170 `
+ -SourceAddressPrefix VirtualNetwork -SourcePortRange * `
+ -DestinationAddressPrefix * -DestinationPortRange 6379
+
+   $RedisRule8 = New-AzureRmNetworkSecurityRuleConfig -Name VnetAllowInboundRedis2 `
+ -Access Allow -Protocol Tcp -Direction Inbound -Priority 180 `
+ -SourceAddressPrefix AzureLoadBalancer -SourcePortRange * `
+ -DestinationAddressPrefix * -DestinationPortRange 6379
+
+   $RedisRule9 = New-AzureRmNetworkSecurityRuleConfig -Name VnetAllowInboundRedis3 `
+ -Access Allow -Protocol Tcp -Direction Inbound -Priority 190 `
+ -SourceAddressPrefix AzureLoadBalancer -SourcePortRange * `
+ -DestinationAddressPrefix * -DestinationPortRange 6380
+
+   $RedisRule10 = New-AzureRmNetworkSecurityRuleConfig -Name VnetAllowInboundRedis4 `
+ -Access Allow -Protocol Tcp -Direction Inbound -Priority 200 `
+ -SourceAddressPrefix VirtualNetwork -SourcePortRange * `
+ -DestinationAddressPrefix * -DestinationPortRange 6380
+
+   $RedisRule11 = New-AzureRmNetworkSecurityRuleConfig -Name VnetAllowInboundRedis5 `
+ -Access Allow -Protocol Tcp -Direction Inbound -Priority 210 `
+ -SourceAddressPrefix VirtualNetwork -SourcePortRange * `
+ -DestinationAddressPrefix * -DestinationPortRange 8443
+
+   $RedisRule12 = New-AzureRmNetworkSecurityRuleConfig -Name VnetAllowInboundRedis6 `
+ -Access Allow -Protocol Tcp -Direction Inbound -Priority 220 `
+ -SourceAddressPrefix VirtualNetwork -SourcePortRange * `
+ -DestinationAddressPrefix * -DestinationPortRange 10221-10231
+
+   $RedisRule13 = New-AzureRmNetworkSecurityRuleConfig -Name VnetAllowInboundRedis7 `
+ -Access Allow -Protocol Tcp -Direction Inbound -Priority 230 `
+ -SourceAddressPrefix AzureLoadBalancer -SourcePortRange * `
+ -DestinationAddressPrefix * -DestinationPortRange 10221-10231
+
+   $RedisRule14 = New-AzureRmNetworkSecurityRuleConfig -Name VnetAllowInboundRedis8 `
+ -Access Allow -Protocol Tcp -Direction Inbound -Priority 240 `
+ -SourceAddressPrefix VirtualNetwork -SourcePortRange * `
+ -DestinationAddressPrefix * -DestinationPortRange 13000-13999
+
+   $RedisRule15 = New-AzureRmNetworkSecurityRuleConfig -Name VnetAllowInboundRedis9 `
+ -Access Allow -Protocol Tcp -Direction Inbound -Priority 250 `
+ -SourceAddressPrefix AzureLoadBalancer -SourcePortRange * `
+ -DestinationAddressPrefix * -DestinationPortRange 13000-13999
+
+   $RedisRule16 = New-AzureRmNetworkSecurityRuleConfig -Name VnetAllowInboundRedis10 `
+ -Access Allow -Protocol Tcp -Direction Inbound -Priority 260 `
+ -SourceAddressPrefix VirtualNetwork -SourcePortRange * `
+ -DestinationAddressPrefix * -DestinationPortRange 15000-15999
+
+   $RedisRule17 = New-AzureRmNetworkSecurityRuleConfig -Name VnetAllowInboundRedis11 `
+ -Access Allow -Protocol Tcp -Direction Inbound -Priority 270 `
+ -SourceAddressPrefix AzureLoadBalancer -SourcePortRange * `
+ -DestinationAddressPrefix * -DestinationPortRange 15000-15999
+
+   $RedisRule18 = New-AzureRmNetworkSecurityRuleConfig -Name VnetAllowInboundRedis12 `
+ -Access Allow -Protocol Tcp -Direction Inbound -Priority 280 `
+ -SourceAddressPrefix VirtualNetwork -SourcePortRange * `
+ -DestinationAddressPrefix * -DestinationPortRange 20226
+
+   $RedisRule19 = New-AzureRmNetworkSecurityRuleConfig -Name VnetAllowInboundRedis13 `
+ -Access Allow -Protocol * -Direction Inbound -Priority 290 `
+ -SourceAddressPrefix AzureLoadbalancer -SourcePortRange * `
+ -DestinationAddressPrefix * -DestinationPortRange 8500
+
+   $RedisRule20 = New-AzureRmNetworkSecurityRuleConfig -Name VnetAllowInboundRedis14 `
+ -Access Allow -Protocol * -Direction Inbound -Priority 300 `
+ -SourceAddressPrefix AzureLoadBalancer -SourcePortRange * `
+ -DestinationAddressPrefix * -DestinationPortRange 16001
+ 
+   $RedisRule21 = New-AzureRmNetworkSecurityRuleConfig -Name DenyAllOutbound `
+ -Access Deny -Protocol * -Direction Outbound -Priority 500 `
  -SourceAddressPrefix * -SourcePortRange * `
  -DestinationAddressPrefix * -DestinationPortRange *
 
-   $RedisRule4 = New-AzureRmNetworkSecurityRuleConfig -Name DenyAllInbound `
- -Access Deny -Protocol Tcp -Direction Inbound -Priority 500 `
+   $RedisRule22 = New-AzureRmNetworkSecurityRuleConfig -Name DenyAllInbound `
+ -Access Deny -Protocol * -Direction Inbound -Priority 500 `
  -SourceAddressPrefix * -SourcePortRange * `
  -DestinationAddressPrefix * -DestinationPortRange *
 
