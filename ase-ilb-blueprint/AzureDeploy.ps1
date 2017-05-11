@@ -225,7 +225,6 @@ $aadtenant = (Get-AzureADDomain | ?{$_.IsDefault -eq 'True'}).Name
 Write-Host "=>" -ForegroundColor Yellow
 Write-Host "=> Retrieving outputs from deployment $DeploymentName." -ForegroundColor Yellow
 $AseWebName = (Get-AzureRmResourceGroupDeployment -ResourceGroupName $RgName -Name $DeploymentName).Outputs.aseWebName.Value
-$AseApiName = (Get-AzureRmResourceGroupDeployment -ResourceGroupName $RgName -Name $DeploymentName).Outputs.aseApiName.Value
 
 $VnetName = (Get-AzureRmResourceGroupDeployment -ResourceGroupName $RgName -Name $DeploymentName).Outputs.vnetName.Value
 $SqlName = (Get-AzureRmResourceGroupDeployment -ResourceGroupName $RgName -Name $DeploymentName).Outputs.sqlName.Value
@@ -233,7 +232,6 @@ $AppGWName = (Get-AzureRmResourceGroupDeployment -ResourceGroupName $RgName -Nam
 
 ##Retrieve Resource ID for ASE
 $resourceIDWeb = (Get-AzureRmResource | where -Property resourcename -EQ $AseWebName).resourceID
-$resourceIDApi = (Get-AzureRmResource | where -Property resourcename -EQ $AseApiName).resourceID
 
 ##Function to get AuthToken to retrieve IP Addresses from ASE
 function GetAuthToken
@@ -280,20 +278,18 @@ $header = @{
 
 ##Set URI
 $uriweb = "https://management.azure.com$resourceIDWeb/capacities/virtualip?api-version=2015-08-01"
-$uriapi = "https://management.azure.com$resourceIDApi/capacities/virtualip?api-version=2015-08-01"
 
 Write-Host "=>" -ForegroundColor Yellow
 Write-Host "=> Getting IPs from the App Service Environment" -ForegroundColor Yellow
 ##Set Hostinginfo variable by invoking rest method
 $hostingInfoWeb = Invoke-RestMethod -Uri $uriweb -Headers $header -Method get
-$hostingInfoApi = Invoke-RestMethod -Uri $uriapi -Headers $header -Method get
 
 Write-Host "=>" -ForegroundColor Yellow
 Write-Host "=> Creating Network Security Group Rules." -ForegroundColor Yellow
 ##WAF Rules
 #region
   $WAFRule1 = New-AzureRmNetworkSecurityRuleConfig -Name DenyAllInbound -Description "Deny All Inbound" `
- -Access Allow -Protocol * -Direction Inbound -Priority 300 `
+ -Access Deny -Protocol * -Direction Inbound -Priority 500 `
  -SourceAddressPrefix * -SourcePortRange * -DestinationAddressPrefix * `
  -DestinationPortRange *
 
@@ -304,73 +300,33 @@ Write-Host "=> Creating Network Security Group Rules." -ForegroundColor Yellow
 
   $WAFRule3 = New-AzureRmNetworkSecurityRuleConfig -Name HTTP-In -Description "Allow Inbound HTTP" `
  -Access Allow -Protocol Tcp -Direction Inbound -Priority 120 `
- -SourceAddressPrefix Internet -SourcePortRange * -DestinationAddressPrefix * `
- -DestinationPortRange 80
- 
-  $WAFRule4 = New-AzureRmNetworkSecurityRuleConfig -Name ILBWebAppHTTP-In -Description "Allow Inbound ILBWebAppHTTP" `
- -Access Allow -Protocol Tcp -Direction Inbound -Priority 130 `
- -SourceAddressPrefix $hostingInfoWeb.internalIpAddress -SourcePortRange * `
- -DestinationAddressPrefix * -DestinationPortRange 80
-
-   $WAFRule5 = New-AzureRmNetworkSecurityRuleConfig -Name ILBWebAppHTTPS-In -Description "Allow Inbound ILBWebAppHTTPS" `
- -Access Allow -Protocol Tcp -Direction Inbound -Priority 140 `
- -SourceAddressPrefix $hostingInfoWeb.internalIpAddress -SourcePortRange * `
- -DestinationAddressPrefix * -DestinationPortRange 443
-
-   $WAFRule6 = New-AzureRmNetworkSecurityRuleConfig -Name DNS-In -Description "Allow Inbound DNS" `
- -Access Allow -Protocol Tcp -Direction Inbound -Priority 150 `
- -SourceAddressPrefix * -SourcePortRange * `
- -DestinationAddressPrefix * -DestinationPortRange 53
-
-  $WAFRule7 = New-AzureRmNetworkSecurityRuleConfig -Name DenyAllOutbound -Description "Deny All Outbound" `
- -Access Allow -Protocol * -Direction Outbound -Priority 400 `
- -SourceAddressPrefix * -SourcePortRange * -DestinationAddressPrefix * `
- -DestinationPortRange *
-
-  $WAFRule8 = New-AzureRmNetworkSecurityRuleConfig -Name HTTPS-Out -Description "Allow Outbound HTTPS" `
- -Access Allow -Protocol Tcp -Direction Outbound -Priority 110 `
  -SourceAddressPrefix Internet -SourcePortRange * `
- -DestinationAddressPrefix * -DestinationPortRange 443
-
-  $WAFRule9 = New-AzureRmNetworkSecurityRuleConfig -Name HTTP-Out -Description "Allow Outbound HTTP" `
- -Access Allow -Protocol Tcp -Direction Outbound -Priority 120 `
- -SourceAddressPrefix Internet -SourcePortRange * -DestinationAddressPrefix * `
- -DestinationPortRange 80
- 
-  $WAFRule10 = New-AzureRmNetworkSecurityRuleConfig -Name ILBWebAppHTTP-Out -Description "Allow Outbound ILBWebAppHTTP" `
- -Access Allow -Protocol Tcp -Direction Outbound -Priority 130 `
- -SourceAddressPrefix $hostingInfoWeb.internalIpAddress -SourcePortRange * `
  -DestinationAddressPrefix * -DestinationPortRange 80
-
-   $WAFRule11 = New-AzureRmNetworkSecurityRuleConfig -Name ILBWebAppHTTPS-Out -Description "Allow Outbound ILBWebAppHTTPS" `
- -Access Allow -Protocol Tcp -Direction Outbound -Priority 140 `
- -SourceAddressPrefix $hostingInfoWeb.internalIpAddress -SourcePortRange * `
- -DestinationAddressPrefix * -DestinationPortRange 443
-
-   $WAFRule12 = New-AzureRmNetworkSecurityRuleConfig -Name DNS-Out -Description "Allow Outbound DNS" `
- -Access Allow -Protocol Tcp -Direction Outbound -Priority 150 `
+ 
+   $WAFRule4 = New-AzureRmNetworkSecurityRuleConfig -Name DNS-In -Description "Allow Inbound DNS" `
+ -Access Allow -Protocol Tcp -Direction Inbound -Priority 130 `
  -SourceAddressPrefix * -SourcePortRange * `
  -DestinationAddressPrefix * -DestinationPortRange 53
 
-   $WAFRule13 = New-AzureRmNetworkSecurityRuleConfig -Name ILBApiAppHTTP-In -Description "Allow Inbound ILBApiAppHTTP" `
- -Access Allow -Protocol Tcp -Direction Inbound -Priority 160 `
- -SourceAddressPrefix $hostingInfoApi.internalIpAddress -SourcePortRange * `
- -DestinationAddressPrefix * -DestinationPortRange 80
+  $WAFRule5 = New-AzureRmNetworkSecurityRuleConfig -Name DenyAllOutbound -Description "Deny All Outbound" `
+ -Access Deny -Protocol * -Direction Outbound -Priority 500 `
+ -SourceAddressPrefix * -SourcePortRange * `
+ -DestinationAddressPrefix * -DestinationPortRange *
 
-   $WAFRule14 = New-AzureRmNetworkSecurityRuleConfig -Name ILBApiAppHTTPS-In -Description "Allow Inbound ILBApiAppHTTPS" `
- -Access Allow -Protocol Tcp -Direction Inbound -Priority 170 `
- -SourceAddressPrefix $hostingInfoApi.internalIpAddress -SourcePortRange * `
+  $WAFRule6 = New-AzureRmNetworkSecurityRuleConfig -Name HTTPS-Out -Description "Allow Outbound HTTPS" `
+ -Access Allow -Protocol Tcp -Direction Outbound -Priority 110 `
+ -SourceAddressPrefix * -SourcePortRange * `
  -DestinationAddressPrefix * -DestinationPortRange 443
 
-  $WAFRule15 = New-AzureRmNetworkSecurityRuleConfig -Name ILBApiAppHTTP-Out -Description "Allow Outbound ILBApiAppHTTP" `
- -Access Allow -Protocol Tcp -Direction Outbound -Priority 180 `
- -SourceAddressPrefix $hostingInfoApi.internalIpAddress -SourcePortRange * `
+  $WAFRule7 = New-AzureRmNetworkSecurityRuleConfig -Name HTTP-Out -Description "Allow Outbound HTTP" `
+ -Access Allow -Protocol Tcp -Direction Outbound -Priority 120 `
+ -SourceAddressPrefix * -SourcePortRange * `
  -DestinationAddressPrefix * -DestinationPortRange 80
-
-   $WAFRule16 = New-AzureRmNetworkSecurityRuleConfig -Name ILBApiAppHTTPS-Out -Description "Allow Outbound ILBApiAppHTTPS" `
- -Access Allow -Protocol Tcp -Direction Outbound -Priority 190 `
- -SourceAddressPrefix $hostingInfoApi.internalIpAddress -SourcePortRange * `
- -DestinationAddressPrefix * -DestinationPortRange 443
+ 
+   $WAFRule8 = New-AzureRmNetworkSecurityRuleConfig -Name DNS-Out -Description "Allow Outbound DNS" `
+ -Access Allow -Protocol Tcp -Direction Outbound -Priority 130 `
+ -SourceAddressPrefix * -SourcePortRange * `
+ -DestinationAddressPrefix * -DestinationPortRange 53
 
  #endregion
 
@@ -444,110 +400,47 @@ Write-Host "=> Creating Network Security Group Rules." -ForegroundColor Yellow
 
 ##Redis Rules
 #region
-  $RedisRule1 = New-AzureRmNetworkSecurityRuleConfig -Name AllowHTTP -Description "Redis dependencies on Azure Storage/PKI (Internet)" `
- -Access Allow -Protocol Tcp -Direction Outbound -Priority 100 `
- -SourceAddressPrefix * -SourcePortRange * -DestinationAddressPrefix * `
- -DestinationPortRange 80
+  $RedisRule1 = New-AzureRmNetworkSecurityRuleConfig -Name AllowOutboundHTTP -Description "Redis dependencies on Azure Storage/PKI (Internet)" `
+ -Access Allow -Protocol Tcp -Direction Outbound -Priority 110 `
+ -SourceAddressPrefix * -SourcePortRange * `
+ -DestinationAddressPrefix * -DestinationPortRange 80
 
-  $RedisRule2 = New-AzureRmNetworkSecurityRuleConfig -Name AllowInboundHTTPS -Description "Allow Inbound HTTPS" `
- -Access Allow -Protocol Tcp -Direction Outbound -Priority 200 `
+  $RedisRule2 = New-AzureRmNetworkSecurityRuleConfig -Name AllowOutboundHTTPS `
+ -Access Allow -Protocol Tcp -Direction Outbound -Priority 120 `
  -SourceAddressPrefix * -SourcePortRange * `
  -DestinationAddressPrefix * -DestinationPortRange 443
 
-  $RedisRule3 = New-AzureRmNetworkSecurityRuleConfig -Name AllowDNS -Description "Allow DNS Outbound" `
- -Access Allow -Protocol * -Direction Outbound -Priority 300 `
- -SourceAddressPrefix * -SourcePortRange * -DestinationAddressPrefix * `
- -DestinationPortRange 445
- 
-  $RedisRule4 = New-AzureRmNetworkSecurityRuleConfig -Name AllowRedisClientCommunication -Description "Allow Client communication to Redis" `
- -Access Allow -Protocol Tcp -Direction Inbound -Priority 400 `
- -SourceAddressPrefix * -SourcePortRange * `
- -DestinationAddressPrefix VirtualNetwork -DestinationPortRange 6379
-
-  $RedisRule5 = New-AzureRmNetworkSecurityRuleConfig -Name  AllowAzureLoadBalancing -Description "Allow Azure Load Balancing" `
- -Access Allow -Protocol Tcp -Direction Inbound -Priority 500 `
- -SourceAddressPrefix * -SourcePortRange * `
- -DestinationAddressPrefix AzureLoadBalancer -DestinationPortRange 6380
-
-  $RedisRule6 = New-AzureRmNetworkSecurityRuleConfig -Name ImplementationDetail-out -Description "Outbound Implementation Detail for Redis" `
- -Access Allow -Protocol Tcp -Direction Outbound -Priority 600 `
+  $RedisRule3 = New-AzureRmNetworkSecurityRuleConfig -Name VnetAllowOutboundRedis1 `
+ -Access Allow -Protocol Tcp -Direction Outbound -Priority 130 `
  -SourceAddressPrefix * -SourcePortRange * `
  -DestinationAddressPrefix VirtualNetwork -DestinationPortRange 8443
 
-  $RedisRule7 = New-AzureRmNetworkSecurityRuleConfig -Name ImplementationDetail-in -Description "Inbound Implementation Detail for Redis" `
- -Access Allow -Protocol Tcp -Direction Inbound -Priority 700 `
- -SourceAddressPrefix * -SourcePortRange * `
- -DestinationAddressPrefix VirtualNetwork -DestinationPortRange 8443
- 
-  $RedisRule8 = New-AzureRmNetworkSecurityRuleConfig -Name AzureLoadBalancing -Description "Allow Azure Load Balancing" `
- -Access Allow -Protocol * -Direction Inbound -Priority 800 `
- -SourceAddressPrefix * -SourcePortRange * -DestinationAddressPrefix AzureLoadBalancer `
- -DestinationPortRange 8500
-
-  $RedisRule9 = New-AzureRmNetworkSecurityRuleConfig -Name OutRestrictImplementationDetailVnet -Description "Implementation Detail for Redis (can restrict remote endpoint to VIRTUAL_NETWORK)" `
- -Access Allow -Protocol Tcp -Direction Outbound -Priority 900 `
+   $RedisRule4 = New-AzureRmNetworkSecurityRuleConfig -Name VnetAllowOutboundRedis2 `
+ -Access Allow -Protocol Tcp -Direction Outbound -Priority 140 `
  -SourceAddressPrefix * -SourcePortRange * `
  -DestinationAddressPrefix VirtualNetwork -DestinationPortRange 10221-10231
 
-  $RedisRule10 = New-AzureRmNetworkSecurityRuleConfig -Name OutRestrictImplementationDetailLB -Description "Implementation Detail for Redis (can restrict remote endpoint to VIRTUAL_NETWORK)" `
- -Access Allow -Protocol Tcp -Direction Outbound -Priority 1000 `
+   $RedisRule5 = New-AzureRmNetworkSecurityRuleConfig -Name VnetAllowOutboundRedis3 `
+ -Access Allow -Protocol Tcp -Direction Outbound -Priority 150 `
  -SourceAddressPrefix * -SourcePortRange * `
  -DestinationAddressPrefix AzureLoadBalancer -DestinationPortRange 10221-10231
 
-  $RedisRule11 = New-AzureRmNetworkSecurityRuleConfig -Name InRestrictImplementationDetailVnet -Description "Implementation Detail for Redis (can restrict remote endpoint to VIRTUAL_NETWORK)" `
- -Access Allow -Protocol Tcp -Direction Inbound -Priority 1100 `
- -SourceAddressPrefix * -SourcePortRange * `
- -DestinationAddressPrefix VirtualNetwork -DestinationPortRange 10221-10231
-
-  $RedisRule12 = New-AzureRmNetworkSecurityRuleConfig -Name InRestrictImplementationDetailLB -Description "Implementation Detail for Redis (can restrict remote endpoint to VIRTUAL_NETWORK)" `
- -Access Allow -Protocol Tcp -Direction Inbound -Priority 1200 `
- -SourceAddressPrefix * -SourcePortRange * `
- -DestinationAddressPrefix AzureLoadBalancer -DestinationPortRange 10221-10231
- 
-  $RedisRule13 = New-AzureRmNetworkSecurityRuleConfig -Name ClientCommunications-In-Vnet1 -Description "Client communication to Redis Clusters" `
- -Access Allow -Protocol Tcp -Direction Inbound -Priority 1300 `
- -SourceAddressPrefix * -SourcePortRange * -DestinationAddressPrefix VirtualNetwork `
- -DestinationPortRange 13000-13999
- 
-  $RedisRule14 = New-AzureRmNetworkSecurityRuleConfig -Name ClientCommunications-In-LB1 -Description "Client communication to Redis Clusters" `
- -Access Allow -Protocol Tcp -Direction Inbound -Priority 1400 `
- -SourceAddressPrefix * -SourcePortRange * -DestinationAddressPrefix AzureLoadBalancer `
- -DestinationPortRange 13000-13999
-
-  $RedisRule15 = New-AzureRmNetworkSecurityRuleConfig -Name ClientCommunications-In-Vnet2 -Description "Client communication to Redis Clusters" `
- -Access Allow -Protocol Tcp -Direction Inbound -Priority 1500 `
- -SourceAddressPrefix * -SourcePortRange * -DestinationAddressPrefix VirtualNetwork `
- -DestinationPortRange 15000-15999
- 
-  $RedisRule16 = New-AzureRmNetworkSecurityRuleConfig -Name ClientCommunications-In-LB2 -Description "Client communication to Redis Clusters" `
- -Access Allow -Protocol Tcp -Direction Inbound -Priority 1600 `
- -SourceAddressPrefix * -SourcePortRange * -DestinationAddressPrefix AzureLoadBalancer `
- -DestinationPortRange 15000-15999
- 
-  $RedisRule17 = New-AzureRmNetworkSecurityRuleConfig -Name ClientCommunications-In-Vnet3 -Description "Client communication to Redis Clusters" `
- -Access Allow -Protocol Tcp -Direction Inbound -Priority 1700 `
- -SourceAddressPrefix * -SourcePortRange * `
- -DestinationAddressPrefix VirtualNetwork -DestinationPortRange 15000-15999
-
-  $RedisRule18 = New-AzureRmNetworkSecurityRuleConfig -Name ClientCommunications-In-LB3 -Description "Client communication to Redis Clusters" `
- -Access Allow -Protocol Tcp -Direction Inbound -Priority 1800 `
- -SourceAddressPrefix * -SourcePortRange * `
- -DestinationAddressPrefix AzureLoadBalancer -DestinationPortRange 15000-15999
-
-  $RedisRule19 = New-AzureRmNetworkSecurityRuleConfig -Name AzureLoadBalancing2 -Description "Allow Azure Load Balancing" `
- -Access Allow -Protocol * -Direction Inbound -Priority 1900 `
- -SourceAddressPrefix * -SourcePortRange * `
- -DestinationAddressPrefix AzureLoadBalancer -DestinationPortRange 16001
-
-  $RedisRule20 = New-AzureRmNetworkSecurityRuleConfig -Name RedisCacheImplementaionIn -Description "Implementation Detail for Redis Clusters" `
- -Access Allow -Protocol Tcp -Direction Inbound -Priority 2000 `
+   $RedisRule6 = New-AzureRmNetworkSecurityRuleConfig -Name VnetAllowOutboundRedis4 `
+ -Access Allow -Protocol Tcp -Direction Outbound -Priority 160 `
  -SourceAddressPrefix * -SourcePortRange * `
  -DestinationAddressPrefix VirtualNetwork -DestinationPortRange 20226
 
-  $RedisRule21 = New-AzureRmNetworkSecurityRuleConfig -Name RedisCacheImplementaionOut -Description "Implementation Detail for Redis Clusters" `
- -Access Allow -Protocol Tcp -Direction Outbound -Priority 2100 `
+   $RedisRule4 = New-AzureRmNetworkSecurityRuleConfig -Name DenyAllOutbound `
+ -Access Deny -Protocol Tcp -Direction Outbound -Priority 500 `
  -SourceAddressPrefix * -SourcePortRange * `
- -DestinationAddressPrefix VirtualNetwork -DestinationPortRange 20226
+ -DestinationAddressPrefix * -DestinationPortRange *
+
+   $RedisRule4 = New-AzureRmNetworkSecurityRuleConfig -Name DenyAllInbound `
+ -Access Deny -Protocol Tcp -Direction Inbound -Priority 500 `
+ -SourceAddressPrefix * -SourcePortRange * `
+ -DestinationAddressPrefix * -DestinationPortRange *
+
+
  #endregion
 
 Write-Host "=>" -ForegroundColor Yellow
@@ -558,9 +451,6 @@ $WafNsg = New-AzureRmNetworkSecurityGroup -Name "WafNsg" -ResourceGroupName $RgN
                                           -SecurityRules $WAFRule1,$WAFRule2,$WAFRule3,$WAFRule4,$WAFRule5,$WAFRule6,$WAFRule7,$WAFRule8,$WAFRule9,$WAFRule10,$WAFRule11,$WAFRule12,$WAFRule13,$WAFRule14,$WAFRule15,$WAFRule16 `
                                           -Force -WarningAction SilentlyContinue |out-null 
 $AseWebNsg = New-AzureRmNetworkSecurityGroup -Name "AseWebNsg" -ResourceGroupName $RgName -Location $Region `
-                                             -SecurityRules $ASERule1,$ASERule2,$ASERule3,$ASERule4,$ASERule5,$ASERule6,$ASERule7,$ASERule8,$ASERule9,$ASERule10,$ASERule11,$ASERule12,$ASERule13 `
-                                             -Force -WarningAction SilentlyContinue | Out-Null
-$AseApiNsg = New-AzureRmNetworkSecurityGroup -Name "AseApiNsg" -ResourceGroupName $RgName -Location $Region `
                                              -SecurityRules $ASERule1,$ASERule2,$ASERule3,$ASERule4,$ASERule5,$ASERule6,$ASERule7,$ASERule8,$ASERule9,$ASERule10,$ASERule11,$ASERule12,$ASERule13 `
                                              -Force -WarningAction SilentlyContinue | Out-Null
 $RedisNsg = New-AzureRmNetworkSecurityGroup -Name "RedisNsg" -ResourceGroupName $RgName -Location $Region `
@@ -587,41 +477,16 @@ Set-AzureRmVirtualNetwork -VirtualNetwork $vnet  | Out-Null
 $vnet = Get-AzureRmVirtualNetwork -ResourceGroupName $RgName -Name $VnetName
 Set-AzureRmVirtualNetworkSubnetConfig -VirtualNetwork $vnet -Name $vnet.Subnets.name[2] `
                                       -AddressPrefix $vnet.Subnets.AddressPrefix[2]`
-                                      -NetworkSecurityGroup $AseApiNSG  | Out-Null
-Set-AzureRmVirtualNetwork -VirtualNetwork $vnet  | Out-Null
-
-$vnet = Get-AzureRmVirtualNetwork -ResourceGroupName $RgName -Name $VnetName
-Set-AzureRmVirtualNetworkSubnetConfig -VirtualNetwork $vnet -Name $vnet.Subnets.name[3] `
-                                      -AddressPrefix $vnet.Subnets.AddressPrefix[3]`
                                       -NetworkSecurityGroup $RedisNsg  | Out-Null
 Set-AzureRmVirtualNetwork -VirtualNetwork $vnet  | Out-Null
 #endregion
-
-Write-Host "=>" -ForegroundColor Yellow
-Write-Host "=> Setting SQL Firewall Rules" -ForegroundColor Yellow
-##Set SQl Firewall Rules
-if(!(Get-AzureRmSqlServerFirewallRule -ResourceGroupName $RgName -ServerName $SqlName | ?{$_.FirewallRuleName -eq "ILBOutboundAddressWeb"}))
-{
-    New-AzureRmSqlServerFirewallRule -ResourceGroupName $RgName -ServerName $SQLName `
-                                     -FirewallRuleName "ILBOutboundAddressWeb" `
-                                     -StartIpAddress $hostingInfoWeb.outboundIpAddresses[0] `
-                                     -EndIpAddress $hostingInfoWeb.outboundIpAddresses[0]  | Out-Null
-}
-
-if(!(Get-AzureRmSqlServerFirewallRule -ResourceGroupName $RgName -ServerName $SqlName|?{$_.FirewallRuleName -eq "ILBOutboundAddressApi"}))
-{
-    New-AzureRmSqlServerFirewallRule -ResourceGroupName $RgName -ServerName $SQLName `
-                                     -FirewallRuleName "ILBOutboundAddressApi" `
-                                     -StartIpAddress $hostingInfoApi.outboundIpAddresses[0] `
-                                     -EndIpAddress $hostingInfoApi.outboundIpAddresses[0]  | Out-Null
-}
 
 Write-Host "=>" -ForegroundColor Yellow
 Write-Host "=> Adding Backend IPs to the Web Application Firewall" -ForegroundColor Yellow
 #Add ILB Internal IP to the Backend Address Pool of the WAF
 $AppGW = Get-AzureRmApplicationGateway -Name $AppGWName -ResourceGroupName $RgName
 Set-AzureRmApplicationGatewayBackendAddressPool -Name appGatewayBackendPool `
-                                                -BackendIPAddresses $hostingInfoApi.internalIpAddress, $hostingInfoWeb.internalIpAddress `
+                                                -BackendIPAddresses $hostingInfoWeb.internalIpAddress `
                                                 -ApplicationGateway $AppGW  | Out-Null
 Set-AzureRmApplicationGateway -ApplicationGateway $AppGW  | Out-Null
 

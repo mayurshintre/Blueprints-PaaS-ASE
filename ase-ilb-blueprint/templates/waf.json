@@ -65,16 +65,16 @@
         "description": "WAF Rule Set Version"
       }
     },
+    "webAppDNS": {
+      "type": "string",
+      "metadata": {
+        "description": "DNS address for WebSite to be probed"
+      }
+    },
     "backendIpAddress1": {
       "type": "string",
       "metadata": {
         "description": "IP Address for Backend Server 1"
-      }
-    },
-    "backendIpAddress2": {
-      "type": "string",
-      "metadata": {
-        "description": "IP Address for Backend Server 2"
       }
     }
   },
@@ -83,7 +83,8 @@
     "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',parameters('vnetName'))]",
     "subnetRef": "[concat(variables('vnetID'),'/subnets/',parameters('WAFSubnetName'))]",
     "publicIPRef": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]",
-    "applicationGatewayID": "[resourceId('Microsoft.Network/applicationGateways',parameters('applicationGatewayName'))]"
+    "applicationGatewayID": "[resourceId('Microsoft.Network/applicationGateways',parameters('applicationGatewayName'))]",
+    "probeName": "WafProbe1"
   },
     "resources": [
       {
@@ -137,6 +138,19 @@
               }
             }
           ],
+          "probes": [
+            {
+              "properties": {
+                "protocol": "Http",
+                "host": "[parameters('webAppDNS')]",
+                "path": "/",
+                "interval": "30",
+                "timeout": "120",
+                "unhealthyThreshold": "8"
+              },
+              "name": "[variables('ProbeName')]"
+            }
+          ],
           "backendAddressPools": [
             {
               "name": "appGatewayBackendPool",
@@ -144,9 +158,6 @@
                 "BackendAddresses": [
                   {
                     "IpAddress": "[parameters('backendIpAddress1')]"
-                  },
-                  {
-                    "IpAddress": "[parameters('backendIpAddress2')]"
                   }
                 ]
               }
