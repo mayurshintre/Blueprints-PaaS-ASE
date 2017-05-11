@@ -80,30 +80,6 @@
         "description": "Web App Subnet Name"
       }
     },
-    "APIAppSubnetPrefix": {
-      "type": "string",
-      "metadata": {
-        "description": "API App Subnet IP Address Without CIDR Block"
-      }
-    },
-    "APIAppSubnetPrefixCIDR": {
-      "type": "int",
-      "metadata": {
-        "description": "API App Subnet CIDR Block"
-      }
-    },
-    "APIAppSubnetName": {
-      "type": "string",
-      "metadata": {
-        "description": "API App Subnet Name"
-      }
-    },
-    "APIAppSubnetAddressSpace": {
-      "type": "string",
-      "metadata": {
-        "description": "IP Address And CIDR Block Combined"
-      }
-    },
     "RedisCacheSubnetPrefix": {
       "type": "string",
       "metadata": {
@@ -126,12 +102,6 @@
       "type": "string",
       "metadata": {
         "description": "IP Address And CIDR Block Combined"
-      }
-    },
-    "customDNSIP": {
-      "type": "string",
-      "metadata": {
-        "description": "IP Address of Custom DNS Server"
       }
     }
   },
@@ -161,12 +131,6 @@
             "name": "[parameters('WebAppSubnetName')]",
             "properties": {
               "addressPrefix": "[parameters('WebAppSubnetAddressSpace')]"
-            }
-          },
-          {
-            "name": "[parameters('APIAppSubnetName')]",
-            "properties": {
-              "addressPrefix": "[parameters('APIAppSubnetAddressSpace')]"
             }
           },
           {

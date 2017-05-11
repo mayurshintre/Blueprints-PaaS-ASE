@@ -41,12 +41,6 @@
         "description": "The static IP address the redis cache should have, for a cache in a virtual network subnet. Requires configuring a virtualNetwork."
       }
     },
-    "enableNonSslPort": {
-      "type": "bool",
-      "metadata": {
-        "description": "Set to true to allow access to redis on port 6379, without SSL tunneling (less secure)."
-      }
-    },
     "redisCacheMaxClients": {
       "type": "int",
       "metadata": {
@@ -79,7 +73,7 @@
       "type": "Microsoft.Cache/Redis",
       "location": "[parameters('Region')]",
       "properties": {
-        "enableNonSslPort": "[parameters('enableNonSslPort')]",
+        "enableNonSslPort": false,
         "shardCount": "[parameters('redisShardCount')]",
         "subnetId": "[concat(parameters('virtualNetwork'),'/subnets/',parameters('subnet'))]",
         "sku": {

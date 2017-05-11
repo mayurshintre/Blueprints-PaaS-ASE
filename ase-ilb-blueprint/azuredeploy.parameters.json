@@ -44,18 +44,6 @@
         "description": "Web App Subnet CIDR Block"
       }
     },
-    "APIAppSubnetPrefix": {
-      "value": "10.0.2.0",
-      "metadata": {
-        "description": "API App Subnet IP Address Without CIDR Block"
-      }
-    },
-    "APIAppSubnetPrefixCIDR": {
-      "value": 26,
-      "metadata": {
-        "description": "API App Subnet CIDR Block"
-      }
-    },
     "RedisCacheSubnetPrefix": {
       "value": "10.0.3.0",
       "metadata": {
@@ -68,20 +56,8 @@
         "description": "Redis Cache Subnet CIDR Block"
       }
     },
-    "customDNSIP": {
-      "value": "10.0.0.4",
-      "metadata": {
-        "description": "IP Address of Custom DNS Server"
-      }
-    },
-    "dnsOption": {
-      "value": "customdns",
-      "metadata": {
-        "description": "This will set a custom DNS server or use Azure Fabric DNS (not Azure DNS service). Pick either azuredns or customdns. This is Case Sensitive."
-      }
-    },
     "redisShardCount": {
-      "value": 2,
+      "value": 0,
       "metadata": {
         "description": "Number of highly available shards to create in the cluster. Requires Premium SKU. Set to 0 to not set up clustering."
       }
@@ -96,18 +72,6 @@
       "value": "ASPNameWeb",
       "metadata": {
         "description": "The name of the App Service plan to use for hosting the web app."
-      }
-    },
-    "appServicePlanNameApi": {
-      "value": "ASPNameApi",
-      "metadata": {
-        "description": "The name of the App Service plan to use for hosting the web app."
-      }
-    },
-    "ApiDNS": {
-      "value": "Api.demo",
-      "metadata": {
-        "description": "Set to the root internal domain name to associate with this ASP."
       }
     },
     "WebDNS": {
@@ -198,6 +162,18 @@
       "value": 2,
       "metadata": {
         "description": "Number of WAF Instances"
+      }
+    },
+    "databaseServiceObjectiveName": {
+      "value": "Basic",
+      "metadata": {
+        "description": "The name of the configured Service Level Objective of the Azure SQL database. This is the Service Level Objective that is in the process of being applied to the Azure SQL database."
+      }
+    },
+    "databaseEdition": {
+      "value": "Basic",
+      "metadata": {
+        "description": "The edition of the Azure SQL database. The DatabaseEditions enumeration contains all the valid editions."
       }
     },
     "sqlAdministratorLogin": {
