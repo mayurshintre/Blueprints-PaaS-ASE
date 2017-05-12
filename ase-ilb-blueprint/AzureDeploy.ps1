@@ -8,9 +8,9 @@
 ##MAKE CHANGES HERE TO MATCH YOUR ENVIRONMENT
 #region
     ##Azure Region to Deploy all resources including the Resource Group
-    $Region = "Central US"
+    $Region = "West US"
     ##Name of the Resource Group to deploy
-    $RgName = "mayurstestblueprint"
+    $RgName = "BluePrint"
     ##Name to give the Deployment that will be ran
     $DeploymentName = $RgName +"-nist800ase"
     ##Location of the main azuredeploy.json template
@@ -18,7 +18,7 @@
     ##Location of the local parameters file
     $ParameterFile = "C:\temp\azuredeploy.parameters.json"
     ##Subscription ID that will be used to host the resource group
-    $SubscriptionID = "SUBSCRIPTION ID"
+    $SubscriptionID = "960e1588-d82e-47d5-8c2c-342cd071e172"
 #endregion
 
 #Function to generate random password
