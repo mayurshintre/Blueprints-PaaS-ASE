@@ -479,7 +479,6 @@
       "name": "WAF",
       "apiVersion": "2015-01-01",
       "dependsOn": [
-        "AseApi", 
         "AseWeb"
       ],
       "properties": {
@@ -523,7 +522,7 @@
           "sqlServerName": { "value": "[variables('sqlServerName')]" },
           "databaseName": { "value": "[variables('databaseName')]" },
           "databaseEdition": { "value": "[parameters('databaseEdition')]" },
-          "databaseServiceObjectiveName": { "value": "[parameterds('databaseServiceObjectiveName')]" }
+          "databaseServiceObjectiveName": { "value": "[parameters('databaseServiceObjectiveName')]" }
         }
       }
     }
