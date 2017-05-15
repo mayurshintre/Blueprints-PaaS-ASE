@@ -12,9 +12,8 @@
 		- [Application Gateway w/ WAF](#222-application-gateway---waf)
 		- [Redis Cache](#223-redis-cache)
 		- [ILB ASE w/ Web App](#224-ilb-ase-webapp)
-		- [ILB ASE w/ Api App](#225-ilb-ase-apiapp---only-deployed-when-dual-ase-branch-used)
-		- [Azure SQL](#226-azure-sql)
-		- [Azure KeyVault](#227-azure-keyvault)
+		- [Azure SQL](#225-azure-sql)
+		- [Azure KeyVault](#226-azure-keyvault)
 	- [2.3 Security](#23-security)
 		- [WAF - Application Gateway](#231-waf---application-gateway)
 		- [ILB ASE w/ Web Apps](#232-ilb-ase-w-web-apps)
@@ -40,14 +39,17 @@
 
 ![alt text](images/asesequencevsdx.png "Template Deployment Sequence")
 
-This Blueprint deploys a fully automated secure baseline Azure ARM Template + PowerShell solution to provision a highly secure, orchestrated and configured Platform as a Service environment mapped to a NIST 800-66 assurance security controls matrix, that includes :
+This Blueprint deploys a fully automated secure baseline Azure ARM Template + PowerShell solution to provision a highly secure, orchestrated and configured Platform as a Service (PaaS) environment mapped to a NIST 800-66 assurance security controls matrix, that includes :
 
-+ Azure App Service Environment with an ILB, App Service Environment & Web App
-+ Azure App Service Environment with an ILB, App Service Environment & API App
++ Azure App Service Environment (ASE) with an Internal Load Balancer (ILB)
++ Azure Web App within ASE
 + Redis Cache Cluster
++ Azure Virtual Network
++ Azure Network Security Groups
 + Web Application Gateway with WAF in Prevention Mode
 + Azure SQL 
 + Azure KeyVault
++ Azure Active Directory
 
 The environment is locked down using Network Security Groups on each subnet with restricted access between all provisioned Azure services and also between subnets, as described in the [security](#s23-security) section below.
 
@@ -57,8 +59,6 @@ This Azure refernce Blueprint deployment guide discusses architectural considera
 
 + National Institute of Standards and Technology (NIST) SP 800-66 (Revision 4)
 + NIST SP 800-171
-+ The OMB Trusted Internet Connection (TIC) Initiative – FedRAMP Overlay (pilot)
-+ The DoD Cloud Computing Security Requirements Guide (SRG)
 
 ## 2. Solution Design and Deployed Resources
 
@@ -88,19 +88,13 @@ The diagram below illustrates the deployment topology and architecture of the so
 + **/serverFarms**: Deploys a default App Service Plan
 + **kind: "webapp"**: Deploys a default Azure WebApp
 
-#### 2.2.5 ILB ASE APIApp - Only Deployed when 'Dual-Ase' Branch Used
-##### Microsoft.Web
-+ **/hostingEnvironments**: Deploys App Service Environment v1
-+ **/serverFarms**: Deploys a default App Service Plan
-+ **kind: "apiapp"**: Deploys a default Azure WebApp
-
-#### 2.2.6 Azure SQL
+#### 2.2.5 Azure SQL
 ##### Microsoft.Sql
 + **/servers**: Deploys an Azure SQL Server
 + **/servers/databases**: Deploys an Azure SQL Database
 + **/servers/firewallRules**: Applied Firewall rule for Outbound IP's from both ASE's
 
-#### 2.2.7 Azure KeyVault
+#### 2.2.6 Azure KeyVault
 ##### Microsoft.KeyVault
 + **/vaults**: Deploys a new Keyvault with a secret for Azure SQL
 
