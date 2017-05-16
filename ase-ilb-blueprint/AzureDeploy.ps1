@@ -16,9 +16,9 @@
     ##Location of the main azuredeploy.json template
     $TemplateUri = "https://raw.githubusercontent.com/mayurshintre/Blueprints-PaaS-ASE/master/ase-ilb-blueprint/azuredeploy.json"
     ##Location of the local parameters file
-    $ParameterFile = "C:\Users\mashintr\Documents\GitHub\Blueprints-PaaS-ASE\ase-ilb-blueprint\azuredeploy.parameters.json"
+    $ParameterFile = "C:\{yourlocationhere}\azuredeploy.parameters.json"
     ##Subscription ID that will be used to host the resource group
-    $SubscriptionID = "960e1588-d82e-47d5-8c2c-342cd071e172"
+    $SubscriptionID = "subscription id here"
 #endregion
 
 #Function to generate random password
@@ -120,15 +120,8 @@ function New-SWRandomPassword {
     }
 }
 
-Write-Host "=> Alright" -ForegroundColor Yellow
-Write-Host "=> Booting up . . ." -ForegroundColor Yellow
-Write-Host "=> Begin Azure Deployment seaquences..." -ForegroundColor Yellow
-Write-Host "=>" -ForegroundColor Yellow
-Write-Host "=>" -ForegroundColor Yellow
-Write-Host "=> Systems now online." -ForegroundColor Yellow
-Write-Host "=>" -ForegroundColor Yellow
-Write-Host "=>" -ForegroundColor Yellow
-Write-Host "=> Time to Login to ARM if you are not already." -ForegroundColor Yellow
+Write-Host "=> Beginning Azure Deployment Sequence for ASE PaaS Blueprint..." -ForegroundColor Yellow
+Write-Host "=> Login to ARM if you are not already." -ForegroundColor Yellow
 
 ##Catch to verify AzureRM session is active.  Forces sign-in if no session is found
 #region
@@ -173,7 +166,7 @@ Write-Host "=> Time to Login to ARM if you are not already." -ForegroundColor Ye
 
 ##Set Azure Context
 Write-Host "=>" -ForegroundColor Yellow
-Write-Host "=> I suggest you ask Mayur to fetch the coffee while I set your context..." -ForegroundColor Yellow
+Write-Host "=> Setting Context for this Azure Deployment" -ForegroundColor Yellow
 Set-AzureRmContext -SubscriptionId $SubscriptionID
 Write-Host "=>" -ForegroundColor Yellow
 Write-Host "=> Context is now set to Subscription $SubscriptionID"  -ForegroundColor Yellow
@@ -198,13 +191,12 @@ else
 
 ##GeneratePassword
 Write-Host "=>" -ForegroundColor Yellow
-Write-Host "=> Generating password for PaaS SQL." -ForegroundColor Yellow
+Write-Host "=> Generating password for Azure SQL" -ForegroundColor Yellow
 $NewPass = New-SWRandomPassword -MinPasswordLength 30 -MaxPasswordLength 30 | ConvertTo-SecureString -AsPlainText -Force
 
 ## Deploying the Template
 Write-Host "=>" -ForegroundColor Yellow
-Write-Host "=> Logging into the Matrix so I can deploy some Nist Compliant Architecture now..." -ForegroundColor Yellow
-Write-Host "=> Here we go...." -ForegroundColor Yellow
+Write-Host "=> Deploying some ASE Blueprint..." -ForegroundColor Yellow
 New-AzureRMResourceGroupDeployment -Name $DeploymentName `
     -ResourceGroupName $RgName `
     -TemplateUri $TemplateUri `
