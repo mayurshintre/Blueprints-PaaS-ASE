@@ -178,7 +178,7 @@ git clone https://github.com/mayurshintre/Blueprints-PaaS-ASE.git somefolder
 
 >This is the **main** configuration file. 
 
-Navigate to the _ase-ilb-blueprint/_ folder file on your local machine and update the default parameters the _azuredeploy.parameters.json_. This file holds all configuration and sizing parameters for all services deployed in this Blueprint. Please follow the instructions carefully as any typo's can result in a failed deployment.Notes for configuration values can be found in this file and on [Azure Quickstart Templates in Github](https://github.com/Azure/azure-quickstart-templates)
+Navigate to the _ase-ilb-blueprint/_ folder file on your local machine and update the default parameters the _azuredeploy.parameters.json_. This file holds all configuration and sizing parameters for all services deployed in this Blueprint. Please follow the instructions carefully as any typo's can result in a failed deployment. Notes for configuration values can be found in this file and also searched in relevant [Azure Quickstart Templates in Github](https://github.com/Azure/azure-quickstart-templates)
 
 ### 4.6 Configure _azuredeploy.ps1_ PowerShell File
 
