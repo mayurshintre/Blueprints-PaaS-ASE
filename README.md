@@ -3,7 +3,7 @@ o![alt text](ase-ilb-blueprint/images/azblueprints.png "Template Deployment Sequ
 
 ## Terms of Agreement 
 
-*This work is available as-is under the [Microsoft Public License (MS-PL)](https://opensource.org/licenses/MS-PL) under the Open Source Initiative.*
+*This work is available as-is under the [Microsoft Public License (MS-PL)](https://opensource.org/licenses/MS-PL) from the Open Source Initiative.*
 
 ## Documentation
 
