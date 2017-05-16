@@ -127,6 +127,7 @@ The solution automatically configures the following security features by default
 
 #### 2.3.5 KeyVault
 
++ **KV**:Provisions and automatically configures a Vault for system passwords, secrets, encryption keys and certificates
 + **KV**:Provisions and automatically configures a Vault with a _uniquestring_ password for Azure SQL
 
 #### 2.3.6 Network
@@ -135,9 +136,6 @@ The solution automatically configures the following security features by default
 + **Azure VNET**: Each Subnet is tightly locked down with Network Security Groups (NSG) to only allow traffic from SSL.TLS endpoints from its corresponding tier
 + **Azure VNET**: All Network Security Group Inbound and Outbound rules are protocol and port speficic
 + **Azure VNET**: All default traffic routing within the VNET (between subnets) is blocked by NSG's unless expicitly defined in the inbound or outbound security rules for each subnet
-
-
-+ **KV**:Provisions and automatically configures a Vault with a _uniquestring_ password for Azure SQL
 
 ## 3.0 NIST 800-66 Assurance Security Compliance Matrix
 
