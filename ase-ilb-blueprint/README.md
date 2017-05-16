@@ -17,10 +17,9 @@
 	- [2.3 Security](#23-security)
 		- [WAF - Application Gateway](#231-waf---application-gateway)
 		- [ILB ASE w/ Web Apps](#232-ilb-ase-w-web-apps)
-		- [ILB ASE w/ API Apps](#233-ilb-ase-w-api-apps)
-		- [Redis Cache](#234-redis-cache)
-		- [Azure SQL](#235-azure-sql)	
-		- [Azure KeyVault](#237-keyvault)
+		- [Redis Cache](#233-redis-cache)
+		- [Azure SQL](#234-azure-sql)	
+		- [Azure KeyVault](#235-keyvault)
 - [3. NIST 800-66 Assurance - Security Compliance Matrix](#30-nist-800-66-assurance-security-compliance-matrix)
 - [4. Deployment Guide](#4-deployment-guide) 
 	- [4.1 Installation Prerequisites](#41-installation-prerequisites)
@@ -51,7 +50,7 @@ This Blueprint deploys a fully automated secure baseline Azure ARM Template + Po
 + Azure KeyVault
 + Azure Active Directory
 
-The environment is locked down using Network Security Groups on each subnet with restricted access between all provisioned Azure services and also between subnets, as described in the [security](#s23-security) section below.
+The environment is locked down using Network Security Groups on each subnet with restricted access between all provisioned Azure services and also between subnets, as described in the [security](#23-security) section below.
 
 ### 1.1 NIST 800-66 Based Assurance Framework for Azure PaaS Blueprint
 
@@ -70,7 +69,7 @@ The diagram below illustrates the deployment topology and architecture of the so
 
 #### 2.2.1 Virtual Network
 ##### Microsoft.Networks
-+ **/virtualNetworks**: 1 Virtual Network and 4 Subnets
++ **/virtualNetworks**: 1 Virtual Network and 3 Subnets
 + **/publicIPAddresses**: 1 Public IP Address for Application Gateway WAF
 
 #### 2.2.2 Application Gateway - WAF
@@ -79,11 +78,11 @@ The diagram below illustrates the deployment topology and architecture of the so
 
 #### 2.2.3 Redis Cache
 ##### Microsoft.Cache
-+ **Redis**: Redis Cache Cluster
++ **/Redis**: Redis Cache Cluster
 
 #### 2.2.4 ILB ASE WebApp
 ##### Microsoft.Web
-+ **/hostingEnvironments**: Deploys App Service Environment v1
++ **/hostingEnvironments**: Deploys App Service Environment **v1**
 + **/serverFarms**: Deploys a default App Service Plan
 + **kind: "webapp"**: Deploys a default Azure WebApp
 
@@ -105,6 +104,7 @@ The solution automatically configures the following security features by default
 
 + **WAF**:The solution locks down all subnets with a top-level DenyAll with a weight of 100 by default
 + **WAF**:Deploys Application Gateway with WAF turned on in prevention mode with OWASP rulest 3.0
++ **WAF**:Deploys Application Gateway with WAF turned on to accept incloning requests only on SSL/TLS on Port 443
 + **WAF**:Configures Backend Pools for the Application Gateway to communicate only on Ports 80 and 443 for the ASE ILB IP addresses
 
 #### 2.3.2 ILB ASE w/ Web Apps
@@ -114,25 +114,30 @@ The solution automatically configures the following security features by default
 + **ASE**:Blocks all FTP/FTPS 'deployment' access ports to ASE environments
 + **ASE**:Blocks all FTP/FTPS 'deployment' access ports to ASE environments
 
-#### 2.3.3 ILB ASE w/ Api Apps
-
-Same as above
-
-#### 2.3.4 Redis Cache
+#### 2.3.3 Redis Cache
 
 + **Redis Cache**:Restricts Azure Redis Cache communication only with the ASE Subnets
 + **Redis Cache**:Turns off non-SSL endpoints for Azure Redis Cache
 
-#### 2.3.5 Azure SQL
+#### 2.3.4 Azure SQL
 
 + **Azure SQL**:Configures Azure SQL to use Transperent Disk Encryption
 + **Azure SQL**:Generates a secure pasword for Azure SQL and stores it as a secret in Azure KeyVault
 + **Azure SQL**:Applies Firewall Roles to lock down incoming traffic to Azure SQL only from provisioned ASE Outbound IP addresses
 
-#### 2.3.7 KeyVault
+#### 2.3.5 KeyVault
 
 + **KV**:Provisions and automatically configures a Vault with a _uniquestring_ password for Azure SQL
 
+#### 2.3.6 Network
+
++ **Azure VNET**: Provisioned with separate subnet for each individual tier
++ **Azure VNET**: Each Subnet is tightly locked down with Network Security Groups (NSG) to only allow traffic from SSL.TLS endpoints from its corresponding tier
++ **Azure VNET**: All Network Security Group Inbound and Outbound rules are protocol and port speficic
++ **Azure VNET**: All default traffic routing within the VNET (between subnets) is blocked by NSG's unless expicitly defined in the inbound or outbound security rules for each subnet
+
+
++ **KV**:Provisions and automatically configures a Vault with a _uniquestring_ password for Azure SQL
 
 ## 3.0 NIST 800-66 Assurance Security Compliance Matrix
 
@@ -198,7 +203,7 @@ $DeploymentName = $RgName +"nist800ase"
 $TemplateUri = "https://raw.githubusercontent.com/mayurshintre/Blueprints/master/ase-ilb-blueprint/azuredeploy.json"
 
 ##Location of the local parameters file
-$ParameterFile = "Repository Location\azureDeploy.parameters.json"
+$ParameterFile = "your_local_repository_location\azureDeploy.parameters.json"
     
 ##Subscription ID that will be used to host the resource group
 $SubscriptionID = "Your Subscription ID here"
@@ -286,8 +291,8 @@ You are entirely responsible for the cost of the Azure services used while runni
 
 ## Authors
 
-+ Dustin Paulson, Premier Field Engineer, Microsoft
-+ Jerad Berhow, Premier Field Engineer, Microsoft
 + Mayur Shintre, Principal Architect, Microsoft
++ Jerad Berhow, Premier Field Engineer, Microsoft
++ Dustin Paulson, Premier Field Engineer, Microsoft
 
 `Tags: [Microsoft, Azure, NIST, 800-66, Compliance, ARM, Templates, PaaS, ASE]`
