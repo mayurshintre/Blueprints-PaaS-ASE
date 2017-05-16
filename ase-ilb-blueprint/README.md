@@ -58,7 +58,6 @@ The environment is locked down using Network Security Groups on each subnet with
 This Azure refernce Blueprint deployment guide discusses architectural considerations and steps for deploying security-focused baseline environments on Azure. Specifically, this Blueprint deploys a standardized environment that helps organizations with workloads that fall in scope for any of the following:
 
 + National Institute of Standards and Technology (NIST) SP 800-66 (Revision 4)
-+ NIST SP 800-171
 
 ## 2. Solution Design and Deployed Resources
 
@@ -139,7 +138,7 @@ Same as above
 
 You can also view the security controls matrix (Microsoft Excel spreadsheet), which maps the architecture decisions, components, and configuration in this Quick Start to security requirements within NIST, TIC, and DoD Cloud SRG publications; indicates which Azure ARM templates and PowerShell scripts affect the controls implementation; and specifies the associated Azure resources within the templates. The excerpt in Figure 1 provides a sample of the available information.
 
->The NIST 800-66 Security Controls Matrix for this blueprint can be downloaded [here](#). 
+>The NIST 800-66 Security Controls Matrix for this blueprint can be downloaded [here](https://github.com/mayurshintre/Blueprints-PaaS-ASE/tree/master/ase-ilb-blueprint/images/nist80066matrix.xlsx).
 
 ![alt text](images/scmexcerpt.png "SCM Excerpt")
 
@@ -177,24 +176,9 @@ git clone https://github.com/mayurshintre/Blueprints-PaaS-ASE.git somefolder
 
 ### 4.5 Configure _azuredeploy.parameters.json_
 
-Navigate to the _ase-ilb-blueprint/_ folder file on your local machine and update the default parameters the _azuredeploy.parameters.json_. This file holds all configuration and sizing parameters for all services deployed in this Blueprint. Please follow the instructions carefully as any typo's can result in a failed deployment.
+>This is the **main** configuration file. 
 
->This is the **main** configuration file.
-
-  Resource | Parameter | Default Value| Allowed Values | Configuration
-  ---|---|---|---|---|
-  All | All | - | **No spaces or special characters. Lower case alphabets and numbers only.** | Adding special characters will break deployment for Azure SQL.
-  All | SystemPrefixName | _blueprint_ | lowercase string and numbers, upto 8 characters | Prefix name for the entire solution. Prepended to all resource names. Keep it short (4-6 characters). Lower case alphabets and numbers only. No spaces or special characters.
-  Vnet | vnetAddressPrefix | _10.0.0.0_ | Network Space Only | As defined within [RFC 1918 Range](https://tools.ietf.org/html/rfc1918)
-  Vnet | vnetAddressPrefixCIDR | _/16_ | RFC 1918 CIDR Block | As defined within [RFC 1918 Range](https://tools.ietf.org/html/rfc1918)
-  Subnet | WAFSubnetPrefix | _10.0.0.0_ | Within the defined Vnet space | As defined within [RFC 1918 Range](https://tools.ietf.org/html/rfc1918)
-  Subnet | WAFSubnetPrefixCIDR | _/24_ | RFC 1918 CIDR Block |As defined within [RFC 1918 Range](https://tools.ietf.org/html/rfc1918)
-  Subnet | WebAppSubnetPrefix | _10.0.1.0_ | Within the defined Vnet space | As defined within [RFC 1918 Range](https://tools.ietf.org/html/rfc1918)
-  Subnet | WebAppSubnetPrefixCIDR | _/24_ | RFC 1918 CIDR Block |As defined within [RFC 1918 Range](https://tools.ietf.org/html/rfc1918)
-  Subnet | APIAppSubnetPrefix | _10.0.2.0_ | Within the defined Vnet space | As defined within [RFC 1918 Range](https://tools.ietf.org/html/rfc1918)
-  Subnet | APIAppSubnetPrefixCIDR | _/24_ | RFC 1918 CIDR Block |As defined within [RFC 1918 Range](https://tools.ietf.org/html/rfc1918)
-  Subnet | RedisCacheSubnetPrefix | _10.0.3.0_ | Within the defined Vnet space | As defined within [RFC 1918 Range](https://tools.ietf.org/html/rfc1918)
-  Subnet | RedisCacheSubnetPrefixCIDR | _/24_ | RFC 1918 CIDR Block |As defined within [RFC 1918 Range](https://tools.ietf.org/html/rfc1918)
+Navigate to the _ase-ilb-blueprint/_ folder file on your local machine and update the default parameters the _azuredeploy.parameters.json_. This file holds all configuration and sizing parameters for all services deployed in this Blueprint. Please follow the instructions carefully as any typo's can result in a failed deployment.Notes for configuration values can be found in this file and on [Azure Quickstart Templates in Github](https://github.com/Azure/azure-quickstart-templates)
 
 ### 4.6 Configure _azuredeploy.ps1_ PowerShell File
 
@@ -251,6 +235,8 @@ VERBOSE: 9:34:59 PM - Resource Microsoft.Resources/deployments 'AseWeb' provisio
 VERBOSE: 9:34:59 PM - Resource Microsoft.Web/hostingEnvironments 'blueprintasewebwxl3ksd4fy5tg' provisioning status is running
 VERBOSE: 9:34:59 PM - Resource Microsoft.Resources/deployments 'Vnet' provisioning status is succeeded
 VERBOSE: 9:34:59 PM - Checking deployment status in 5 seconds
+...
+...
 ```
 
 ### 4.9 Optional - Post Deployment ExpressRoute UDR
