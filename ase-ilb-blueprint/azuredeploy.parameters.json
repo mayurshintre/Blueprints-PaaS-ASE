@@ -57,9 +57,9 @@
       }
     },
     "redisShardCount": {
-      "value": 0,
+      "value": 2,
       "metadata": {
-        "description": "Number of highly available shards to create in the cluster. Requires Premium SKU. Set to 0 to not set up clustering."
+        "description": "Number of highly available shards to create in the cluster. Requires Premium SKU. Requires a value of 2 or greater."
       }
     },
     "redisCacheCapacity": {
