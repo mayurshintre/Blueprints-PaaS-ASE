@@ -232,7 +232,25 @@ PS C:\User>azuredeploy.ps1
 ### 4.8 Expected Output
 
 ``` PowerShell
-placeholder
+VERBOSE: Performing the operation "Creating Deployment" on target "BluePrint".
+VERBOSE: 9:34:27 PM - Template is valid.
+VERBOSE: 9:34:29 PM - Create template deployment 'BluePrint2-nist800ase'
+VERBOSE: 9:34:29 PM - Checking deployment status in 5 seconds
+VERBOSE: 9:34:36 PM - Resource Microsoft.Resources/deployments 'SQL' provisioning status is running
+VERBOSE: 9:34:36 PM - Resource Microsoft.Resources/deployments 'Vnet' provisioning status is running
+VERBOSE: 9:34:36 PM - Resource Microsoft.Resources/deployments 'KeyVault' provisioning status is running
+VERBOSE: 9:34:36 PM - Checking deployment status in 5 seconds
+VERBOSE: 9:34:43 PM - Resource Microsoft.Network/virtualNetworks 'blueprintvnetwxl3ksd4fy5tg' provisioning status is succeeded
+VERBOSE: 9:34:43 PM - Resource Microsoft.KeyVault/vaults/secrets 'ILBaseVaultwxl3ksd4fy5tg/SqlSecret' provisioning status is succeeded
+VERBOSE: 9:34:43 PM - Resource Microsoft.KeyVault/vaults 'ILBaseVaultwxl3ksd4fy5tg' provisioning status is succeeded
+VERBOSE: 9:34:43 PM - Checking deployment status in 5 seconds
+VERBOSE: 9:34:50 PM - Resource Microsoft.Resources/deployments 'KeyVault' provisioning status is succeeded
+VERBOSE: 9:34:51 PM - Checking deployment status in 5 seconds
+VERBOSE: 9:34:59 PM - Resource Microsoft.Resources/deployments 'RedisCachePremium' provisioning status is running
+VERBOSE: 9:34:59 PM - Resource Microsoft.Resources/deployments 'AseWeb' provisioning status is running
+VERBOSE: 9:34:59 PM - Resource Microsoft.Web/hostingEnvironments 'blueprintasewebwxl3ksd4fy5tg' provisioning status is running
+VERBOSE: 9:34:59 PM - Resource Microsoft.Resources/deployments 'Vnet' provisioning status is succeeded
+VERBOSE: 9:34:59 PM - Checking deployment status in 5 seconds
 ```
 
 ### 4.9 Optional - Post Deployment ExpressRoute UDR
