@@ -1,6 +1,10 @@
 ![alt text](ase-ilb-blueprint/images/azblueprints.png "Template Deployment Sequence")
 # PaaS (ASE) Blueprint with NIST 800-66 Assurance Framework
 
+## Terms of Agreement 
+
+*This work is available as-is under the [Microsoft Public License (MS-PL)](https://opensource.org/licenses/MS-PL) under the Open SOurce Initiative.*
+
 ## Documentation
 
 Please click [here](https://github.com/mayurshintre/Blueprints-PaaS-ASE/blob/master/ase-ilb-blueprint/README.md) to view documentation.
