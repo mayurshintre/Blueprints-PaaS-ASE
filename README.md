@@ -11,9 +11,9 @@ Please click [here](https://github.com/mayurshintre/Blueprints-PaaS-ASE/blob/mas
 
 ## Authors
 
-+ Dustin Paulson, Premier Field Engineer, Microsoft
-+ Jerad Berhow, Premier Field Engineer, Microsoft
 + Mayur Shintre, Principal Architect, Microsoft
++ Jerad Berhow, Premier Field Engineer, Microsoft
++ Dustin Paulson, Premier Field Engineer, Microsoft
 
 ## Open Source
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
