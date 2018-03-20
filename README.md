@@ -11,8 +11,8 @@ Please click [here](https://github.com/mayurshintre/Blueprints-PaaS-ASE/blob/mas
 
 ## Authors
 
-+ Mayur Shintre, Principal Architect, Microsoft
-+ Matt Lunzer, Azure TSP, Microsoft
++ Mayur Shintre, Cloud Solution Architect, Microsoft
++ Matt Lunzer, Cloud Solution Architect, Microsoft
 + Jerad Berhow, Premier Field Engineer, Microsoft
 + Dustin Paulson, Premier Field Engineer, Microsoft
 
