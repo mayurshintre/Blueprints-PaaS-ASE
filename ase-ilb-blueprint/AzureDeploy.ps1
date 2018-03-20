@@ -10,15 +10,18 @@
     ##Azure Region to Deploy all resources including the Resource Group
     $Region = "Central US"
     ##Name of the Resource Group to deploy
-    $RgName = "BluePrint2"
+    $RgName = "BluePrint201"
     ##Name to give the Deployment that will be ran
-    $DeploymentName = $RgName +"-nist800ase"
+    $DeploymentName = $RgName +"nist800ase"
     ##Location of the main azuredeploy.json template
-    $TemplateUri = "https://raw.githubusercontent.com/mayurshintre/Blueprints-PaaS-ASE/master/ase-ilb-blueprint/azuredeploy.json"
-    ##Location of the local parameters file
-    $ParameterFile = "C:\{yourlocationhere}\azuredeploy.parameters.json"
+    $TemplateUri = "https://raw.githubusercontent.com/mayurshintre/Blueprints-PaaS-ASE/master/ase-ilb-blueprint/azuredeploy.json@"
+	##Local Location of the Template. Use only if testing updates locally.
+	## $TemplateFile = "C:\<your_local_template_path>\azuredeploy.json"			         
+    ##Location of the local parameters file    
+	$ParameterFile = "C:\<your_local_parameters_file>\azuredeploy.parameters.json"
+	
     ##Subscription ID that will be used to host the resource group
-    $SubscriptionID = "subscription id here"
+    $SubscriptionID = "f05bd3e7-fe83-40ae-9dec-7f146792b60d"
 #endregion
 
 #Function to generate random password
@@ -194,13 +197,16 @@ Write-Host "=>" -ForegroundColor Yellow
 Write-Host "=> Generating password for Azure SQL" -ForegroundColor Yellow
 $NewPass = New-SWRandomPassword -MinPasswordLength 30 -MaxPasswordLength 30 | ConvertTo-SecureString -AsPlainText -Force
 
-## Deploying the Template
 Write-Host "=>" -ForegroundColor Yellow
-Write-Host "=> Deploying some ASE Blueprint..." -ForegroundColor Yellow
+Write-Host "=> Deploying the ASE Blueprint..." -ForegroundColor Yellow
+
+## If Deploying the Template from local:
+## -TemplateParameterFile $ParameterFile 
+
 New-AzureRMResourceGroupDeployment -Name $DeploymentName `
-    -ResourceGroupName $RgName `
-    -TemplateUri $TemplateUri `
-    -TemplateParameterFile $ParameterFile `
+	-ResourceGroupName $RgName `
+	-TemplateUri $TemplateUri `
+    -TemplateFile $TemplateFile `	
     -sqlAdministratorLoginPassword $NewPass `
     -Region $Region `
     -Mode Incremental `
@@ -522,7 +528,7 @@ Write-Host "=> Building Network Security Groups" -ForegroundColor Yellow
 #region
 $WafNsg = New-AzureRmNetworkSecurityGroup -Name "WafNsg" -ResourceGroupName $RgName -Location $Region `
                                           -SecurityRules $WAFRule1,$WAFRule2,$WAFRule3,$WAFRule4,$WAFRule5,$WAFRule6,$WAFRule7,$WAFRule8,$WAFRule9,$WAFRule10,$WAFRule11,$WAFRule12,$WAFRule13,$WAFRule14,$WAFRule15,$WAFRule16 `
-                                          -Force -WarningAction SilentlyContinue |out-null 
+                                          -Force -WarningAction SilentlyContinue | out-null 
 $AseWebNsg = New-AzureRmNetworkSecurityGroup -Name "AseWebNsg" -ResourceGroupName $RgName -Location $Region `
                                              -SecurityRules $ASERule1,$ASERule2,$ASERule3,$ASERule4,$ASERule5,$ASERule6,$ASERule7,$ASERule8,$ASERule9,$ASERule10,$ASERule11,$ASERule12,$ASERule13 `
                                              -Force -WarningAction SilentlyContinue | Out-Null

@@ -1,5 +1,5 @@
 ﻿{
-  "$schema": "http://schema.management.azure.com/schemas/2014-04-01-preview/deploymentTemplate.json#",
+  "$schema": "http://schema.management.azure.com/schemas/2014-04-01-preview/deploymentTemplate.json",
   "contentVersion": "1.0.0.0",
   "parameters": {
     "appServicePlanName": {
@@ -20,37 +20,44 @@
         "description": "Set this to the same location as the App Service Environment"
       }
     },
-    "workerPool": {
+    "pricingTier": {
       "type": "string",
+      "allowedValues": [
+        "1",
+        "2",
+        "3"
+      ],
+      "defaultValue": "1",
       "metadata": {
-        "description": "Defines which worker pool's (WP1, WP2 or WP3) resources will be used for the app service plan."
+        "description": "Defines pricing tier for workers: 1 = Isolated 1, 2 = Isolated 2, 3 = Isolated 3."
       }
     },
-    "numberOfWorkersFromWorkerPool": {
+    "capacity": {
       "type": "int",
+      "defaultValue": 1,
       "metadata": {
-        "description": "Defines the number of workers from the worker pool that will be used by the app service plan."
+        "description": "Defines the number of instances that will be allocated to the app service plan."
       }
     }
   },
   "resources": [
     {
-      "apiVersion": "2014-06-01",
+      "apiVersion": "2016-09-01",
       "name": "[parameters('appServicePlanName')]",
       "type": "Microsoft.Web/serverfarms",
       "location": "[parameters('Region')]",
       "properties": {
         "name": "[parameters('appServicePlanName')]",
         "hostingEnvironmentProfile": {
-          "id": "[resourceId('Microsoft.Web/hostingEnvironments',parameters('asename'))]"
+          "id": "[resourceId('Microsoft.Web/hostingEnvironments',parameters('aseName'))]"
         }
       },
       "sku": {
-        "name": "[parameters('appServicePlanName')]",
-        "tier": "Premium",
-        "size": "[parameters('workerPool')]",
-        "family": "P",
-        "capacity": "[parameters('numberOfWorkersFromWorkerPool')]"
+        "name": "[concat('I',parameters('pricingTier'))]",
+        "tier": "Isolated",
+        "size": "[concat('I',parameters('pricingTier'))]",
+        "family": "I",
+        "capacity": "[parameters('capacity')]"
       }
     }
   ]

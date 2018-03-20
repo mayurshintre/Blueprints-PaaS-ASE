@@ -69,7 +69,7 @@
       }
     },
     "appServicePlanNameWeb": {
-      "value": "ASPNameWeb",
+      "value": "ASPWeb",
       "metadata": {
         "description": "The name of the App Service plan to use for hosting the web app."
       }
@@ -86,64 +86,16 @@
         "description": "0 = public VIP only, 1 = only ports 80/443 are mapped to ILB VIP, 2 = only FTP ports are mapped to ILB VIP, 3 = both ports 80/443 and FTP ports are mapped to an ILB VIP."
       }
     },
-    "frontEndSize": {
-      "value": "Medium",
+    "pricingTier": {      
+      "value": "1",
       "metadata": {
-        "description": "Instance size for the front-end pool.  Maps to P2,P3,P4."
+        "description": "Defines pricing tier for workers: 1 = Isolated 1, 2 = Isolated 2, 3 = Isolated 3."
       }
     },
-    "frontEndCount": {
+    "capacity": {      
       "value": 2,
       "metadata": {
-        "description": "Number of instances in the front-end pool.  Minimum of two."
-      }
-    },
-    "workerPoolOneInstanceSize": {
-      "value": "Small",
-      "metadata": {
-        "description": "Instance size for worker pool one.  Maps to P1,P2,P3,P4."
-      }
-    },
-    "workerPoolOneInstanceCount": {
-      "value": 2,
-      "metadata": {
-        "description": "Number of instances in worker pool one.  Minimum of two."
-      }
-    },
-    "workerPoolTwoInstanceSize": {
-      "value": "Small",
-      "metadata": {
-        "description": "Instance size for worker pool two.  Maps to P1,P2,P3,P4."
-      }
-    },
-    "workerPoolTwoInstanceCount": {
-      "value": 2,
-      "metadata": {
-        "description": "Number of instances in worker pool two.  Can be zero if not using worker pool two."
-      }
-    },
-    "workerPoolThreeInstanceSize": {
-      "value": "Small",
-      "metadata": {
-        "description": "Instance size for worker pool three.  Maps to P1,P2,P3,P4."
-      }
-    },
-    "workerPoolThreeInstanceCount": {
-      "value": 0,
-      "metadata": {
-        "description": "Number of instances in worker pool three.  Can be zero if not using worker pool three."
-      }
-    },
-    "numberOfWorkersFromWorkerPool": {
-      "value": 2,
-      "metadata": {
-        "description": "Defines the number of workers from the worker pool that will be used by the app service plan."
-      }
-    },
-    "workerPool": {
-      "value": "WP1",
-      "metadata": {
-        "description": "Defines which worker pool's (WP1, WP2 or WP3) resources will be used for the app service plan."
+        "description": "Defines the number of instances that will be allocated to the app service plan."
       }
     },
     "applicationGatewaySize": {

@@ -4,7 +4,7 @@
   "parameters": {
     "SystemPrefixName": {
       "type": "string",
-      "defaultValue": "Nist800Demo",
+      "defaultValue": "PaaSBluePrint",
       "metadata": {
         "description": "String to append to all resource names"
       }
@@ -115,87 +115,23 @@
         "description": "0 = public VIP only, 1 = only ports 80/443 are mapped to ILB VIP, 2 = only FTP ports are mapped to ILB VIP, 3 = both ports 80/443 and FTP ports are mapped to an ILB VIP."
       }
     },
-    "frontEndSize": {
+    "pricingTier": {
       "type": "string",
       "allowedValues": [
-        "Medium",
-        "Large",
-        "ExtraLarge"
+        "1",
+        "2",
+        "3"
       ],
+      "defaultValue": "1",
       "metadata": {
-        "description": "Instance size for the front-end pool.  Maps to P2,P3,P4."
+        "description": "Defines pricing tier for workers: 1 = Isolated 1, 2 = Isolated 2, 3 = Isolated 3."
       }
     },
-    "frontEndCount": {
+    "capacity": {
       "type": "int",
+      "defaultValue": 1,
       "metadata": {
-        "description": "Number of instances in the front-end pool.  Minimum of two."
-      }
-    },
-    "workerPoolOneInstanceSize": {
-      "type": "string",
-      "allowedValues": [
-        "Small",
-        "Medium",
-        "Large",
-        "ExtraLarge"
-      ],
-      "metadata": {
-        "description": "Instance size for worker pool one.  Maps to P1,P2,P3,P4."
-      }
-    },
-    "workerPoolOneInstanceCount": {
-      "type": "int",
-      "metadata": {
-        "description": "Number of instances in worker pool one.  Minimum of two."
-      }
-    },
-    "workerPoolTwoInstanceSize": {
-      "type": "string",
-      "allowedValues": [
-        "Small",
-        "Medium",
-        "Large",
-        "ExtraLarge"
-      ],
-      "metadata": {
-        "description": "Instance size for worker pool two.  Maps to P1,P2,P3,P4."
-      }
-    },
-    "workerPoolTwoInstanceCount": {
-      "type": "int",
-      "metadata": {
-        "description": "Number of instances in worker pool two.  Can be zero if not using worker pool two."
-      }
-    },
-    "workerPoolThreeInstanceSize": {
-      "type": "string",
-      "allowedValues": [
-        "Small",
-        "Medium",
-        "Large",
-        "ExtraLarge"
-      ],
-      "metadata": {
-        "description": "Instance size for worker pool three.  Maps to P1,P2,P3,P4."
-      }
-    },
-    "workerPoolThreeInstanceCount": {
-      "type": "int",
-      "metadata": {
-        "description": "Number of instances in worker pool three.  Can be zero if not using worker pool three."
-      }
-    },
-    "numberOfWorkersFromWorkerPool": {
-      "type": "int",
-      "metadata": {
-        "description": "Defines the number of workers from the worker pool that will be used by the app service plan."
-      }
-    },
-    "workerPool": {
-      "type": "string",
-      "metadata": {
-        "description": "Defines which worker pool's (WP1, WP2 or WP3) resources will be used for the app service plan."
+        "description": "Defines the number of instances that will be allocated to the app service plan."
       }
     },
     "applicationGatewaySize": {
@@ -293,9 +229,8 @@
     "applicationGatewayName": "[toLower(concat(parameters('SystemPrefixName'),'WAF',uniqueString(resourceGroup().id)))]",
     "sqlServerName": "[toLower(concat(parameters('SystemPrefixName'),'AzureSql',uniqueString(resourceGroup().id)))]",
     "databaseName": "[toLower(concat(parameters('SystemPrefixName'),'Database'))]",
-
     "TemplateURIs": "https://raw.githubusercontent.com/mayurshintre/Blueprints-PaaS-ASE/master/ase-ilb-blueprint/templates/",
-
+    "_StorageTemplateURIs": "https://<yourstorage>.blob.core.windows.net/arm/blueprint/",
     "wafMode": "Prevention",
     "wafRuleSetType": "OWASP",
     "wafRuleSetVersion": "3.0",
@@ -397,15 +332,7 @@
           "vnetID": { "value": "[variables('vnetID')]" },
           "SubnetName": { "value": "[variables('WebAppSubnetName')]" },
           "internalLoadBalancingMode": { "value": "[parameters('internalLoadBalancingMode')]" },
-          "DNS": { "value": "[parameters('WebDNS')]" },
-          "frontEndSize": { "value": "[parameters('frontEndSize')]" },
-          "frontEndCount": { "value": "[parameters('frontEndCount')]" },
-          "workerPoolOneInstanceSize": { "value": "[parameters('workerPoolOneInstanceSize')]" },
-          "workerPoolOneInstanceCount": { "value": "[parameters('workerPoolOneInstanceCount')]" },
-          "workerPoolTwoInstanceSize": { "value": "[parameters('workerPoolTwoInstanceSize')]" },
-          "workerPoolTwoInstanceCount": { "value": "[parameters('workerPoolTwoInstanceCount')]" },
-          "workerPoolThreeInstanceSize": { "value": "[parameters('workerPoolThreeInstanceSize')]" },
-          "workerPoolThreeInstanceCount": { "value": "[parameters('workerPoolThreeInstanceCount')]" }
+          "DNS": { "value": "[parameters('WebDNS')]" }
         }
       }
     },
@@ -423,9 +350,7 @@
         "parameters": {
           "appServicePlanName": { "value": "[parameters('appServicePlanNameWeb')]" },
           "aseName": { "value": "[variables('aseWebName')]" },
-          "Region": { "value": "[parameters('Region')]" },
-          "workerPool": { "value": "[parameters('workerPool')]" },
-          "numberOfWorkersFromWorkerPool": { "value": "[parameters('numberOfWorkersFromWorkerPool')]" }
+          "Region": { "value": "[parameters('Region')]" }          
         }
       }
     },
@@ -458,7 +383,7 @@
     {
       "type": "Microsoft.Resources/deployments",
       "name": "WebApp",
-      "apiVersion": "2015-01-01",
+      "apiVersion": "2016-09-01",
       "dependsOn": [ "AspWeb" ],
       "properties": {
         "mode": "Incremental",

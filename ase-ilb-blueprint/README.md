@@ -40,7 +40,7 @@
 
 This Blueprint deploys a fully automated secure baseline Azure ARM Template + PowerShell solution to provision a highly secure, orchestrated and configured Platform as a Service (PaaS) environment mapped to a NIST 800-66 assurance security controls matrix, that includes :
 
-+ Azure App Service Environment (ASE) with an Internal Load Balancer (ILB)
++ Azure App Service Environment v2 (ASE v2) with an Internal Load Balancer (ILB)
 + Azure Web App within ASE
 + Redis Cache Cluster
 + Azure Virtual Network
@@ -82,7 +82,7 @@ The diagram below illustrates the deployment topology and architecture of the so
 
 #### 2.2.4 ILB ASE WebApp
 ##### Microsoft.Web
-+ **/hostingEnvironments**: Deploys App Service Environment **v1**
++ **/hostingEnvironments**: Deploys App Service Environment **v2**
 + **/serverFarms**: Deploys a default App Service Plan
 + **kind: "webapp"**: Deploys a default Azure WebApp
 
@@ -221,7 +221,7 @@ PS C:\User>azuredeploy.ps1
 ``` PowerShell
 VERBOSE: Performing the operation "Creating Deployment" on target "BluePrint".
 VERBOSE: 9:34:27 PM - Template is valid.
-VERBOSE: 9:34:29 PM - Create template deployment 'BluePrint2-nist800ase'
+VERBOSE: 9:34:29 PM - Create template deployment 'BluePrintv2-nist800ase'
 VERBOSE: 9:34:29 PM - Checking deployment status in 5 seconds
 VERBOSE: 9:34:36 PM - Resource Microsoft.Resources/deployments 'SQL' provisioning status is running
 VERBOSE: 9:34:36 PM - Resource Microsoft.Resources/deployments 'Vnet' provisioning status is running
@@ -285,12 +285,13 @@ _Excerpt from azuredeploy.json for hard-coded redis cache variables not exposed 
 
 ## 6. Cost
 
-You are entirely responsible for the cost of the Azure services used while running this NIST 800-66 reference PaaS deployment template for ASE. There is no additional cost for using this template. The Azure Resource Manager template for this NIST 800-66 reference PaaS deployment for ASE includes configuration parameters that you can customize. Some of these settings will affect the cost of deployment. For cost estimates, see the pricing pages for each Azure service you will be using, the [Azure Calculator](https://azure.microsoft.com/en-us/pricing/calculator/), or the [Azure Channel Pricing Calculator](https://azure.microsoft.com/en-us/pricing/calculator/) if you are an enterprise customer with an ELA. Prices are subject to change.
+You are entirely responsible for the cost of the Azure services used while running this NIST 800-66 reference PaaS deployment template for ASEv2. There is no additional cost for using this template. The Azure Resource Manager template for this NIST 800-66 reference PaaS deployment for ASE includes configuration parameters that you can customize. Some of these settings will affect the cost of deployment. For cost estimates, see the pricing pages for each Azure service you will be using, the [Azure Calculator](https://azure.microsoft.com/en-us/pricing/calculator/), or the [Azure Channel Pricing Calculator](https://azure.microsoft.com/en-us/pricing/calculator/) if you are an enterprise customer with an ELA. Prices are subject to change.
 
 ## Authors
 
 + Mayur Shintre, Principal Architect, Microsoft
 + Jerad Berhow, Premier Field Engineer, Microsoft
 + Dustin Paulson, Premier Field Engineer, Microsoft
++ Eduardo Gomez, Cloud Solution Architect, Microsoft
 
 `Tags: [Microsoft, Azure, NIST, 800-66, Compliance, ARM, Templates, PaaS, ASE]`
