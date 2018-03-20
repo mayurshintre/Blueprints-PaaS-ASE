@@ -289,7 +289,7 @@ You are entirely responsible for the cost of the Azure services used while runni
 
 ## Authors
 
-+ Mayur Shintre, Cloud Solution Architect Architect, Microsoft
++ Mayur Shintre, Cloud Solution Architect, Microsoft
 + Jerad Berhow, Premier Field Engineer, Microsoft
 + Dustin Paulson, Premier Field Engineer, Microsoft
 + Eduardo Gomez, Cloud Solution Architect, Microsoft
