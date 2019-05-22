@@ -1,6 +1,8 @@
-o![alt text](ase-ilb-blueprint/images/azblueprints.png "Template Deployment Sequence")
 
-# :warning: DEPRECATED - This Architecture (while stil valid) has lived it's life and now outdated.
+# :warning: 
+# DEPRECATED - This Architecture (while stil valid) has lived it's life and now outdated.
+
+o![alt text](ase-ilb-blueprint/images/azblueprints.png "Template Deployment Sequence")
 
 # PaaS (ASE) Blueprint with NIST 800-66 Assurance Framework
 
