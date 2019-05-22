@@ -1,6 +1,6 @@
 
 # :warning: 
-# DEPRECATED - This Architecture (while stil valid) has lived it's life and now outdated.
+# DEPRECATED - This Architecture (while still valid) has outlived it's life and now outdated. Better options now exist for design asn well as Azure Services
 
 o![alt text](ase-ilb-blueprint/images/azblueprints.png "Template Deployment Sequence")
 
