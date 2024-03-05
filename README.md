@@ -1,6 +1,6 @@
 
-# :warning: 
-# DEPRECATED - This Architecture (while still valid) has outlived it's life and now outdated. Better options now exist for design as well as Azure Services
+# :please read: 
+# This Blueprint is was adopted to establish the Microsoft Azure Blueprint Program. Please visit https://learn.microsoft.com/en-us/azure/governance/blueprints/overview to get the latest blueprints.
 
 o![alt text](ase-ilb-blueprint/images/azblueprints.png "Template Deployment Sequence")
 
